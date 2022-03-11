@@ -1,38 +1,65 @@
-![Blazorise](docs/assets/images/blazorise.png)
+![Blazorise](https://user-images.githubusercontent.com/900302/147649481-11ca2931-34cd-4e24-8035-fe757cf9d744.png)
 
 # Components for Blazor
 
-[![NuGet](https://img.shields.io/nuget/vpre/Blazorise.svg)](https://www.nuget.org/profiles/stsrki)
+[![NuGet](https://img.shields.io/nuget/vpre/Blazorise.svg)](https://www.nuget.org/profiles/Megabit)
 [![MyGet](https://img.shields.io/myget/blazorise/vpre/blazorise.svg?label=myget)](https://www.myget.org/gallery/blazorise)
 ![Nuget](https://img.shields.io/nuget/dt/Blazorise.svg)
 [![Join the chat at https://gitter.im/stsrki/Blazorise](https://badges.gitter.im/stsrki/Blazorise.svg)](https://gitter.im/stsrki/Blazorise?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Slack](https://img.shields.io/badge/chat-on%20Slack-green.svg)](https://join.slack.com/t/blazorise/shared_invite/enQtNzQ2MjQxNDI4MzQxLThjZWM2YjRjMzg1OTlmMWY5NTBlNGRhYmQxOWZhY2Q2ZDcwYjRiMTQzZWZiOTAzMmE5YmNjNzMzYjY5YWRkZjg)
-[![MIT](https://img.shields.io/github/license/stsrki/Blazorise.svg)](LICENSE)
+[![Discord](https://img.shields.io/discord/761589226965696552?color=%237289da&label=Discord&logo=discord&logoColor=%237289da&style=flat-square)](https://discord.io/blazorise)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE.md)
 [![Tip Me via PayPal](https://img.shields.io/badge/PayPal-tip%20me-green.svg?logo=paypal)](https://www.paypal.me/mladenmacanovic)
-[![Buy me a Coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/mladenmacanovic)
 [![Patreon](https://img.shields.io/badge/Patreon-donate-yellow.svg)](https://www.patreon.com/mladenmacanovic)
 
 Blazorise is a component library built on top of [Blazor](https://blazor.net/) and CSS frameworks like Bootstrap, Bulma and Material.
+
+> Note: Old documentation can be found at http://v094.blazorise.com/
+
+## Commercial support
+
+[Support](https://support.blazorise.com/) for the Blazorise Components is available as part of the [Blazorise Commercial](https://commercial.blazorise.com/) subscription.
+
+With the commercial license you get:
+
+- Access to premium themes and templates
+- Premium forum support
+- Dedicated customer support with 24 or 16 hour response time
+- Priority fixes and feature requests
+
+## Supporting Blazorise
+
+Blazorise is an Apache 2.0-licensed open source project with its ongoing development made possible entirely by the support of these awesome backers.
+
+### Special Sponsors
+
+<!--platinum start-->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="middle">
+        <a href="https://volosoft.com/" target="_blank">
+          <img width="222px" src="https://volosoft.com/assets/logos/volosoft-logo-dark.svg">
+        </a>
+      </td>
+    </tr>
+    <tr></tr>
+  </tbody>
+</table>
+<!--platinum end-->
 
 ## Demos
 
 ### Blazor WebAssembly
 
-- [Bootstrap Demo](https://bootstrapdemo.blazorise.com)
+- [Bootstrap 4 Demo](https://bootstrapdemo.blazorise.com)
+- [Bootstrap 5 Demo](https://bootstrap5demo.blazorise.com)
 - [Material Demo](https://materialdemo.blazorise.com/)
 - [Bulma Demo](https://bulmademo.blazorise.com/)
-- [eFrolic Demo](https://efrolicdemo.blazorise.com/)
 - [AntDesign Demo](https://antdesigndemo.blazorise.com/)
 
 ### Blazor Server
 
 - [Bootstrap Demo](https://rcbootstrapdemo.blazorise.com/)
-
-```
-Note: This project is still experimental so it's possible that some components will be removed or refactored.
-```
-
-[Releases](https://blazorise.com/docs/releases/) and [Roadmap](https://github.com/stsrki/Blazorise/issues/304)
 
 ## Documentation
 
@@ -50,10 +77,10 @@ There are currently 5 different NuGet packages for each of the supported CSS fra
 
 ```
 - Blazorise.Bootstrap
+- Blazorise.Bootstrap5
 - Blazorise.Bulma
 - Blazorise.Material
 - Blazorise.AntDesign
-- Blazorise.Frolic
 ```
 
 This guide will show you how to setup Blazorise with **Bootstrap** and **FontAwesome** icons. To setup Blazorise for other CSS frameworks, please refer the [Usage](https://blazorise.com/docs/usage/) page in the documentation.
@@ -74,32 +101,36 @@ Install-Package Blazorise.Icons.FontAwesome
 
 ### 2. Source files
 
-The next step is to define links to Bootstrap and FontAwesome _CSS_ or _JS_ files. If you're using **Blazor WebAssembly** project template, those links will go to the `index.html` located inside of `wwwroot` folder. Otherwise, if you're using a **Blazor Server** project template you will place the links into the `_Host.cshtml`.
-
-In this step we're also going to define the links for Blazorise content files that comes with nuget packages. You must follow the naming convention `_content/{LIBRARY.NAME}/{FILE.NAME}`. 
+Add the following to `index.html` (Blazor WebAssembly) or `_Host.cshtml` (Blazor Server) in the `head` section.
 
 ```html
-<!-- inside of head section -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
 
 <link href="_content/Blazorise/blazorise.css" rel="stylesheet" />
 <link href="_content/Blazorise.Bootstrap/blazorise.bootstrap.css" rel="stylesheet" />
-
-<!-- inside of body section and after the <app> tag  -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-<script src="_content/Blazorise/blazorise.js"></script>
-<script src="_content/Blazorise.Bootstrap/blazorise.bootstrap.js"></script>
 ```
 
----
-**NOTE**
- When Blazor project is created it will also include it's own **Bootstrap** and **FontAwesome** files that can sometime be of older versions. To ensure we're using the appropriate Bootstrap and FontAwesome files, you need to remove them or replace them with the links from above. If you forget to remove them it's possible that some of components will not work as expected.
+Add the following to `index.html` or `_Host.cshtml` in the `body` section.
 
----
+```html
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+```
+
+Please note, that these are the Blazorise explicit dependencies, you still need to add framework specific dependencies.
+
+#### 2.1 JavaScript resources
+
+Blazorise loads any additional JavaScript it needs dynamically once a component needs it. This means that Blazorise expects that the resources are available and placed relative to the app root. You can configure this by using the `app.UseStaticFiles();` and it does not need any other additional configuration from your part. If you're having any difficulties, please refer to the following issues:
+
+If you're having any difficulties, please refer to the following issues:
+
+- [#3122](https://github.com/Megabit/Blazorise/issues/3122)
+- [#3150](https://github.com/Megabit/Blazorise/issues/3150)
+
+We are also aware that there might need to be extra setup when dealing with PWA and offline capabilities if you want your app to remain responsive. Please check our [PWA docs](https://blazorise.com/docs/pwa) for more information. 
 
 ### 3. Using's
 
@@ -111,99 +142,22 @@ In your main `_Imports.razor` add:
 
 ### 4. Registrations
 
-Starting from **.Net Core 3.2** there was some changes regarding the setup process for **Blazor WebAssembly** project types. Specifically the **Startup.cs** file is removed and all registrations are now done in the **Program.cs**.
-
----
-Depending on the hosting model of your Blazor project you only need to apply either step **4.a** or **4.b**. You should not include both of them as that is generally not supported.
-
-To Learn more about the different project types you can go to the official [documentation](https://docs.microsoft.com/en-us/aspnet/core/blazor/hosting-models?view=aspnetcore-3.0).
-
----
-
-#### 4.a Blazor WebAssembly
-
-This step is mandatory for **Blazor WebAssembly**(client-side) and also for **ASP.NET Core hosted** project types. You should place the code into the **Program.cs** of your **client** project.
+Add the following lines to the relevant sections of `Program.cs`.
 
 ```cs
-// other usings
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
-
-public class Program
-{
-  public static async Task Main( string[] args )
-  {
-    var builder = WebAssemblyHostBuilder.CreateDefault( args );
-
-    builder.Services
-      .AddBlazorise( options =>
-      {
-          options.ChangeTextOnKeyPress = true;
-      } )
-      .AddBootstrapProviders()
-      .AddFontAwesomeIcons();
-
-    builder.Services.AddSingleton( new HttpClient
-    {
-      BaseAddress = new Uri( builder.HostEnvironment.BaseAddress )
-    } );
-
-    builder.RootComponents.Add<App>( "app" );
-
-    var host = builder.Build();
-
-    host.Services
-      .UseBootstrapProviders()
-      .UseFontAwesomeIcons();
-
-    await host.RunAsync();
-  }
-}
 ```
 
-#### 4.b Blazor Server
-
-This step is going only into the **Startup.cs** of your **Blazor Server** project.
-
 ```cs
-// other usings
-using Blazorise;
-using Blazorise.Bootstrap;
-using Blazorise.Icons.FontAwesome;
-
-public class Startup
-{
-  public void ConfigureServices( IServiceCollection services )
+builder.Services
+  .AddBlazorise( options =>
   {
-    services
-      .AddBlazorise( options =>
-      {
-        options.ChangeTextOnKeyPress = true; // optional
-      } )
-      .AddBootstrapProviders()
-      .AddFontAwesomeIcons();
-
-      // other services
-  }
-
-  public void Configure( IComponentsApplicationBuilder app )
-  {
-    // other settings
-    
-    app.UseRouting();
-    
-    app.ApplicationServices
-      .UseBootstrapProviders()
-      .UseFontAwesomeIcons();
-
-    app.UseEndpoints( endpoints =>
-    {
-        endpoints.MapBlazorHub();
-        endpoints.MapFallbackToPage( "/_Host" );
-    } );
-  }
-}
+      options.Immediate = true;
+  } )
+  .AddBootstrapProviders()
+  .AddFontAwesomeIcons();
 ```
 
 ## Usage
@@ -229,7 +183,7 @@ public class Startup
 
 ## Try Preview
 
-If you're willing to try preview versions of Blazorise all you need to do is to setup Visual Studio so it knows how to use Blazorise [MyGet feed](https://www.myget.org/feed/Details/blazorise). The easies way to do this is to create `NuGet.config` file and place it into your solution root folder. Then you copy the following content and paste it to the `NuGet.config`.
+If you're willing to try preview versions of Blazorise, all you need to do is set up Visual Studio to know how to use Blazorise [MyGet feed](https://www.myget.org/feed/Details/blazorise) feed. The easiest way to do this is to create `NuGet.config` file and place it into your solution root folder. Then you copy the following content and paste it to the `NuGet.config`.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>

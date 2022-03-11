@@ -1,0 +1,33 @@
+﻿table {
+    &.is-borderless td,
+    &.is-borderless th,
+    &.is-borderless tr {
+        border: 0 !important;
+    }
+}
+
+tr.table-row-selectable {
+    &:hover, &.is-hovered {
+        cursor: pointer;
+    }
+}
+
+.table-container-fixed-header {
+    overflow-y: auto;
+
+    .table {
+        border-collapse: separate;
+        border-spacing: 0;
+
+        thead tr th {
+            border-top: none;
+            position: sticky;
+            background: white;
+            z-index: 10;
+        }
+
+        thead tr:nth-child(1) th {
+            top: 0;
+        }
+    }
+}

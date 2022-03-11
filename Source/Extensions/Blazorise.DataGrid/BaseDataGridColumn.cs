@@ -1,31 +1,21 @@
 ﻿#region Using directives
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
-using Blazorise.DataGrid.Utils;
 using Microsoft.AspNetCore.Components;
 #endregion
 
 namespace Blazorise.DataGrid
 {
+    [CascadingTypeParameter( nameof( TItem ) )]
     public class BaseDataGridColumn<TItem> : BaseDataGridComponent
     {
-        #region Members
-
-        #endregion
-
-        #region Constructors
-
-        #endregion
-
         #region Methods
 
         /// <summary>
-        /// Gets the formated display value.
+        /// Gets the formatted display value.
         /// </summary>
-        /// <param name="item">Item the contains the value to format.</param>
-        /// <returns></returns>
+        /// <param name="value">Item the contains the value to format.</param>
+        /// <returns>Formatted display value.</returns>
         public string FormatDisplayValue( object value )
         {
             if ( DisplayFormat != null )
@@ -57,7 +47,10 @@ namespace Blazorise.DataGrid
 
         [Parameter] public RenderFragment ChildContent { get; set; }
 
-        [CascadingParameter] protected DataGrid<TItem> ParentDataGrid { get; set; }
+        /// <summary>
+        /// Gets or sets the parent <see cref="DataGrid{TItem}"/> of the this component.
+        /// </summary>
+        [CascadingParameter] public DataGrid<TItem> ParentDataGrid { get; set; }
 
         #endregion
     }

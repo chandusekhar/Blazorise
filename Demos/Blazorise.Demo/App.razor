@@ -11,11 +11,24 @@
             <p>Sorry, there's nothing at this address.</p>
         </NotFound>
     </Router>
+    <MessageAlert />
+    <NotificationAlert />
+    <PageProgressAlert />
 </Blazorise.ThemeProvider>
 @code{
-    private Theme theme = new Theme
+    private Theme theme = new()
     {
-        ColorOptions = new ThemeColorOptions
+        BarOptions = new()
+        {
+            HorizontalHeight = "72px"
+        },
+        BreakpointOptions = new()
+        {
+        },
+        //SpacingOptions = new()
+        //{
+        //},
+        ColorOptions = new()
         {
             Primary = "#0288D1",
             //Secondary = "#A65529",
@@ -26,16 +39,16 @@
             //Light = "#F0F0F0",
             //Dark = "#535353",
         },
-        BackgroundOptions = new ThemeBackgroundOptions
+        BackgroundOptions = new()
         {
             Primary = "#0288D1",
         },
-        TextColorOptions = new ThemeTextColorOptions
+        TextColorOptions = new()
         {
         },
         //ButtonOptions = new ThemeButtonOptions { },
         //DropdownOptions = new ThemeDropdownOptions { },
-        InputOptions = new ThemeInputOptions
+        InputOptions = new()
         {
             CheckColor = "#0288D1",
         },
@@ -54,4 +67,5 @@
         //    Color = "#ff0000",
         //},
     };
+
 }

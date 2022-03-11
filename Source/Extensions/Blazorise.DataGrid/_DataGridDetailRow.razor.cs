@@ -1,8 +1,6 @@
 ﻿#region Using directives
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 #endregion
 
@@ -10,33 +8,13 @@ namespace Blazorise.DataGrid
 {
     public abstract class _BaseDataGridDetailRow<TItem> : BaseDataGridComponent
     {
-        #region Members
-
-        #endregion
-
-        #region Methods
-
-        #endregion
-
         #region Properties
 
-        protected bool HasCommandColumn => Columns.Any( x => x.ColumnType == DataGridColumnType.Command );
+        protected bool HasCommandColumn
+            => Columns.Any( x => x.ColumnType == DataGridColumnType.Command );
 
-        protected string CommandColumnLocation
-        {
-            get
-            {
-                if ( Columns.Count > 1 && HasCommandColumn )
-                {
-                    if ( Columns[0].ColumnType == DataGridColumnType.Command )
-                        return "start";
-                    else if ( Columns[Columns.Count - 1].ColumnType == DataGridColumnType.Command )
-                        return "end";
-                }
-
-                return string.Empty;
-            }
-        }
+        protected int ColumnSpan
+            => Columns.Count - ( HasCommandColumn && !ParentDataGrid.Editable ? 1 : 0 );
 
         /// <summary>
         /// Item associated with the data set.
@@ -48,7 +26,10 @@ namespace Blazorise.DataGrid
         /// </summary>
         [Parameter] public IReadOnlyList<DataGridColumn<TItem>> Columns { get; set; }
 
-        [CascadingParameter] protected DataGrid<TItem> ParentDataGrid { get; set; }
+        /// <summary>
+        /// Gets or sets the parent <see cref="DataGrid{TItem}"/> of the this component.
+        /// </summary>
+        [CascadingParameter] public DataGrid<TItem> ParentDataGrid { get; set; }
 
         [Parameter] public RenderFragment ChildContent { get; set; }
 

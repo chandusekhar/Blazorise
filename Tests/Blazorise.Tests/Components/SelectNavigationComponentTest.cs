@@ -8,11 +8,13 @@ using Xunit;
 
 namespace Blazorise.Tests.Components
 {
-    public class SelectNavigationComponentTest : ComponentTestFixture
+    public class SelectNavigationComponentTest : TestContext
     {
         public SelectNavigationComponentTest()
         {
             BlazoriseConfig.AddBootstrapProviders( Services );
+            BlazoriseConfig.JSInterop.AddButton( this.JSInterop );
+            BlazoriseConfig.JSInterop.AddSelect( this.JSInterop );
             Services.AddSingleton<NavigationManager>( new Mock<NavigationManager>().Object );
         }
 

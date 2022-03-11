@@ -1,4 +1,8 @@
-﻿.ant-menu-submenu-horizontal > .ant-menu-submenu-title {
+﻿:root {
+    --b-sidebar-small-width: 80px;
+}
+
+.ant-menu-submenu-horizontal > .ant-menu-submenu-title {
     .ant-menu-submenu-arrow {
         position: absolute;
         top: 50%;
@@ -100,11 +104,220 @@
     }
 }
 
-.ant-menu-sub-right {
+.ant-menu-submenu-placement-bottomRight {
     right: 0;
     left: auto;
 }
 
 .b-layout-header .ant-menu {
     line-height: inherit;
+}
+
+/* *** Vertical menu *** */
+.ant-menu.ant-menu-root {
+    &.ant-menu-inline,
+    &.ant-menu-vertical {
+        display: flex;
+        flex-flow: column;
+        height: 100%;
+        overflow-y: auto;
+
+        .ant-menu-label {
+            background: transparent;
+            color: #adb5bd;
+            padding: .375rem 1.25rem;
+            font-size: .75rem;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            margin: 5px;
+        }
+
+        .ant-bar-brand {
+            margin: 0;
+            height: var(--b-sidebar-brand-height, 64px);
+            min-height: var(--b-sidebar-brand-height, 64px) !important;
+            padding: 0 !important;
+
+            > .ant-menu-item {
+                height: 100%;
+                display: flex;
+                margin: auto;
+
+                > a {
+                    margin: auto;
+                }
+            }
+        }
+
+        .ant-menu-toggler-inline {
+            height: var(--b-vertical-bar-brand-height, 64px);
+            padding: 12px;
+            display: inline-flex;
+            cursor: pointer;
+            position: absolute;
+            right: 0;
+            z-index: 2;
+
+            & > * {
+                margin: auto;
+            }
+        }
+    }
+
+    @mixin ant-selected-item {
+        margin: 0px -16px;
+        color: inherit;
+        padding-right: 16px;
+
+        &.active {
+            color: var(--b-bar-item-dark-active-color, #fff);
+            background: var(--b-bar-item-dark-active-background, #0288D1);
+        }
+    }
+
+    &.ant-menu-inline {
+        min-width: var(--b-sidebar-width, 230px);
+        max-width: var(--b-sidebar-width, 230px);
+        width: var(--b-sidebar-width, 230px);
+
+        > .ant-menu-item {
+            min-height: 40px;
+
+            > a {
+                @include ant-selected-item;
+                padding-left: 24px;
+            }
+        }
+
+        .ant-menu-submenu.ant-menu-submenu-inline {
+            > .ant-menu-submenu-title {
+                padding-left: 24px;
+            }
+
+            > .ant-menu.ant-menu-sub {
+                > .ant-menu-item {
+                    > a {
+                        @include ant-selected-item;
+                        padding-left: 48px;
+                    }
+                }
+            }
+        }
+    }
+
+    &.ant-menu-vertical {
+        &.ant-menu-inline-collapsed:not(.ant-menu-vertical-collapsed) {
+            min-width: var(--b-sidebar-small-width, 80px);
+            max-width: var(--b-sidebar-small-width, 80px);
+            width: var(--b-sidebar-small-width, 80px);
+        }
+
+        > .ant-menu-item {
+            min-height: 40px;
+
+            > a {
+                @include ant-selected-item;
+                padding: 0px 32px;
+                margin: 0px -32px;
+            }
+        }
+
+        .ant-menu-item {
+            > a {
+                > span {
+                    font-size: 0px;
+                }
+            }
+        }
+
+        .ant-menu-submenu.ant-menu-submenu-vertical {
+            > .ant-menu-submenu-title {
+                > span {
+                    font-size: 0px;
+                }
+            }
+
+            > .ant-menu-submenu.ant-menu-submenu-popup {
+                margin: -45px 5px 0px 5px;
+                width: var(--b-vertical-bar-popout-menu-width, auto);
+
+                > .ant-menu.ant-menu-sub {
+                    > .ant-menu-item {
+                        > a {
+                            @include ant-selected-item;
+                            padding-left: 16px;
+                        }
+                    }
+                }
+
+                &.ant-menu-submenu-placement-rightTop {
+                    left: var(--b-sidebar-small-width, 80px);
+
+                    &::before {
+                        top: 0;
+                        left: -7px;
+                    }
+                }
+
+                &.ant-menu-submenu-placement-leftTop {
+                    right: var(--b-sidebar-small-width, 80px);
+
+                    &::before {
+                        top: 0;
+                        right: -7px;
+                    }
+                }
+
+                .ant-menu-submenu.ant-menu-submenu-vertical {
+                    > .ant-menu-submenu-title {
+                        > span {
+                            font-size: inherit;
+                        }
+                    }
+
+                    > .ant-menu-submenu.ant-menu-submenu-popup {
+                        &.ant-menu-submenu-placement-rightTop {
+                            left: var(--b-vertical-bar-popout-menu-width, 180px);
+                        }
+
+                        &.ant-menu-submenu-placement-leftTop {
+                            right: var(--b-vertical-bar-popout-menu-width, 180px);
+                        }
+                    }
+                }
+            }
+        }
+
+        .ant-menu-toggler-inline {
+            position: relative;
+            width: 100%;
+        }
+    }
+
+    &.ant-menu-inline-collapsed:not(.ant-menu-vertical), &.ant-menu-vertical-collapsed {
+        width: 0px;
+        min-width: 0px;
+        transition: width 200ms ease-in-out, min-width 200ms ease-in-out, visibility 100ms;
+        visibility: hidden;
+    }
+}
+
+.ant-menu-submenu.ant-menu-submenu-open .ant-menu-submenu {
+    animation-duration: 0.3s;
+    animation-fill-mode: both;
+    animation-name: fadeIn;
+}
+
+.ant-menu-submenu.ant-menu-submenu-horizontal {
+    .ant-menu-submenu-open {
+        position: relative;
+
+        .ant-menu-submenu.ant-menu-submenu-popup {
+            display: block;
+            top: 0;
+            left: 100%;
+            margin-left: .1rem;
+            margin-right: .1rem;
+        }
+    }
 }

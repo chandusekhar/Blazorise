@@ -1,8 +1,4 @@
 ﻿#region Using directives
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 #endregion
 
 namespace Blazorise.Providers
@@ -30,8 +26,6 @@ namespace Blazorise.Providers
         #endregion
 
         #region Layout
-
-        public string Visibility( Visibility visibility ) => null;
 
         #endregion
 

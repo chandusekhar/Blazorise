@@ -40,4 +40,51 @@ In case you don't want to be on the list please let me know. And 'm sorry if I f
 - Kamil Kosek
 - Daniel Cipra
 - Alberto Passalacqua
+- Willem Hoogland
+- 志强 王
+- Steve Webb
+- H3tech
+- Roland Bird
+- Stephen Torchia
+- Anton Turba
+- Zoltán Kiss
+- David Taylor
+- Adam Herbage
+- Willian Gruber
+- Brian John Robinson
+- Steven T. Cramer
+- Bjarne Havnen
+- Brant Denherder
+- 信夫 曾
+- Timothy Kelley
+- Giulio Gazzotti
+- Richard Brodie
+- Jean Faust
+- Lukáš Josai
+- Sergio Wilson
+- Peter Rosenland
+- עילי שורק
+- Torbjörn Eliasson
+- Roman Ranzmaier
+- Andy Bocz
+- Sebastian Fischer
+- Dariusz Daćko
+- Humberto Santiago
+- Miroslav Vojta
+- Jim Vernon
+- Wojciech Janowski
+- Jesse Hamilton
+- Logan Payton
+- Catrina Zapata
+- Angel Ruben
+- TridentShoxx Labs
+- Dejan Demonjić
+- Sebastian Gerner
+- Philip Näf
+- Damiano Gambarotto
+- Austin Hogan
+- Corey Johnson
+- Brian J Hoskins
+- Jakub Otáhal
+- Данилов Александр
 - Your name can be here, [become a patron](https://www.patreon.com/mladenmacanovic) or [buy me a coffee](https://www.buymeacoffee.com/mladenmacanovic)

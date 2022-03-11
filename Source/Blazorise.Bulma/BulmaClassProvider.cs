@@ -1,20 +1,18 @@
 ﻿#region Using directives
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 #endregion
 
 namespace Blazorise.Bulma
 {
-    class BulmaClassProvider : ClassProvider
+    public class BulmaClassProvider : ClassProvider
     {
         #region TextEdit
 
         public override string TextEdit( bool plaintext ) => plaintext ? "input is-static" : "input";
 
-        public override string TextEditSize( Size size ) => ToSize( size );
+        public override string TextEditSize( Size size ) => $"is-{ToSize( size )}";
 
         public override string TextEditColor( Color color ) => $"is-{ToColor( color )}";
 
@@ -24,7 +22,9 @@ namespace Blazorise.Bulma
 
         #region MemoEdit
 
-        public override string MemoEdit() => "textarea";
+        public override string MemoEdit( bool plaintext ) => plaintext ? "textarea is-static" : "textarea";
+
+        public override string MemoEditSize( Size size ) => $"is-{ToSize( size )}";
 
         public override string MemoEditValidation( ValidationStatus validationStatus ) => ToValidationStatus( validationStatus );
 
@@ -34,17 +34,33 @@ namespace Blazorise.Bulma
 
         public override string Select() => "select is-fullwidth";
 
-        public override string SelectSize( Size size ) => $"{ToSize( size )}";
+        public override string SelectMultiple() => "is-multiple";
+
+        public override string SelectSize( Size size ) => $"is-{ToSize( size )}";
 
         public override string SelectValidation( ValidationStatus validationStatus ) => ToValidationStatus( validationStatus );
 
         #endregion
 
+        #region NumericEdit
+
+        public override string NumericEdit( bool plaintext ) => plaintext ? "input is-static" : "input";
+
+        public override string NumericEditSize( Size size ) => $"is-{ToSize( size )}";
+
+        public override string NumericEditColor( Color color ) => $"is-{ToColor( color )}";
+
+        public override string NumericEditValidation( ValidationStatus validationStatus ) => ToValidationStatus( validationStatus );
+
+        #endregion
+
         #region DateEdit
 
-        public override string DateEdit() => "input";
+        public override string DateEdit( bool plaintext ) => plaintext ? "input is-static" : "input";
 
-        public override string DateEditSize( Size size ) => $"{ToSize( size )}";
+        public override string DateEditSize( Size size ) => $"is-{ToSize( size )}";
+
+        public override string DateEditColor( Color color ) => $"is-{ToColor( color )}";
 
         public override string DateEditValidation( ValidationStatus validationStatus ) => ToValidationStatus( validationStatus );
 
@@ -52,9 +68,11 @@ namespace Blazorise.Bulma
 
         #region TimeEdit
 
-        public override string TimeEdit() => "input";
+        public override string TimeEdit( bool plaintext ) => plaintext ? "input is-static" : "input";
 
-        public override string TimeEditSize( Size size ) => $"{ToSize( size )}";
+        public override string TimeEditSize( Size size ) => $"is-{ToSize( size )}";
+
+        public override string TimeEditColor( Color color ) => $"is-{ToColor( color )}";
 
         public override string TimeEditValidation( ValidationStatus validationStatus ) => ToValidationStatus( validationStatus );
 
@@ -64,11 +82,71 @@ namespace Blazorise.Bulma
 
         public override string ColorEdit() => "input";
 
+        public override string ColorEditSize( Size size ) => $"is-{ToSize( size )}";
+
+        #endregion
+
+        #region DatePicker
+
+        public override string DatePicker( bool plaintext ) => plaintext ? "input is-static" : "input";
+
+        public override string DatePickerSize( Size size ) => $"is-{ToSize( size )}";
+
+        public override string DatePickerColor( Color color ) => $"is-{ToColor( color )}";
+
+        public override string DatePickerValidation( ValidationStatus validationStatus ) => ToValidationStatus( validationStatus );
+
+        #endregion
+
+        #region TimePicker
+
+        public override string TimePicker( bool plaintext ) => plaintext ? "input is-static" : "input";
+
+        public override string TimePickerSize( Size size ) => $"is-{ToSize( size )}";
+
+        public override string TimePickerColor( Color color ) => $"is-{ToColor( color )}";
+
+        public override string TimePickerValidation( ValidationStatus validationStatus ) => ToValidationStatus( validationStatus );
+
+        #endregion
+
+        #region ColorPicker
+
+        public override string ColorPicker() => "input b-input-color-picker";
+
+        public override string ColorPickerSize( Size size ) => $"is-{ToSize( size )}";
+
+        #endregion
+
+        #region NumericPicker
+
+        public override string NumericPicker( bool plaintext ) => plaintext ? "input is-static" : "input";
+
+        public override string NumericPickerSize( Size size ) => $"is-{ToSize( size )}";
+
+        public override string NumericPickerColor( Color color ) => $"is-{ToColor( color )}";
+
+        public override string NumericPickerValidation( ValidationStatus validationStatus ) => ToValidationStatus( validationStatus );
+
+        #endregion
+
+        #region InputMask
+
+        public override string InputMask( bool plaintext ) => plaintext ? "input is-static" : "input";
+
+        public override string InputMaskSize( Size size ) => $"is-{ToSize( size )}";
+
+        public override string InputMaskColor( Color color ) => $"is-{ToColor( color )}";
+
+        public override string InputMaskValidation( ValidationStatus validationStatus ) => ToValidationStatus( validationStatus );
+
         #endregion
 
         #region Check
 
-        public override string Check() => "checkbox";
+        public override string Check() => "is-checkradio";
+
+        public override string CheckSize( Size size ) => $"is-{ToSize( size )}";
 
         public override string CheckInline() => "is-inline";
 
@@ -80,23 +158,36 @@ namespace Blazorise.Bulma
 
         #region RadioGroup
 
-        public override string RadioGroup( bool buttons ) => buttons ? "field has-addons" : "control";
+        public override string RadioGroup( bool buttons, Orientation orientation )
+            => $"{( buttons ? "buttons has-addons" : "control" )}{( orientation == Orientation.Horizontal ? null : " are-vertical" )}";
 
-        public override string RadioGroupInline() => null;
+        public override string RadioGroupSize( bool buttons, Orientation orientation, Size size ) => $"are-{ToSize( size )}";
+
+        public override string RadioGroupValidation( ValidationStatus validationStatus ) => ToValidationStatus( validationStatus );
 
         #endregion
 
         #region Radio
 
-        public override string Radio( bool button ) => "radio";
+        public override string Radio( bool button ) => "is-checkradio";
 
-        public override string RadioInline() => "is-inline";
+        public override string RadioSize( bool button, Size size ) => $"is-{ToSize( size )}";
+
+        public override string RadioInline( bool inline ) => inline ? "is-inline" : null;
+
+        public override string RadioCursor( Cursor cursor ) => $"is-checkradio-{ToCursor( cursor )}";
+
+        public override string RadioValidation( ValidationStatus validationStatus ) => ToValidationStatus( validationStatus );
 
         #endregion
 
         #region Switch
 
         public override string Switch() => "switch";
+
+        public override string SwitchColor( Color color ) => $"is-{ToColor( color )}";
+
+        public override string SwitchSize( Size size ) => $"is-{ToSize( size )}";
 
         public override string SwitchChecked( bool @checked ) => null;
 
@@ -110,6 +201,8 @@ namespace Blazorise.Bulma
 
         public override string FileEdit() => "file-input";
 
+        public override string FileEditSize( Size size ) => $"is-{ToSize( size )}";
+
         public override string FileEditValidation( ValidationStatus validationStatus ) => ToValidationStatus( validationStatus );
 
         #endregion
@@ -119,6 +212,26 @@ namespace Blazorise.Bulma
         public override string Slider() => "slider";
 
         public override string SliderColor( Color color ) => $"is-{ToColor( color )}";
+
+        public override string SliderValidation( ValidationStatus validationStatus ) => ToValidationStatus( validationStatus );
+
+        #endregion
+
+        #region Rating
+
+        public override string Rating() => "rating";
+
+        public override string RatingDisabled( bool disabled ) => disabled ? "rating-disabled" : null;
+
+        public override string RatingReadonly( bool @readonly ) => @readonly ? "rating-readonly" : null;
+
+        public override string RatingItem() => "rating-item";
+
+        public override string RatingItemColor( Color color ) => $"is-{ToColor( color )}";
+
+        public override string RatingItemSelected( bool selected ) => null;
+
+        public override string RatingItemHovered( bool hover ) => hover ? "is-hover" : null;
 
         #endregion
 
@@ -130,14 +243,11 @@ namespace Blazorise.Bulma
         {
             switch ( labelType )
             {
-                case Blazorise.LabelType.Check:
-                    return "checkbox";
-                case Blazorise.LabelType.Radio:
-                    return "radio";
-                case Blazorise.LabelType.Switch:
-                    return null;
                 case Blazorise.LabelType.File:
                     return "file-label";
+                case Blazorise.LabelType.Check:
+                case Blazorise.LabelType.Radio:
+                case Blazorise.LabelType.Switch:
                 case Blazorise.LabelType.None:
                 default:
                     return null;
@@ -164,17 +274,21 @@ namespace Blazorise.Bulma
 
         public override string ValidationNone() => "help";
 
+        public override string ValidationSummary() => "has-text-danger";
+
+        public override string ValidationSummaryError() => "has-text-danger";
+
         #endregion
 
         #endregion
 
         #region Fields
 
-        public override string Fields() => "field";
+        public override string Fields() => "columns is-multiline";
 
         public override string FieldsBody() => "field-body";
 
-        public override string FieldsColumn() => $"{Col()}";
+        public override string FieldsColumn() => "column";
 
         //public override string FieldsColumnSize( ColumnSize columnSize ) => $"is-{ColumnSize( columnSize )}";
 
@@ -186,7 +300,7 @@ namespace Blazorise.Bulma
 
         public override string FieldHorizontal() => "is-horizontal";
 
-        public override string FieldColumn() => $"{Col()}";
+        public override string FieldColumn() => "column";
 
         public override string FieldJustifyContent( JustifyContent justifyContent ) => ToJustifyContent( justifyContent );
 
@@ -196,9 +310,7 @@ namespace Blazorise.Bulma
 
         #region FieldLabel
 
-        public override string FieldLabel() => "field-label";
-
-        public override string FieldLabelHorizontal() => "is-normal";
+        public override string FieldLabel( bool horizontal ) => horizontal ? "field-label is-normal" : "field-label";
 
         #endregion
 
@@ -231,6 +343,8 @@ namespace Blazorise.Bulma
         #region Addons
 
         public override string Addons() => "field has-addons";
+
+        public override string AddonsSize( Size size ) => $"is-{ToSize( size )}";
 
         public override string AddonsHasButton( bool hasButton ) => null;
 
@@ -266,22 +380,13 @@ namespace Blazorise.Bulma
 
         public override string ButtonOutline( Color color ) => $"is-{ToColor( color )} is-outlined";
 
-        public override string ButtonSize( ButtonSize buttonSize )
-        {
-            switch ( buttonSize )
-            {
-                case Blazorise.ButtonSize.Small:
-                    return "is-small";
-                case Blazorise.ButtonSize.Large:
-                    return "is-large";
-                default:
-                    return null;
-            }
-        }
+        public override string ButtonSize( Size size ) => $"is-{ToSize( size )}";
 
-        public override string ButtonBlock() => $"is-fullwidth";
+        public override string ButtonBlock() => "is-fullwidth";
 
         public override string ButtonActive() => "is-active";
+
+        public override string ButtonDisabled() => "is-disabled";
 
         public override string ButtonLoading() => "is-loading";
 
@@ -289,26 +394,18 @@ namespace Blazorise.Bulma
 
         #region Buttons
 
-        //public override string Buttons() => "buttons has-addons";
-
-        public override string ButtonsAddons() => "field has-addons";
-
-        public override string ButtonsToolbar() => "field is-grouped";
-
-        public override string ButtonsSize( ButtonsSize buttonsSize )
+        public override string Buttons( ButtonsRole role, Orientation orientation )
         {
-            switch ( buttonsSize )
-            {
-                case Blazorise.ButtonsSize.Small:
-                    return "are-small";
-                case Blazorise.ButtonsSize.Large:
-                    return "are-large";
-                default:
-                    return null;
-            }
+            if ( role == ButtonsRole.Toolbar )
+                return "field is-grouped";
+
+            if ( orientation == Orientation.Vertical )
+                return "field has-addons buttons";
+
+            return "field has-addons";
         }
 
-        public override string ButtonsVertical() => "buttons";
+        public override string ButtonsSize( Size size ) => $"are-{ToSize( size )}";
 
         #endregion
 
@@ -320,7 +417,7 @@ namespace Blazorise.Bulma
 
         #region Dropdown
 
-        public override string Dropdown() => "dropdown";
+        public override string Dropdown( bool isDropdownSubmenu ) => "dropdown";
 
         public override string DropdownGroup() => "field has-addons";
 
@@ -330,11 +427,17 @@ namespace Blazorise.Bulma
 
         public override string DropdownItem() => "dropdown-item";
 
-        public override string DropdownItemActive() => Active();
+        public override string DropdownItemActive( bool active ) => active ? Active() : null;
+
+        public override string DropdownItemDisabled( bool disabled ) => disabled ? Disabled() : null;
 
         public override string DropdownDivider() => "dropdown-divider";
 
+        public override string DropdownHeader() => "dropdown-header";
+
         public override string DropdownMenu() => "dropdown-menu";
+
+        public override string DropdownMenuScrollable() => "dropdown-menu-scrollable";
 
         //public override string DropdownMenuBody() => "dropdown-content";
 
@@ -342,53 +445,35 @@ namespace Blazorise.Bulma
 
         public override string DropdownMenuRight() => null;
 
-        public override string DropdownToggle() => "button dropdown-trigger";
+        public override string DropdownToggle( bool isDropdownSubmenu ) => isDropdownSubmenu ? "dropdown-item" : "button dropdown-trigger";
 
         public override string DropdownToggleColor( Color color ) => $"is-{ToColor( color )}";
 
         public override string DropdownToggleOutline( Color color ) => $"is-{ToColor( color )} is-outlined";
 
-        public override string DropdownToggleSize( ButtonSize buttonSize )
-        {
-            switch ( buttonSize )
-            {
-                case Blazorise.ButtonSize.Small:
-                    return "is-small";
-                case Blazorise.ButtonSize.Large:
-                    return "is-large";
-                default:
-                    return null;
-            }
-        }
+        public override string DropdownToggleSize( Size size ) => $"is-{ToSize( size )}";
 
         public override string DropdownToggleSplit() => null;
 
-        public override string DropdownDirection( Direction direction )
+        public override string DropdownToggleIcon( bool visible ) => null;
+
+        public override string DropdownDirection( Direction direction ) => direction switch
         {
-            switch ( direction )
-            {
-                case Direction.Up:
-                    return "is-up";
-                case Direction.Right:
-                    return "is-right";
-                case Direction.Left:
-                    return "is-left";
-                case Direction.Down:
-                case Direction.None:
-                default:
-                    return null;
-            }
-        }
+            Direction.Up => "is-up",
+            Direction.End => "is-right",
+            Direction.Start => "is-left",
+            _ => null,
+        };
+
+        public override string DropdownTableResponsive() => null;
 
         #endregion
 
-        #region Tab
+        #region Tabs
 
-        public override string Tabs() => "tabs";
+        public override string Tabs( bool pills ) => pills ? "tabs is-toggle" : "tabs";
 
         public override string TabsCards() => null;
-
-        public override string TabsPills() => "is-toggle";
 
         public override string TabsFullWidth() => "is-fullwidth";
 
@@ -398,11 +483,11 @@ namespace Blazorise.Bulma
 
         public override string TabItem() => null;
 
-        public override string TabItemActive( bool active ) => active ? $"{Active()}" : null;
+        public override string TabItemActive( bool active ) => active ? Active() : null;
 
         public override string TabItemDisabled( bool disabled ) => null;
 
-        public override string TabLinkDisabled( bool disabled ) => disabled ? "is-disabled" : null;
+        public override string TabLinkDisabled( bool disabled ) => disabled ? Disabled() : null;
 
         public override string TabLink() => null;
 
@@ -412,19 +497,85 @@ namespace Blazorise.Bulma
 
         public override string TabPanel() => "tab-pane";
 
-        public override string TabPanelActive( bool active ) => active ? $"{Active()}" : null;
+        public override string TabPanelActive( bool active ) => active ? Active() : null;
+
+        #endregion
+
+        #region Steps
+
+        public override string Steps() => "steps";
+
+        public override string StepItem() => "step-item";
+
+        public override string StepItemActive( bool active ) => active ? Active() : null;
+
+        public override string StepItemCompleted( bool completed ) => completed ? "is-completed" : null;
+
+        public override string StepItemColor( Color color ) => $"is-{ToColor( color )}";
+
+        public override string StepItemMarker() => "step-marker";
+
+        public override string StepItemDescription() => "step-details";
+
+        public override string StepsContent() => "steps-content";
+
+        public override string StepPanel() => "step-content";
+
+        public override string StepPanelActive( bool active ) => active ? "is-active" : null;
+
+        #endregion
+
+        #region Carousel
+
+        public override string Carousel() => "carousel";
+
+        public override string CarouselSlides() => "carousel-items";
+
+        public override string CarouselSlide() => "carousel-item";
+
+        public override string CarouselSlideActive( bool active ) => active ? null : "carousel-item-hidden";
+
+        public override string CarouselSlideSlidingLeft( bool left ) => null;
+
+        public override string CarouselSlideSlidingRight( bool right ) => null;
+
+        public override string CarouselSlideSlidingPrev( bool previous ) => null;
+
+        public override string CarouselSlideSlidingNext( bool next ) => null;
+
+        public override string CarouselIndicators() => "carousel-indicator is-inside is-bottom";
+
+        public override string CarouselIndicator() => "indicator-item";
+
+        public override string CarouselIndicatorActive( bool active ) => active ? Active() : null;
+
+        public override string CarouselFade( bool fade ) => null;
+
+        public override string CarouselCaption() => null;
+
+        #endregion
+
+        #region Jumbotron
+
+        public override string Jumbotron() => "hero";
+
+        public override string JumbotronBackground( Background background ) => $"is-{ToBackground( background )}";
+
+        public override string JumbotronTitle( JumbotronTitleSize jumbotronTitleSize ) => $"title is-{ToJumbotronTitleSize( jumbotronTitleSize )}";
+
+        public override string JumbotronSubtitle() => "subtitle";
 
         #endregion
 
         #region Card
+
+        public override string CardDeck() => "card-deck";
 
         public override string CardGroup() => "card-group";
 
         public override string Card() => "card";
 
         public override string CardWhiteText() => "has-text-white";
-
-        public override string CardBackground( Background background ) => BackgroundColor( background );
 
         public override string CardActions() => "card-actions";
 
@@ -458,105 +609,107 @@ namespace Blazorise.Bulma
 
         public override string ListGroupItem() => "list-group-item";
 
+        public override string ListGroupItemSelectable() => "list-group-item-action";
+
         public override string ListGroupItemActive() => Active();
 
         public override string ListGroupItemDisabled() => Disabled();
+
+        public override string ListGroupItemColor( Color color ) => $"is-{ToColor( color )}";
 
         #endregion
 
         #region Container
 
-        public override string Container() => "container";
+        public override string Container( Breakpoint breakpoint )
+            => breakpoint > Breakpoint.Desktop ? $"container is-{ToBreakpoint( breakpoint )}" : "container";
 
         public override string ContainerFluid() => "container-fluid";
 
         #endregion
 
-        #region Panel
-
-        public override string Panel() => null;
-
-        #endregion
-
-        #region Nav
-
-        public override string Nav() => "nav";
-
-        public override string NavItem() => "nav-item";
-
-        public override string NavLink() => "nav-link";
-
-        public override string NavTabs() => "nav-tabs";
-
-        public override string NavCards() => "nav-cards";
-
-        public override string NavPills() => "nav-pills";
-
-        public override string NavFill( NavFillType fillType ) => fillType == NavFillType.Justified ? "nav-justified" : "nav-fill";
-
-        public override string NavVertical() => "flex-column";
-
-        #endregion
-
-        #region Navbar
+        #region Bar
 
         public override string Bar() => "navbar";
 
-        public override string BarBackground( Background background ) => BackgroundColor( background );
+        public override string BarInitial( bool initial ) => initial ? "b-bar-initial" : null;
 
         public override string BarAlignment( Alignment alignment ) => FlexAlignment( alignment );
 
-        public override string BarThemeContrast( ThemeContrast themeContrast ) => null;
+        public override string BarThemeContrast( ThemeContrast themeContrast ) => $"b-bar-{ToThemeContrast( themeContrast )}";
 
         public override string BarBreakpoint( Breakpoint breakpoint ) => $"navbar-expand-{ToBreakpoint( breakpoint )}";
 
-        public override string BarItem() => "navbar-item";
+        public override string BarMode( BarMode mode ) => $"b-bar-{ToBarMode( mode )}";
 
-        public override string BarItemActive() => Active();
+        public override string BarItem( BarMode mode, bool hasDropdown ) => mode == Blazorise.BarMode.Horizontal
+            ? hasDropdown
+                ? "nav-item dropdown"
+                : "nav-item dropdown"
+            : "b-bar-item";
 
-        public override string BarItemDisabled() => Disabled();
+        public override string BarItemActive( BarMode mode ) => Active();
 
-        public override string BarItemHasDropdown() => "has-dropdown";
+        public override string BarItemDisabled( BarMode mode ) => Disabled();
 
-        public override string BarItemHasDropdownShow() => Active();
+        public override string BarItemHasDropdown( BarMode mode ) => mode == Blazorise.BarMode.Horizontal ? "has-dropdown" : null;
 
-        public override string BarLink() => "navbar-item";
+        public override string BarItemHasDropdownShow( BarMode mode ) => mode == Blazorise.BarMode.Horizontal ? Active() : Show();
 
-        public override string BarLinkDisabled() => Disabled();
+        public override string BarLink( BarMode mode ) => mode == Blazorise.BarMode.Horizontal ? "navbar-item" : "b-bar-link";
+
+        public override string BarLinkDisabled( BarMode mode ) => Disabled();
 
         //public override string BarCollapse() => "navbar-menu";
 
-        public override string BarBrand() => "navbar-brand";
+        public override string BarBrand( BarMode mode ) => mode == Blazorise.BarMode.Horizontal ? "navbar-brand" : "b-bar-brand";
 
-        public override string BarToggler() => "navbar-burger";
+        public override string BarToggler( BarMode mode, BarTogglerMode togglerMode ) => mode == Blazorise.BarMode.Horizontal ? "navbar-burger" :
+            togglerMode == BarTogglerMode.Popout ? "b-bar-toggler-popout" : "b-bar-toggler-inline";
 
-        public override string BarTogglerCollapsed( bool isShow ) => isShow ? Active() : null;
+        public override string BarTogglerCollapsed( BarMode mode, BarTogglerMode togglerMode, bool isShow )
+            => isShow || mode != Blazorise.BarMode.Horizontal ? null : Active();
 
-        public override string BarMenu() => "navbar-menu";
+        public override string BarMenu( BarMode mode ) => mode == Blazorise.BarMode.Horizontal ? "navbar-menu" : "b-bar-menu";
 
-        public override string BarMenuShow() => Active();
+        public override string BarMenuShow( BarMode mode ) => Active();
 
-        public override string BarStart() => "navbar-start";
+        public override string BarStart( BarMode mode ) => mode == Blazorise.BarMode.Horizontal ? "navbar-start" : "b-bar-start";
 
-        public override string BarEnd() => "navbar-end";
+        public override string BarEnd( BarMode mode ) => mode == Blazorise.BarMode.Horizontal ? "navbar-end" : "b-bar-end";
 
         //public override string BarHasDropdown() => "has-dropdown";
 
-        public override string BarDropdown() => null;
+        public override string BarDropdown( BarMode mode, bool isBarDropDownSubmenu ) => mode == Blazorise.BarMode.Horizontal && isBarDropDownSubmenu
+            ? "dropdown"
+            : "b-bar-dropdown";
 
-        public override string BarDropdownShow() => null;
+        public override string BarDropdownShow( BarMode mode ) => Active();
 
-        public override string BarDropdownToggle() => "navbar-link";
+        public override string BarDropdownToggle( BarMode mode, bool isBarDropDownSubmenu ) => mode == Blazorise.BarMode.Horizontal
+            ? isBarDropDownSubmenu
+                ? "dropdown-item"
+                : "navbar-link b-bar-dropdown-toggle"
+            : "b-bar-link b-bar-dropdown-toggle";
 
-        public override string BarDropdownItem() => "navbar-item";
+        public override string BarDropdownItem( BarMode mode ) => mode == Blazorise.BarMode.Horizontal ? "navbar-item" : "b-bar-dropdown-item";
 
-        public override string BarTogglerIcon() => null;
+        public override string BarDropdownDivider( BarMode mode ) => "navbar-divider";
 
-        public override string BarDropdownMenu() => "navbar-dropdown";
+        public override string BarTogglerIcon( BarMode mode ) => null;
 
-        public override string BarDropdownMenuVisible( bool visible ) => visible ? Show() : null;
+        public override string BarDropdownMenu( BarMode mode ) => mode == Blazorise.BarMode.Horizontal ? "navbar-dropdown" : "b-bar-dropdown-menu";
 
-        public override string BarDropdownMenuRight() => "is-right";
+        public override string BarDropdownMenuVisible( BarMode mode, bool visible ) => visible ? Show() : null;
+
+        public override string BarDropdownMenuRight( BarMode mode ) => mode == Blazorise.BarMode.Horizontal ? "is-right" : null;
+
+        public override string BarDropdownMenuContainer( BarMode mode ) => mode == Blazorise.BarMode.Horizontal ? null : "b-bar-dropdown-menu-container";
+
+        public override string BarCollapsed( BarMode mode ) => null;
+
+        public override string BarLabel() => "b-bar-label";
+
 
         #endregion
 
@@ -568,17 +721,17 @@ namespace Blazorise.Bulma
 
         #region Collapse
 
-        public override string Collapse() => "card";
+        public override string Collapse( bool accordion ) => "card";
 
-        public override string CollapseActive( bool active ) => null;
+        public override string CollapseActive( bool accordion, bool active ) => null;
 
-        public override string CollapseHeader() => "card-header";
+        public override string CollapseHeader( bool accordion ) => "card-header";
 
-        public override string CollapseBody() => "collapse";
+        public override string CollapseBody( bool accordion ) => "collapse";
 
-        public override string CollapseBodyActive( bool active ) => active ? Show() : null;
+        public override string CollapseBodyActive( bool accordion, bool active ) => active ? Show() : null;
 
-        public override string CollapseBodyContent() => "card-content";
+        public override string CollapseBodyContent( bool accordion ) => "card-content";
 
         #endregion
 
@@ -586,29 +739,55 @@ namespace Blazorise.Bulma
 
         public override string Row() => "columns";
 
+        public override string RowColumns( RowColumnsSize rowColumnsSize, RowColumnsDefinition rowColumnsDefinition )
+        {
+            if ( rowColumnsDefinition.Breakpoint != Breakpoint.None && rowColumnsDefinition.Breakpoint != Breakpoint.Mobile )
+                return $"are-columns-{ToBreakpoint( rowColumnsDefinition.Breakpoint )}-{ToRowColumnsSize( rowColumnsSize )}";
+
+            return $"are-columns-{ToRowColumnsSize( rowColumnsSize )}";
+        }
+
+        public override string RowNoGutters() => "is-gapless";
+
         #endregion
 
-        #region Col
+        #region Column
 
-        public override string Col() => "column";
+        public override string Column( bool hasSizes ) => hasSizes ? null : "column";
 
-        public override string Col( ColumnWidth columnWidth, Breakpoint breakpoint, bool offset )
+        public override string Column( ColumnWidth columnWidth, Breakpoint breakpoint, bool offset )
         {
             var baseClass = offset ? "offset-" : null;
 
             if ( breakpoint != Blazorise.Breakpoint.None )
             {
-                if ( columnWidth == Blazorise.ColumnWidth.None )
-                    return $"{Col()} is-{baseClass}{ToBreakpoint( breakpoint )}";
+                if ( columnWidth == Blazorise.ColumnWidth.Default )
+                    return $"column is-{baseClass}{ToBreakpoint( breakpoint )}";
 
-                return $"{Col()} is-{baseClass}{ToBreakpoint( breakpoint )}-{ToColumnWidth( columnWidth )}";
+                return $"column is-{ToColumnWidth( columnWidth )}-{baseClass}{ToBreakpoint( breakpoint )}";
             }
 
-            return $"{Col()} is-{baseClass}{ToColumnWidth( columnWidth )}";
+            return $"column is-{baseClass}{ToColumnWidth( columnWidth )}";
         }
 
-        public override string Col( ColumnWidth columnWidth, IEnumerable<(Breakpoint breakpoint, bool offset)> rules ) =>
-              string.Join( " ", rules.Select( r => Col( columnWidth, r.breakpoint, r.offset ) ) );
+        public override string Column( ColumnWidth columnWidth, IEnumerable<(Breakpoint breakpoint, bool offset)> rules ) =>
+              string.Join( " ", rules.Select( r => Column( columnWidth, r.breakpoint, r.offset ) ) );
+
+        #endregion
+
+        #region Display
+
+        public override string Display( DisplayType displayType, DisplayDefinition displayDefinition )
+        {
+            var baseClass = displayDefinition.Breakpoint != Breakpoint.None
+                ? $"is-{ToDisplayType( displayType )}-{ToBreakpoint( displayDefinition.Breakpoint )}"
+                : $"is-{ToDisplayType( displayType )}";
+
+            if ( displayDefinition.Direction != DisplayDirection.Default )
+                return $"{baseClass} is-flex-direction-{ToDisplayDirection( displayDefinition.Direction )}";
+
+            return baseClass;
+        }
 
         #endregion
 
@@ -638,7 +817,9 @@ namespace Blazorise.Bulma
 
         public override string Modal() => "modal";
 
-        public override string ModalFade() => null;
+        public override string ModalFade() => Fade();
+
+        public override string ModalFade( bool animation ) => animation ? Fade() : null;
 
         public override string ModalVisible( bool visible ) => visible ? Active() : null;
 
@@ -652,7 +833,11 @@ namespace Blazorise.Bulma
 
         public override string ModalContentSize( ModalSize modalSize ) => $"modal-{ToModalSize( modalSize )}";
 
-        public override string ModalContentCentered() => null;
+        public override string ModalContentFullscreen( bool fullscreen ) => fullscreen ? "modal-fullscreen" : null;
+
+        public override string ModalContentCentered( bool centered ) => null;
+
+        public override string ModalContentScrollable( bool scrollable ) => null;
 
         public override string ModalBody() => "modal-card-body";
 
@@ -668,7 +853,7 @@ namespace Blazorise.Bulma
 
         public override string Pagination() => "pagination-list";
 
-        public override string PaginationSize( Size size ) => $"{ToSize( size )}";
+        public override string PaginationSize( Size size ) => $"is-{ToSize( size )}";
 
         public override string PaginationItem() => null;
 
@@ -680,7 +865,7 @@ namespace Blazorise.Bulma
 
         public override string PaginationLinkActive() => "is-current";
 
-        public override string PaginationLinkDisabled() => "disabled";
+        public override string PaginationLinkDisabled() => "is-disabled";
 
         #endregion
 
@@ -690,15 +875,25 @@ namespace Blazorise.Bulma
 
         public override string ProgressSize( Size size ) => $"is-{ToSize( size )}";
 
-        public override string ProgressBar() => "progress";
+        public override string ProgressColor( Color color ) => $"is-{ToColor( color )}";
 
-        public override string ProgressBarColor( Background background ) => BackgroundColor( background );
+        public override string ProgressStriped() => "progress-striped";
 
-        public override string ProgressBarStriped() => "progress-bar-striped";
+        public override string ProgressAnimated() => "progress-animated";
 
-        public override string ProgressBarAnimated() => "progress-bar-animated";
+        public override string ProgressWidth( int width ) => null;
 
-        public override string ProgressBarWidth( int width ) => $"w-{width}";
+        public override string ProgressBar() => "progress-bar";
+
+        public override string ProgressBarSize( Size size ) => $"is-{ToSize( size )}";
+
+        public override string ProgressBarColor( Color color ) => $"is-{ToColor( color )}";
+
+        public override string ProgressBarStriped() => "progress-striped";
+
+        public override string ProgressBarAnimated() => "progress-animated";
+
+        public override string ProgressBarWidth( int width ) => null;
 
         #endregion
 
@@ -710,15 +905,7 @@ namespace Blazorise.Bulma
 
         #region Colors
 
-        public override string BackgroundColor( Background color ) => $"{ToBackground( color )}";
-
-        #endregion
-
-        #region Title
-
-        public override string Title() => "title";
-
-        public override string TitleSize( int size ) => $"is-{size}";
+        public override string BackgroundColor( Background background ) => $"has-background-{ToBackground( background )}";
 
         #endregion
 
@@ -752,10 +939,6 @@ namespace Blazorise.Bulma
 
         public override string TableRowColor( Color color ) => $"has-background-{ToColor( color )}";
 
-        public override string TableRowBackground( Background background ) => BackgroundColor( background );
-
-        public override string TableRowTextColor( TextColor textColor ) => $"has-text-{ToTextColor( textColor )}";
-
         public override string TableRowHoverCursor() => "table-row-selectable";
 
         public override string TableRowIsSelected() => "is-selected";
@@ -766,11 +949,9 @@ namespace Blazorise.Bulma
 
         public override string TableRowCellColor( Color color ) => $"has-background-{ToColor( color )}";
 
-        public override string TableRowCellBackground( Background background ) => BackgroundColor( background );
+        public override string TableResponsive() => "table-container";
 
-        public override string TableRowCellTextColor( TextColor textColor ) => $"has-text-{ToTextColor( textColor )}";
-
-        public override string TableRowCellTextAlignment( TextAlignment textAlignment ) => $"has-text-{ToTextAlignment( textAlignment )}";
+        public override string TableFixedHeader() => "table-container-fixed-header";
 
         #endregion
 
@@ -781,6 +962,8 @@ namespace Blazorise.Bulma
         public override string BadgeColor( Color color ) => $"is-{ToColor( color )}";
 
         public override string BadgePill() => null;
+
+        public override string BadgeClose() => "delete is-small";
 
         #endregion
 
@@ -806,15 +989,21 @@ namespace Blazorise.Bulma
 
         public override string TextWeight( TextWeight textWeight ) => $"has-text-weight-{ToTextWeight( textWeight )}";
 
+        public override string TextOverflow( TextOverflow textOverflow ) => $"has-text-{ToTextOverflow( textOverflow )}";
+
         public override string TextItalic() => "is-italic";
+
+        #endregion
+
+        #region Code
+
+        public override string Code() => null;
 
         #endregion
 
         #region Heading
 
         public override string HeadingSize( HeadingSize headingSize ) => $"title is-{ToHeadingSize( headingSize )}";
-
-        public override string HeadingTextColor( TextColor textColor ) => $"has-text-{ToTextColor( textColor )}";
 
         #endregion
 
@@ -832,6 +1021,14 @@ namespace Blazorise.Bulma
 
         #endregion
 
+        #region Blockquote
+
+        public override string Blockquote() => "blockquote";
+
+        public override string BlockquoteFooter() => "blockquote-footer";
+
+        #endregion
+
         #region Figure
 
         public override string Figure() => "image";
@@ -843,6 +1040,14 @@ namespace Blazorise.Bulma
         public override string FigureImageRounded() => "is-rounded";
 
         public override string FigureCaption() => "figure-caption";
+
+        #endregion
+
+        #region Image
+
+        public override string Image() => null;
+
+        public override string ImageFluid( bool fluid ) => fluid ? "is-fullwidth" : null;
 
         #endregion
 
@@ -862,7 +1067,7 @@ namespace Blazorise.Bulma
 
         public override string Tooltip() => "b-tooltip";
 
-        public override string TooltipPlacement( Placement placement ) => $"b-tooltip-{ToPlacement( placement )}";
+        public override string TooltipPlacement( TooltipPlacement tooltipPlacement ) => $"b-tooltip-{ToTooltipPlacement( tooltipPlacement )}";
 
         public override string TooltipMultiline() => "b-tooltip-multiline";
 
@@ -884,7 +1089,7 @@ namespace Blazorise.Bulma
 
         #region States
 
-        public override string Show() => "show";
+        public override string Show() => "is-block";
 
         public override string Fade() => "fade";
 
@@ -911,9 +1116,207 @@ namespace Blazorise.Bulma
 
         #endregion
 
+        #region Borders
+
+        public override string Border( BorderSize borderSize, BorderSide borderSide, BorderColor borderColor )
+        {
+            var sb = new StringBuilder( "has-border" );
+
+            if ( borderSide != BorderSide.All )
+                sb.Append( '-' ).Append( ToBorderSide( borderSide ) );
+
+            if ( borderSize != BorderSize.Default )
+                sb.Append( '-' ).Append( ToBorderSize( borderSize ) );
+
+            if ( borderColor != BorderColor.None )
+                sb.Append( " has-border-" ).Append( ToBorderColor( borderColor ) );
+
+            return sb.ToString();
+        }
+
+        public override string Border( BorderSize borderSize, IEnumerable<(BorderSide borderSide, BorderColor borderColor)> rules )
+            => string.Join( " ", rules.Select( x => Border( borderSize, x.borderSide, x.borderColor ) ) );
+
+        public override string BorderRadius( BorderRadius borderRadius )
+            => $"has-{ToBorderRadius( borderRadius )}";
+
+        #endregion
+
         #region Flex
 
+        public override string Flex( FlexType flexType )
+        {
+            return flexType != FlexType.Default
+                ? $"is-{ToFlexType( flexType )}"
+                : null;
+        }
+
+        public override string Flex( FlexDefinition flexDefinition )
+        {
+            var sb = new StringBuilder();
+
+            var breakpoint = flexDefinition.Breakpoint != Breakpoint.None && flexDefinition.Breakpoint != Breakpoint.Mobile
+                ? $"{ToBreakpoint( flexDefinition.Breakpoint )}-"
+                : null;
+
+            if ( flexDefinition.Direction != FlexDirection.Default )
+                sb.Append( "is-flex-direction-" ).Append( breakpoint ).Append( ToDirection( flexDefinition.Direction ) );
+
+            if ( flexDefinition.JustifyContent != FlexJustifyContent.Default )
+                sb.Append( "is-justify-content-" ).Append( breakpoint ).Append( ToJustifyContent( flexDefinition.JustifyContent ) );
+
+            if ( flexDefinition.AlignItems != FlexAlignItems.Default )
+                sb.Append( "is-align-items-" ).Append( breakpoint ).Append( ToAlignItems( flexDefinition.AlignItems ) );
+
+            if ( flexDefinition.AlignSelf != FlexAlignSelf.Default )
+                sb.Append( "is-align-self-" ).Append( breakpoint ).Append( ToAlignSelf( flexDefinition.AlignSelf ) );
+
+            if ( flexDefinition.AlignContent != FlexAlignContent.Default )
+                sb.Append( "is-align-content-" ).Append( breakpoint ).Append( ToAlignContent( flexDefinition.AlignContent ) );
+
+            if ( flexDefinition.GrowShrink != FlexGrowShrink.Default && flexDefinition.GrowShrinkSize != FlexGrowShrinkSize.Default )
+                sb.Append( "is-flex-" ).Append( breakpoint ).Append( ToGrowShrink( flexDefinition.GrowShrink ) ).Append( "-" ).Append( ToGrowShrinkSize( flexDefinition.GrowShrinkSize ) );
+
+            if ( flexDefinition.Wrap != FlexWrap.Default )
+                sb.Append( "is-flex-wrap-" ).Append( breakpoint ).Append( ToWrap( flexDefinition.Wrap ) );
+
+            if ( flexDefinition.Order != FlexOrder.Default )
+                sb.Append( "is-flex-order-" ).Append( breakpoint ).Append( ToOrder( flexDefinition.Order ) );
+
+            if ( flexDefinition.Fill )
+                sb.Append( "is-flex-" ).Append( breakpoint ).Append( "fill" );
+
+            return sb.ToString();
+        }
+
+        public override string Flex( FlexType flexType, IEnumerable<FlexDefinition> flexDefinitions )
+        {
+            var sb = new StringBuilder();
+
+            if ( flexType != FlexType.Default )
+                sb.Append( $"is-{ToFlexType( flexType )}" ).Append( ' ' );
+
+            sb.Append( string.Join( ' ', flexDefinitions.Select( x => Flex( x ) ) ) );
+
+            return sb.ToString();
+        }
+
         public override string FlexAlignment( Alignment alignment ) => $"justify-content-{ToAlignment( alignment )}";
+
+        #endregion
+
+        #region Sizing
+
+        public override string Sizing( SizingType sizingType, SizingSize sizingSize, SizingDefinition sizingDefinition )
+        {
+            var sb = new StringBuilder( "is-" );
+
+            if ( sizingDefinition.IsMin && sizingDefinition.IsViewport )
+                sb.Append( "min-wiewport-" );
+            else if ( sizingDefinition.IsMax )
+                sb.Append( "max-" );
+            else if ( sizingDefinition.IsViewport )
+                sb.Append( "viewport-" );
+
+            sb.Append( sizingType == SizingType.Width
+                ? "width"
+                : "height" );
+
+            sb.Append( $"-{ToSizingSize( sizingSize )}" );
+
+            return sb.ToString();
+        }
+
+        #endregion
+
+        #region Float
+
+        public override string Float( Float @float ) => $"is-pulled-{ToFloat( @float )}";
+
+        public override string Clearfix() => "is-clearfix";
+
+        #endregion
+
+        #region Visibility
+
+        public override string Visibility( Visibility visibility )
+        {
+            return visibility switch
+            {
+                Blazorise.Visibility.Visible => "is-visible",
+                Blazorise.Visibility.Invisible => "is-invisible",
+                _ => null,
+            };
+        }
+
+        #endregion
+
+        #region VerticalAlignment
+
+        public override string VerticalAlignment( VerticalAlignment verticalAlignment )
+            => $"is-vertical-align-{ToVerticalAlignment( verticalAlignment )}";
+
+        #endregion
+
+        #region Shadow
+
+        public override string Shadow( Shadow shadow )
+        {
+            if ( shadow == Blazorise.Shadow.Default )
+                return "has-shadow";
+
+            return $"has-shadow-{ToShadow( shadow )}";
+        }
+
+        #endregion
+
+        #region Overflow
+
+        public override string Overflow( OverflowType overflowType, OverflowType secondOverflowType ) => secondOverflowType != OverflowType.Default
+            ? $"is-overflow-{ToOverflowType( overflowType )}-{ToOverflowType( secondOverflowType )}"
+            : $"is-overflow-{ToOverflowType( overflowType )}";
+
+        #endregion
+
+        #region Position
+
+        public override string Position( PositionType positionType, PositionEdgeType edgeType, int edgeOffset, PositionTranslateType translateType )
+        {
+            return $"is-{ToPositionEdgeType( edgeType )}-{edgeOffset}";
+        }
+
+        public override string Position( PositionType positionType, IEnumerable<(PositionEdgeType edgeType, int edgeOffset)> edges, PositionTranslateType translateType )
+        {
+            var sb = new StringBuilder( $"is-position-{ToPositionType( positionType )}" );
+
+            if ( edges != null && edges.Count() > 0 )
+                sb.Append( ' ' ).Append( string.Join( " ", edges.Select( x => Position( positionType, x.edgeType, x.edgeOffset, translateType ) ) ) );
+
+            if ( translateType != PositionTranslateType.None )
+                sb.Append( " is-translate-" ).Append( ToPositionTranslateType( translateType ) );
+
+            return sb.ToString();
+        }
+
+        #endregion
+
+        #region Elements
+
+        public override string UnorderedList() => "is-unordered-list";
+
+        public override string UnorderedListUnstyled( bool unstyled ) => unstyled ? "is-unordered-list-unstyled" : null;
+
+        public override string OrderedList() => "is-ordered-list";
+
+        public override string OrderedListUnstyled( bool unstyled ) => unstyled ? "is-ordered-list-unstyled" : null;
+
+        public override string OrderedListType( OrderedListType orderedListType ) => $"is-ordered-list-{ToOrderedListType( orderedListType )}";
+
+        public override string DescriptionList() => null;
+
+        public override string DescriptionListTerm() => null;
+
+        public override string DescriptionListDefinition() => null;
 
         #endregion
 
@@ -924,13 +1327,15 @@ namespace Blazorise.Bulma
             switch ( size )
             {
                 case Blazorise.Size.ExtraSmall:
+                    return "extra-small";
                 case Blazorise.Size.Small:
-                    return "is-small";
+                    return "small";
                 case Blazorise.Size.Medium:
-                    return "is-medium";
+                    return "medium";
                 case Blazorise.Size.Large:
+                    return "large";
                 case Blazorise.Size.ExtraLarge:
-                    return "is-large";
+                    return "extra-large";
                 default:
                     return null;
             }
@@ -955,118 +1360,45 @@ namespace Blazorise.Bulma
             }
         }
 
-        public override string ToBackground( Background color )
+        public override string ToBackground( Background background )
         {
-            switch ( color )
-            {
-                case Blazorise.Background.Primary:
-                    return "has-background-primary";
-                case Blazorise.Background.Secondary:
-                    return "has-background-light";
-                case Blazorise.Background.Success:
-                    return "has-background-success";
-                case Blazorise.Background.Danger:
-                    return "has-background-danger";
-                case Blazorise.Background.Warning:
-                    return "has-background-warning";
-                case Blazorise.Background.Info:
-                    return "has-background-info";
-                case Blazorise.Background.Light:
-                    return "has-background-light";
-                case Blazorise.Background.Dark:
-                    return "has-background-dark";
-                case Blazorise.Background.White:
-                    return "has-background-white";
-                case Blazorise.Background.Transparent:
-                    return "transparent";
-                default:
-                    return null;
-            }
+            var name = background.Name;
+
+            if ( name == "secondary" )
+                return "light";
+
+            return name;
         }
 
         public override string ToTextColor( TextColor textColor )
         {
-            switch ( textColor )
-            {
-                case Blazorise.TextColor.Primary:
-                    return "primary";
-                //case Blazorise.TextColor.Secondary:
-                //    return "secondary";
-                case Blazorise.TextColor.Success:
-                    return "success";
-                case Blazorise.TextColor.Danger:
-                    return "danger";
-                case Blazorise.TextColor.Warning:
-                    return "warning";
-                case Blazorise.TextColor.Info:
-                    return "info";
-                case Blazorise.TextColor.Light:
-                    return "light";
-                case Blazorise.TextColor.Dark:
-                    return "dark";
-                //case Blazorise.TextColor.Body:
-                //    return "body";
-                //case Blazorise.TextColor.Muted:
-                //    return "muted";
-                case Blazorise.TextColor.White:
-                    return "white";
-                //case Blazorise.TextColor.Black50:
-                //    return "black-50";
-                //case Blazorise.TextColor.White50:
-                //    return "white-50";
-                default:
-                    return null;
-            }
-        }
+            var name = textColor.Name;
 
-        public override string ToFloat( Float @float )
-        {
-            switch ( @float )
-            {
-                case Blazorise.Float.Left:
-                    return "is-pulled-left";
-                case Blazorise.Float.Right:
-                    return "is-pulled-right	";
-                default:
-                    return null;
-            }
+            if ( name == "secondary" )
+                return "light";
+
+            return name;
         }
 
         public override string ToColumnWidth( ColumnWidth columnWidth )
         {
-            switch ( columnWidth )
+            return columnWidth switch
             {
-                case Blazorise.ColumnWidth.Is1:
-                    return "1";
-                case Blazorise.ColumnWidth.Is2:
-                    return "2";
-                case Blazorise.ColumnWidth.Is3:
-                case Blazorise.ColumnWidth.Quarter:
-                    return "3";
-                case Blazorise.ColumnWidth.Is4:
-                case Blazorise.ColumnWidth.Third:
-                    return "4";
-                case Blazorise.ColumnWidth.Is5:
-                    return "5";
-                case Blazorise.ColumnWidth.Is6:
-                case Blazorise.ColumnWidth.Half:
-                    return "6";
-                case Blazorise.ColumnWidth.Is7:
-                    return "7";
-                case Blazorise.ColumnWidth.Is8:
-                    return "8";
-                case Blazorise.ColumnWidth.Is9:
-                    return "9";
-                case Blazorise.ColumnWidth.Is10:
-                    return "10";
-                case Blazorise.ColumnWidth.Is11:
-                    return "11";
-                case Blazorise.ColumnWidth.Is12:
-                case Blazorise.ColumnWidth.Full:
-                    return "12";
-                default:
-                    return null;
-            }
+                Blazorise.ColumnWidth.Is1 => "1",
+                Blazorise.ColumnWidth.Is2 => "2",
+                Blazorise.ColumnWidth.Is3 or Blazorise.ColumnWidth.Quarter => "3",
+                Blazorise.ColumnWidth.Is4 or Blazorise.ColumnWidth.Third => "4",
+                Blazorise.ColumnWidth.Is5 => "5",
+                Blazorise.ColumnWidth.Is6 or Blazorise.ColumnWidth.Half => "6",
+                Blazorise.ColumnWidth.Is7 => "7",
+                Blazorise.ColumnWidth.Is8 => "8",
+                Blazorise.ColumnWidth.Is9 => "9",
+                Blazorise.ColumnWidth.Is10 => "10",
+                Blazorise.ColumnWidth.Is11 => "11",
+                Blazorise.ColumnWidth.Is12 or Blazorise.ColumnWidth.Full => "12",
+                Blazorise.ColumnWidth.Auto => "narrow",
+                _ => null,
+            };
         }
 
         public override string ToScreenreader( Screenreader screenreader )
@@ -1095,21 +1427,91 @@ namespace Blazorise.Bulma
             }
         }
 
-        public override string ToTextAlignment( TextAlignment textAlignment )
+        public override string ToTextAlignment( TextAlignment textAlignment ) => textAlignment switch
         {
-            switch ( textAlignment )
+            Blazorise.TextAlignment.Start => "left",
+            Blazorise.TextAlignment.Center => "centered",
+            Blazorise.TextAlignment.End => "right",
+            Blazorise.TextAlignment.Justified => "justified",
+            _ => null,
+        };
+
+        public override string ToJustifyContent( FlexJustifyContent justifyContent ) => justifyContent switch
+        {
+            Blazorise.FlexJustifyContent.Start => "flex-start",
+            Blazorise.FlexJustifyContent.End => "flex-end",
+            Blazorise.FlexJustifyContent.Center => "center",
+            Blazorise.FlexJustifyContent.Between => "space-between",
+            Blazorise.FlexJustifyContent.Around => "space-around",
+            _ => null,
+        };
+
+        public override string ToAlignItems( FlexAlignItems alignItems )
+        {
+            return alignItems switch
             {
-                case Blazorise.TextAlignment.Left:
-                    return "left";
-                case Blazorise.TextAlignment.Center:
-                    return "centered";
-                case Blazorise.TextAlignment.Right:
-                    return "right";
-                case Blazorise.TextAlignment.Justified:
-                    return "justified";
-                default:
-                    return null;
-            }
+                Blazorise.FlexAlignItems.Start => "flex-start",
+                Blazorise.FlexAlignItems.End => "flex-end",
+                Blazorise.FlexAlignItems.Center => "center",
+                Blazorise.FlexAlignItems.Baseline => "baseline",
+                Blazorise.FlexAlignItems.Stretch => "stretch",
+                _ => null,
+            };
+        }
+
+        public override string ToAlignSelf( FlexAlignSelf alignSelf )
+        {
+            return alignSelf switch
+            {
+                Blazorise.FlexAlignSelf.Auto => "auto",
+                Blazorise.FlexAlignSelf.Start => "flex-start",
+                Blazorise.FlexAlignSelf.End => "flex-end",
+                Blazorise.FlexAlignSelf.Center => "center",
+                Blazorise.FlexAlignSelf.Baseline => "baseline",
+                Blazorise.FlexAlignSelf.Stretch => "stretch",
+                _ => null,
+            };
+        }
+
+        public override string ToAlignContent( FlexAlignContent alignContent )
+        {
+            return alignContent switch
+            {
+                Blazorise.FlexAlignContent.Start => "flex-start",
+                Blazorise.FlexAlignContent.End => "flex-end",
+                Blazorise.FlexAlignContent.Center => "center",
+                Blazorise.FlexAlignContent.Between => "space-between",
+                Blazorise.FlexAlignContent.Around => "space-around",
+                Blazorise.FlexAlignContent.Stretch => "stretch",
+                _ => null,
+            };
+        }
+
+        public override string ToShadow( Shadow shadow )
+        {
+            return shadow switch
+            {
+                Blazorise.Shadow.Remove => "none",
+                Blazorise.Shadow.Small => "small",
+                Blazorise.Shadow.Large => "large",
+                _ => null,
+            };
+        }
+
+        public override string ToBorderRadius( BorderRadius borderRadius )
+        {
+            return borderRadius switch
+            {
+                Blazorise.BorderRadius.Rounded => "rounded-border",
+                Blazorise.BorderRadius.RoundedTop => "rounded-border-top",
+                Blazorise.BorderRadius.RoundedEnd => "rounded-border-right",
+                Blazorise.BorderRadius.RoundedBottom => "rounded-border-bottom",
+                Blazorise.BorderRadius.RoundedStart => "rounded-border-left",
+                Blazorise.BorderRadius.RoundedCircle => "rounded-border-circle",
+                Blazorise.BorderRadius.RoundedPill => "rounded-border-pill",
+                Blazorise.BorderRadius.RoundedZero => "rounded-border-0",
+                _ => null,
+            };
         }
 
         #endregion

@@ -5,11 +5,12 @@ using Xunit;
 
 namespace Blazorise.Tests.Components
 {
-    public class RadioGroupComponentTest : ComponentTestFixture
+    public class RadioGroupComponentTest : TestContext
     {
         public RadioGroupComponentTest()
         {
             BlazoriseConfig.AddBootstrapProviders( Services );
+            BlazoriseConfig.JSInterop.AddUtilities( this.JSInterop );
         }
 
         [Fact]

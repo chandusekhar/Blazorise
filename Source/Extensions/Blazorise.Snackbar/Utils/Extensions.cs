@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Blazorise.Snackbar.Utils
+﻿namespace Blazorise.Snackbar.Utils
 {
     static class Extensions
     {
@@ -10,13 +6,27 @@ namespace Blazorise.Snackbar.Utils
         {
             switch ( snackbarLocation )
             {
-                case SnackbarLocation.Left:
+                case SnackbarLocation.Start:
                     return "left";
-                case SnackbarLocation.Right:
+                case SnackbarLocation.End:
                     return "right";
-                case SnackbarLocation.None:
+                case SnackbarLocation.Default:
                 default:
                     return null;
+            }
+        }
+
+        public static string GetName( this SnackbarStackLocation snackbarStackLocation )
+        {
+            switch ( snackbarStackLocation )
+            {
+                case SnackbarStackLocation.Start:
+                    return "left";
+                case SnackbarStackLocation.End:
+                    return "right";
+                case SnackbarStackLocation.Center:
+                default:
+                    return "center";
             }
         }
 
@@ -40,7 +50,7 @@ namespace Blazorise.Snackbar.Utils
                     return "light";
                 case SnackbarColor.Dark:
                     return "dark";
-                case SnackbarColor.None:
+                case SnackbarColor.Default:
                 default:
                     return null;
             }

@@ -1,22 +1,32 @@
-﻿@import "variables";
-@import "functions";
+﻿@import "functions";
+@import "variables";
 @import "mixins";
+@import "animations";
 
-@import "buttons";
-@import "form";
-@import "card";
-@import "modal";
-@import "tabs";
-@import "pagination";
-@import "typography";
-@import "table";
-@import "bar";
-@import "dropdown";
-@import "list";
-@import "grid";
 @import "alert";
+@import "badge";
+@import "bar";
+@import "buttons";
+@import "card";
+@import "dropdown";
+@import "extensions";
 @import "figure";
+@import "form";
+@import "grid";
+@import "jumbotron";
 @import "layout";
+@import "list";
+@import "modal";
+@import "pagination";
 @import "progress";
+@import "rating";
+@import "table";
+@import "tabs";
+@import "typography";
+@import "steps";
+@import "switch";
 
+@import "background";
 @import "utilities";
+
+@import "vendor/flatpickr";

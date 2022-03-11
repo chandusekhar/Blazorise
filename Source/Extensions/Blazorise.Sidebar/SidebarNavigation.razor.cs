@@ -1,14 +1,11 @@
 ﻿#region Using directives
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Blazorise.Utilities;
 using Microsoft.AspNetCore.Components;
 #endregion
 
 namespace Blazorise.Sidebar
 {
-    public abstract class BaseSidebarNavigation : BaseComponent
+    public partial class SidebarNavigation : BaseComponent
     {
         #region Members
 

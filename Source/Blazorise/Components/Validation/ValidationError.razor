@@ -1,0 +1,27 @@
+﻿@namespace Blazorise
+@inherits BaseValidationResult
+@if ( ParentValidation?.Status == ValidationStatus.Error )
+{
+    <div id="@ElementId" class="@ClassNames" style="@StyleNames" @attributes="@Attributes">
+        @if ( ErrorMessages != null && ErrorMessages.Any() )
+        {
+            @if ( Multiline )
+            {
+                <OrderedList Unstyled>
+                    @foreach ( var errorMessage in ErrorMessages )
+                    {
+                        <OrderedListItem @key="@errorMessage">@errorMessage</OrderedListItem>
+                    }
+                </OrderedList>
+            }
+            else
+            {
+                @string.Join(";", ErrorMessages)
+            }
+        }
+        else
+        {
+            @ChildContent
+        }
+    </div>
+}

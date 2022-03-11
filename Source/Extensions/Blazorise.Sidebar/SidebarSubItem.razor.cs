@@ -1,14 +1,11 @@
 ﻿#region Using directives
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Blazorise.Utilities;
 using Microsoft.AspNetCore.Components;
 #endregion
 
 namespace Blazorise.Sidebar
 {
-    public abstract class BaseSidebarSubItem : BaseComponent
+    public partial class SidebarSubItem : BaseComponent
     {
         #region Members
 
@@ -26,6 +23,13 @@ namespace Blazorise.Sidebar
             base.BuildClasses( builder );
         }
 
+        protected override void OnInitialized()
+        {
+            ParentSidebarItem?.NotifyHasSidebarSubItem();
+
+            base.OnInitialized();
+        }
+
         /// <summary>
         /// Toggles the visibility of subitem.
         /// </summary>
@@ -34,7 +38,7 @@ namespace Blazorise.Sidebar
         {
             Visible = visible ?? !Visible;
 
-            StateHasChanged();
+            InvokeAsync( StateHasChanged );
         }
 
         #endregion
@@ -52,6 +56,8 @@ namespace Blazorise.Sidebar
                 DirtyClasses();
             }
         }
+
+        [CascadingParameter] public SidebarItem ParentSidebarItem { get; set; }
 
         [Parameter] public RenderFragment ChildContent { get; set; }
 
