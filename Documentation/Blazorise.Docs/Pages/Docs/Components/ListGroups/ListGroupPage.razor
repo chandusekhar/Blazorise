@@ -1,10 +1,14 @@
 ﻿@page "/docs/components/list-group"
 
-<Seo Canonical="/docs/components/list-group" Title="Blazorise ListGroup system" Description="List groups are a flexible and powerful component for displaying a series of content." />
+<Seo Canonical="/docs/components/list-group" Title="Blazorise ListGroup system" Description="Learn to use and work with the Blazorise ListGroup components, a flexible and powerful component for displaying a series of content." />
 
-<DocsPageTitle>
-    List Group component
+<DocsPageTitle Path="Components/List Group">
+    Blazorise ListGroup component
 </DocsPageTitle>
+
+<DocsPageLead>
+    List groups are a flexible and powerful component for displaying a series of content.
+</DocsPageLead>
 
 <DocsPageParagraph>
     List groups are a flexible and powerful component for displaying a series of content.
@@ -88,18 +92,25 @@
 </DocsPageSection>
 
 <DocsPageSubtitle>
-    Attributes
+    API
 </DocsPageSubtitle>
+
+<Heading Size="HeadingSize.Is3">
+    Attributes
+</Heading>
 
 <DocsAttributes Title="ListGroup">
     <DocsAttributesItem Name="Flush" Type="bool" Default="false">
         Remove some borders and rounded corners to render list group items edge-to-edge in a parent container (e.g., cards).
     </DocsAttributesItem>
+    <DocsAttributesItem Name="Scrollable" Type="bool" Default="false">
+        Makes the list group scrollable by adding a vertical scrollbar. (Note: you also must define max height on a list group).
+    </DocsAttributesItem>
     <DocsAttributesItem Name="SelectedItem" Type="string" Default="null">
         Gets or sets currently selected item name.
     </DocsAttributesItem>
     <DocsAttributesItem Name="SelectedItemChanged" Type="EventCallback<string>">
-        Gets or sets currently selected item name.
+        Occurs when the selected item has changed.
     </DocsAttributesItem>
     <DocsAttributesItem Name="Mode" Type="ListGroupMode" Default="Static">
         Defines the list-group behavior mode.

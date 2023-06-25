@@ -1,34 +1,36 @@
 ﻿@page "/docs/extensions/sidebar"
 
-<Seo Canonical="/docs/extensions/sidebar" Title="Blazorise Sidebar" Description="Learn how to use Blazorise Sidebar extension components." />
+<Seo Canonical="/docs/extensions/sidebar" Title="Blazorise Sidebar component" Description="Learn to use and work with the Blazorise Sidebar component, an expandable and collapsible container area that holds primary and secondary information placed alongside the main content of a webpage." />
 
-<DocsPageTitle>
-    Sidebar
+<DocsPageTitle Path="Extensions/Sidebar">
+    Blazorise Sidebar component
 </DocsPageTitle>
 
-<DocsPageParagraph>
+<DocsPageLead>
     The Sidebar component is an expandable and collapsible container area that holds primary and secondary information placed alongside the main content of a webpage.
+</DocsPageLead>
 
+<DocsPageParagraph>
     The sidebar extension is defined of several different components:
 </DocsPageParagraph>
 
 <UnorderedList>
     <UnorderedListItem>
-        <Code>Sidebar</Code> main sidebar component
+        <Code Tag>Sidebar</Code> main sidebar component
         <UnorderedList>
             <UnorderedListItem>
-                <Code>SidebarContent</Code> container for the sidebar brand and navigation
+                <Code Tag>SidebarContent</Code> container for the sidebar brand and navigation
                 <UnorderedList>
-                    <UnorderedListItem><Code>SidebarBrand</Code> brand logo or link located in the sidebar header</UnorderedListItem>
+                    <UnorderedListItem><Code Tag>SidebarBrand</Code> brand logo or link located in the sidebar header</UnorderedListItem>
                     <UnorderedListItem>
-                        <Code>SidebarNavigation</Code> container for the sidebar navigation items
+                        <Code Tag>SidebarNavigation</Code> container for the sidebar navigation items
                         <UnorderedList>
-                            <UnorderedListItem><Code>SidebarLabel</Code> simple label to separate navigation items</UnorderedListItem>
+                            <UnorderedListItem><Code Tag>SidebarLabel</Code> simple label to separate navigation items</UnorderedListItem>
                             <UnorderedListItem>
-                                <Code>SidebarItem</Code> navigation item that holds the link or subitems
+                                <Code Tag>SidebarItem</Code> navigation item that holds the link or subitems
                                 <UnorderedList>
-                                    <UnorderedListItem><Code>SidebarLink</Code> simple label to separate navigation items</UnorderedListItem>
-                                    <UnorderedListItem><Code>SidebarSubItem</Code> simple label to separate navigation items</UnorderedListItem>
+                                    <UnorderedListItem><Code Tag>SidebarLink</Code> simple label to separate navigation items</UnorderedListItem>
+                                    <UnorderedListItem><Code Tag>SidebarSubItem</Code> simple label to separate navigation items</UnorderedListItem>
                                 </UnorderedList>
                             </UnorderedListItem>
                         </UnorderedList>
@@ -38,6 +40,12 @@
         </UnorderedList>
     </UnorderedListItem>
 </UnorderedList>
+
+<Alert Color="Color.Warning" Visible>
+    <AlertDescription>
+        Please be aware that the sidebar component is obsolete and that is generally replaced by the newset <Anchor To="docs/components/bar" Title="Link to bar component">Bar</Anchor> component.
+    </AlertDescription>
+</Alert>
 
 <DocsPageSubtitle>
     Installation
@@ -52,14 +60,14 @@
 
 <DocsPageSection>
     <DocsPageSectionHeader Title="Imports">
-        In your main Imports.razor add:
+        In your main <Badge Color="Color.Light">_Imports.razor</Badge> add:
     </DocsPageSectionHeader>
     <DocsPageSectionSource Code="SidebarImportsExample"></DocsPageSectionSource>
 </DocsPageSection>
 
 <DocsPageSection>
     <DocsPageSectionHeader Title="Static files">
-        Include CSS link into your <Code>index.html</Code> or <Code>_Host.cshtml</Code> file, depending if you’re using a Blazor WebAssembly or Blazor Server side project.
+        Include CSS link into your <Code>index.html</Code> or <Code>_Layout.cshtml</Code> / <Code>_Host.cshtml</Code> file, depending if you’re using a Blazor WebAssembly or Blazor Server side project.
     </DocsPageSectionHeader>
     <DocsPageSectionSource Code="SidebarResourcesExample" />
 </DocsPageSection>

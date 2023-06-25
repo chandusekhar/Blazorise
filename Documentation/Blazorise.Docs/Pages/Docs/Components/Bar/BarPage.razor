@@ -1,14 +1,17 @@
 ﻿@page "/docs/components/bar"
 
-<Seo Canonical="/docs/components/bar" Title="Blazorise Bar component" Description="The Bar component is a responsive and versatile navigation bar that can be used as a top menu" />
+<Seo Canonical="/docs/components/bar" Title="Blazorise Bar component" Description="Learn how to use and work with the Bar component, a responsive and versatile navigation bar that can be used as a top menu." />
 
-<DocsPageTitle>
-    Bar
+<DocsPageTitle Path="Components/Bar">
+    Blazorise Bar component
 </DocsPageTitle>
 
+<DocsPageLead>
+    A responsive navbar that can support images, links, buttons, and dropdowns.
+</DocsPageLead>
+
 <DocsPageParagraph>
-    The <code>Bar</code> component is a responsive and versatile navigation bar that can be used as a top menu
-    in <strong>Horizontal</strong> mode or as a sidebar in one of the three <strong>Vertical</strong> modes.
+    The <code>Bar</code> component is a responsive and versatile navigation bar that can be used as a top menu in <strong>Horizontal</strong> mode or as a sidebar in one of the three <strong>Vertical</strong> modes.
 </DocsPageParagraph>
 
 <UnorderedList>
@@ -89,7 +92,7 @@
     <DocsPageSectionHeader Title="Vertical Bar (Sidebar)">
         When using the Bar in one of the <strong>Vertical</strong> modes for the purpose of a Sidebar, you need to place it inside the <Code>LayoutSiderContent</Code> component.
 
-        Please see the <Blazorise.Link To="docs/components/layout" Target="Target.Blank">Layout docs </Blazorise.Link> for more information on setup with Sidebar.
+        Please see the <Blazorise.Link To="docs/components/layout">Layout docs </Blazorise.Link> for more information on setup with Sidebar.
     </DocsPageSectionHeader>
     <DocsPageSectionContent Outlined>
         <VerticalBarSideBarExample />
@@ -195,8 +198,12 @@
 </DocsPageSection>
 
 <DocsPageSubtitle>
-    Attributes
+    API
 </DocsPageSubtitle>
+
+<Heading Size="HeadingSize.Is3">
+    Attributes
+</Heading>
 
 <DocsAttributes Title="Bar">
     <DocsAttributesItem Name="Mode" Type="BarMode" Default="Horizontal">

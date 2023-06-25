@@ -1,10 +1,20 @@
 ﻿@page "/docs/start"
 
-<Seo Canonical="/docs/start" Title="Blazorise Start" Description="Blazorise is designed to work with different CSS frameworks." />
+<Seo Canonical="/docs/start" Title="Blazorise Quick Start Guide" Description="Blazorise is designed to work with different CSS frameworks. Each of the supported CSS framework is defined by a different NuGet package." />
 
-<DocsPageTitle>
-    Start
+<DocsPageTitle Path="Start">
+    Blazorise Quick Start Guide
 </DocsPageTitle>
+
+<DocsPageLead>
+    Quickly install Blazorise, one of the world's most popular Blazor UI framework.
+</DocsPageLead>
+
+<DocsPageParagraph>
+    Blazorise is designed to work with different CSS frameworks. Each of the supported CSS framework is defined
+    by a different NuGet package. Please see the <Blazorise.Link To="docs/usage">usage page</Blazorise.Link>
+    to find a list of supported frameworks and how to use them.
+</DocsPageParagraph>
 
 <DocsPageParagraph>
     <Alert Color="Color.Info" Visible>
@@ -16,9 +26,14 @@
 </DocsPageParagraph>
 
 <DocsPageParagraph>
-    Blazorise is designed to work with different CSS frameworks. Each of the supported CSS framework is defined
-    by a different NuGet package. Please see the <Blazorise.Link To="docs/usage" Target="Target.Blank">usage page</Blazorise.Link>
-    to find a list of supported frameworks and how to use them.
+    <Alert Color="Color.Info" Visible>
+        <AlertDescription>
+            <Strong>Note:</Strong> This documentation assumes you know the basics of Blazor. if you’re not comfortable
+            with it yet, it’s probably not the best idea to learn from here as your first step — learn the basics, then
+            come back.
+            <Blazorise.Link To="https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor" Target="Target.Blank">Blazor website</Blazorise.Link> is the best source for you to start.
+        </AlertDescription>
+    </Alert>
 </DocsPageParagraph>
 
 <DocsPageParagraph>
@@ -26,7 +41,7 @@
 </DocsPageParagraph>
 
 <DocsPageSubtitle>
-    1. NuGet packages
+    Install Packages
 </DocsPageSubtitle>
 
 <DocsPageSection>
@@ -44,12 +59,12 @@
 </DocsPageSection>
 
 <DocsPageSubtitle>
-    2. Source files
+    Add Static Files
 </DocsPageSubtitle>
 
 <DocsPageSection>
     <DocsPageSectionHeader>
-        The next step is to change your <Code>index.html</Code> or <Code>_Host.cshtml</Code> file and include the CSS and JS source files:
+        The next step is to change your <Code>index.html</Code> or <Code>_Layout.cshtml</Code> / <Code>_Host.cshtml</Code> file and include the CSS and JS source files:
     </DocsPageSectionHeader>
     <DocsPageSectionSource Code="BootstrapGuideSourceFilesExample" />
 </DocsPageSection>
@@ -64,18 +79,18 @@
 </Alert>
 
 <DocsPageSubtitle>
-    3. Usings
+    Add Imports
 </DocsPageSubtitle>
 
 <DocsPageSection>
     <DocsPageSectionHeader>
-        In your main <Code>_Imports.razor</Code> add:
+        In your main <Badge Color="Color.Light">_Imports.razor</Badge> add:
     </DocsPageSectionHeader>
     <DocsPageSectionSource Code="BootstrapGuideUsingExample" />
 </DocsPageSection>
 
 <DocsPageSubtitle>
-    4. Register Services
+    Register Services
 </DocsPageSubtitle>
 
 <DocsPageSection>
@@ -86,17 +101,9 @@
 </DocsPageSection>
 
 <DocsPageSubtitle>
-    5. PWA & Offline Support
+    PWA & Offline Support (optional)
 </DocsPageSubtitle>
 
 <DocsPageParagraph>
     For information about PWAs & offline support, please take a look at our <Blazorise.Link To="docs/pwa">PWA docs.</Blazorise.Link>
 </DocsPageParagraph>
-@code {
-    string selectedSection4 = "4a";
-}
-
-
-
-
-

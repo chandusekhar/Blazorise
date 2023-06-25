@@ -1,4 +1,7 @@
-﻿// adds a classname to the specified element
+﻿import "./vendors/jsencrypt.js?v=1.2.4.0";
+import "./vendors/sha512.js?v=1.2.4.0";
+
+// adds a classname to the specified element
 export function addClass(element, classname) {
     element.classList.add(classname);
 }
@@ -55,6 +58,15 @@ export function select(element, elementId, focus) {
     }
 }
 
+// show a browser picker for the supplied input element
+export function showPicker(element, elementId) {
+    element = getRequiredElement(element, elementId);
+
+    if (element && 'showPicker' in HTMLInputElement.prototype) {
+        element.showPicker();
+    }
+}
+
 export function setCaret(element, caret) {
     if (hasSelectionCapabilities(element)) {
         window.requestAnimationFrame(() => {
@@ -80,6 +92,22 @@ export function scrollAnchorIntoView(elementId) {
     if (element) {
         element.scrollIntoView();
         window.location.hash = elementId;
+    }
+}
+
+export function scrollElementIntoView(elementId, smooth) {
+    var element = document.getElementById(elementId);
+
+    if (element) {
+        var top;
+        if (element.offsetTop < element.parentElement.scrollTop || element.clientHeight > element.parentElement.clientHeight) {
+            top = element.offsetTop;
+        } else if (element.offsetTop + element.offsetHeight > element.parentElement.scrollTop + element.parentElement.clientHeight) {
+            top = element.offsetTop + element.offsetHeight - element.parentElement.clientHeight;
+        }
+
+        var behavior = smooth ? "smooth" : "instant";
+        element.parentElement.scrollTo({ top: top, behavior: behavior });
     }
 }
 
@@ -177,7 +205,7 @@ function isExponential(num) {
 
 export function fromExponential(num) {
     if (!num)
-        return null;
+        return num;
 
     const eParts = getExponentialParts(num);
     if (!isExponential(eParts)) {
@@ -252,4 +280,31 @@ export function firstNonNull(value, fallbackValue) {
         return fallbackValue;
 
     return value;
+}
+
+export function verifyRsa(publicKey, content, signature) {
+    try {
+        const jsEncrypt = new JSEncrypt();
+        jsEncrypt.setPublicKey(publicKey);
+
+        const verified = jsEncrypt.verify(content, signature, sha512);
+
+        if (verified) {
+            return true;
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+    return false;
+}
+
+export function log(message, args) {
+    console.log(message, args);
+}
+
+export function createEvent(name) {
+    const e = document.createEvent("Event");
+    e.initEvent(name, true, true);
+    return e;
 }

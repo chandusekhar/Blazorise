@@ -1,10 +1,14 @@
 ﻿@page "/docs/components/dragdrop"
 
-<Seo Canonical="/docs/components/dropzone" Title="Blazorise DropZone system" Description="The DropZone component allows you to easily drag and drop any component or HTML element." />
+<Seo Canonical="/docs/components/dragdrop" Title="Blazorise DropZone system" Description="Learn to use and work with the Blazorise DropZone component which allows you to easily drag and drop any component or HTML element." />
 
-<DocsPageTitle>
-    Drag & Drop
+<DocsPageTitle Path="Components/Drop Zone">
+    Blazorise Drag & Drop component
 </DocsPageTitle>
+
+<DocsPageLead>
+    Quickly drag and drop elements between the containers.
+</DocsPageLead>
 
 <DocsPageParagraph>
     The Drag & Drop is comprised of <Code>DropContainer</Code> and <Code>DropZone</Code> components. The <Code>DropContainer</Code> is used as a container for all items that are being dragged,
@@ -46,9 +50,25 @@
     <DocsPageSectionSource Code="BasicDragDropExample" />
 </DocsPageSection>
 
+<DocsPageSection>
+    <DocsPageSectionHeader Title="Reorder items">
+        <Paragraph>
+            Items can be reordered inside each dropzone with the <Code>AllowReorder</Code> bool set to true on the dropzone.
+        </Paragraph>
+    </DocsPageSectionHeader>
+    <DocsPageSectionContent Outlined FullWidth>
+        <DragDropReorderingExample />
+    </DocsPageSectionContent>
+    <DocsPageSectionSource Code="DragDropReorderingExample" />
+</DocsPageSection>
+
 <DocsPageSubtitle>
-    Attributes
+    API
 </DocsPageSubtitle>
+
+<Heading Size="HeadingSize.Is3">
+    Attributes
+</Heading>
 
 <DocsAttributes Title="DropContainer">
     <DocsAttributesItem Name="TItem" Type="generic">
@@ -119,5 +139,11 @@
     </DocsAttributesItem>
     <DocsAttributesItem Name="ItemDraggingClass" Type="string" Default="null">
         Classname that is applied to the drag item when it is being dragged.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="AllowReorder" Type="bool" Default="false">
+        If true, the reordering of the items will be enabled.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="OnlyZone" Type="bool" Default="false">
+        If true, will only act as a dropable zone and not render any items.
     </DocsAttributesItem>
 </DocsAttributes>

@@ -2,9 +2,13 @@
 
 <Seo Canonical="/docs/components/link" Title="Blazorise Link system" Description="The Link component allows you to easily customize anchor elements with your theme colors and typography styles." />
 
-<DocsPageTitle>
-    Link component
+<DocsPageTitle Path="Components/Link">
+    Blazorise Link component
 </DocsPageTitle>
+
+<DocsPageLead>
+    Provides declarative, accessible navigation around your application.
+</DocsPageLead>
 
 <DocsPageParagraph>
     The <Code Tag>Link</Code> component allows you to easily customize anchor elements with your theme colors and typography styles.
@@ -15,7 +19,7 @@
 
 <Alert Color="Color.Info" Visible>
     <AlertDescription>
-        <Strong>Note:</Strong> due to a <Blazorise.Link To="https://github.com/dotnet/aspnetcore/issues/18685">bug</Blazorise.Link>
+        <Strong>Note:</Strong> due to a <Blazorise.Link To="https://github.com/dotnet/razor-tooling/issues/5527">bug</Blazorise.Link>
         in VisualStudio tooling you should write <Code Tag>Link</Code> as <Code Tag>Blazorise.Link</Code> until the issue is resolved.
         Or if you prefer the alternative, you can also use the <Code Tag>Anchor</Code> alias.
     </AlertDescription>
@@ -40,7 +44,7 @@
         A <Code>#</Code> in front of a link location specifies that the link is pointing to an anchor on a page.
         (Anchor meaning a specific place in the middle of your page).
 
-        Typically <Code tag>a href="#"</Code> will cause the document to scroll to the top of page when clicked.
+        Typically <Code Tag>a href="#"</Code> will cause the document to scroll to the top of page when clicked.
         <Code Tag>Link</Code> addresses this by preventing the default action (scroll to top) when <Code>To</Code> is set to <Code>#</Code>.
         If you need scroll to top behavior, use a standard <Code Tag>Link To="#"&gt;...&lt;/Link</Code> tag.
     </DocsPageSectionHeader>
@@ -68,8 +72,12 @@
 </DocsPageSection>
 
 <DocsPageSubtitle>
-    Attributes
+    API
 </DocsPageSubtitle>
+
+<Heading Size="HeadingSize.Is3">
+    Attributes
+</Heading>
 
 <DocsAttributes>
     <DocsAttributesItem Name="To" Type="string" Default="null">
@@ -80,6 +88,9 @@
     </DocsAttributesItem>
     <DocsAttributesItem Name="Match" Type="Match" Default="Prefix">
         URL matching behavior for a link.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="CustomMatch" Type="Func<string, bool>" Default="null">
+        A callback function that is used to compare current uri with the user defined uri. Must enable <Code>Match.Custom</Code> to be used.
     </DocsAttributesItem>
     <DocsAttributesItem Name="Title" Type="string" Default="null">
         Defines the title of a link, which appears to the user as a tooltip.

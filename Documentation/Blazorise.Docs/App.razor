@@ -4,14 +4,19 @@
             <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
         </Found>
         <NotFound>
-            <LayoutView Layout="@typeof(MainLayout)">
-                <Paragraph>Sorry, there's nothing at this address.</Paragraph>
+            <LayoutView Layout="@typeof(Error404Layout)">
+                <Heading Size="HeadingSize.Is3" TextWeight="TextWeight.Normal" Margin="Margin.Is3.FromTop.Is4.FromBottom">
+                    Sorry, there's nothing at this address.
+                    <br /><br />
+                    The page you are looking for might have been removed.
+                </Heading>
             </LayoutView>
         </NotFound>
     </Router>
-    <MessageAlert />
-    <NotificationAlert />
-    <PageProgressAlert />
+    <MessageProvider />
+    <NotificationProvider />
+    <PageProgressProvider />
+    <ModalProvider />
 </Blazorise.ThemeProvider>
 @code{
     private Theme theme = new()
@@ -34,22 +39,40 @@
         },
         ColorOptions = new()
         {
-            Primary = "#9317E1",
-            Secondary = "#a5a5a5",
+            Primary = "#8950FC",
+            Secondary = "#d7dae7",
+            Success = "#1BC5BD",
+            Danger = "#F64E60",
+            Warning = "#FFA800",
+            Light = "#F3F6F9",
+            Dark = "#181C32",
+            Info = "#60A5FA",
         },
         BackgroundOptions = new()
         {
-            Primary = "#9317E1",
-            Secondary = "#a5a5a5",
+            Primary = "#8950FC",
+            Secondary = "#d7dae7",
+            Success = "#1BC5BD",
+            Danger = "#F64E60",
+            Warning = "#FFA800",
+            Light = "#F3F6F9",
+            Dark = "#181C32",
+            Info = "#60A5FA",
         },
         TextColorOptions = new()
         {
-            Primary = "#9317E1",
-            Secondary = "#a5a5a5",
+            Primary = "#8950FC",
+            Secondary = "#d7dae7",
+            Success = "#1BC5BD",
+            Danger = "#F64E60",
+            Warning = "#FFA800",
+            Light = "#F3F6F9",
+            Dark = "#181C32",
+            Info = "#60A5FA",
         },
         InputOptions = new()
         {
-            CheckColor = "#0288D1",
+            CheckColor = "#8950FC",
         },
     };
 }

@@ -63,12 +63,14 @@
 }
 
 .input-group {
-    > .b-numeric:not(:last-child) > input {
+    > .b-numeric:not(:last-child) > input,
+    > div.flatpickr-wrapper:not(:last-child) > input {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
     }
 
-    > .b-numeric:not(:first-child) > input {
+    > .b-numeric:not(:first-child) > input,
+    > div.flatpickr-wrapper:not(:first-child) > input {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
     }
@@ -171,6 +173,17 @@
     border-bottom-left-radius: 0;
 }
 
+.input-group {
+    > div.flatpickr-wrapper {
+        > .form-control {
+            position: relative;
+            flex: 1 1 auto;
+            width: 1%;
+            min-width: 0;
+        }
+    }
+}
+
 @mixin checkbox($size, $width, $height, $line-height, $padding-left) {
     .form-check {
         > .form-check-input.form-check-input-#{$size} {
@@ -206,6 +219,12 @@ select[readonly] {
 
     &:hover > .b-numeric-handler-wrap {
         opacity: 1;
+    }
+
+    input:disabled, input:read-only {
+        + .b-numeric-handler-wrap {
+            display: none;
+        }
     }
 }
 
@@ -406,4 +425,25 @@ input[readonly="readonly"][type=range] {
     > .b-input-color-picker-preview {
         height: .55rem;
     }
+}
+
+.focus-trap {
+    display: contents;
+}
+
+.form-file input[type=file] {
+    margin-left: -2px !important;
+}
+
+.form-file input[type=file]::-webkit-file-upload-button {
+    display: none;
+}
+
+.form-file input[type=file]::file-selector-button {
+    display: none;
+}
+
+.form-label-required:after {
+    content: " *";
+    color: var(--b-theme-danger, $danger);
 }

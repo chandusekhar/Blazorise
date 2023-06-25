@@ -1,3 +1,8 @@
+import "./vendors/easymde.js?v=1.2.4.0";
+import "./vendors/highlight.js?v=1.2.4.0";
+
+document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend", "<link rel=\"stylesheet\" href=\"_content/Blazorise.Markdown/vendors/easymde.css?v=1.2.4.0\" />");
+
 const _instances = [];
 
 export function initialize(dotNetObjectRef, element, elementId, options) {
@@ -111,6 +116,13 @@ export function initialize(dotNetObjectRef, element, elementId, options) {
         nativeSpellcheck: options.nativeSpellcheck,
         parsingConfig: options.parsingConfig,
         previewClass: options.previewClass,
+        previewRender: options.usePreviewRender ? (plainText, preview) => {
+            dotNetObjectRef.invokeMethodAsync("NotifyPreviewRender", plainText).then((htmlText) => {
+                preview.innerHTML = htmlText;
+            }).catch((error) => {
+                console.error(error);
+            });
+        } : null,
         previewImagesInEditor: options.previewImagesInEditor,
         promptTexts: options.promptTexts,
         promptURLs: options.promptURLs,
@@ -125,7 +137,8 @@ export function initialize(dotNetObjectRef, element, elementId, options) {
         status: options.status,
         styleSelectedText: options.styleSelectedText,
         syncSideBySidePreviewScroll: options.syncSideBySidePreviewScroll,
-        unorderedListStyle: options.unorderedListStyle
+        unorderedListStyle: options.unorderedListStyle,
+        toolbarButtonClassPrefix: options.toolbarButtonClassPrefix
     };
 
     if (!mdeOptions.status) {
@@ -194,5 +207,15 @@ export function notifyImageUploadError(elementId, errorMessage) {
 
     if (instance) {
         return instance.imageUploadNotifier.onError(errorMessage);
+    }
+}
+
+export function focus(elementId, scrollToElement) {
+    const instance = _instances[elementId];
+
+    if (instance) {
+        return instance.editor.codemirror.focus({
+            preventScroll: !scrollToElement
+        });
     }
 }

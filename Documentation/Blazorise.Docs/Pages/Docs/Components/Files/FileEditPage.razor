@@ -1,10 +1,14 @@
 ﻿@page "/docs/components/file"
 
-<Seo Canonical="/docs/components/file" Title="Blazorise FileEdit component" Description="Customized, cross-browser consistent, file input control that supports single file and multiple files upload." />
+<Seo Canonical="/docs/components/file" Title="Blazorise FileEdit component" Description="Learn to use and work with the Blazorise FileEdit component, a customized, cross-browser consistent, file input control that supports single file and multiple files upload." />
 
-<DocsPageTitle>
-    FileEdit component
+<DocsPageTitle Path="Components/File Edit">
+    Blazorise FileEdit component
 </DocsPageTitle>
+
+<DocsPageLead>
+    The <Code>FileEdit</Code> component is a specialized input that provides a clean interface for selecting files.
+</DocsPageLead>
 
 <DocsPageParagraph>
     Customized, cross-browser consistent, file input control that supports single file and multiple files upload.
@@ -35,6 +39,29 @@
     </DocsPageSectionContent>
     <DocsPageSectionSource Code="MultipleFileEditExample" />
 </DocsPageSection>
+
+<DocsPageSection>
+    <DocsPageSectionHeader Title="Directories">
+        Directory uploading is supported by enabling <Code>Directory</Code> attribute to component. In this case <Code>Files</Code> property
+        of <Code>FileChangedEventArgs</Code> can contain multiple files within a directory.
+    </DocsPageSectionHeader>
+    <DocsPageSectionContent Outlined FullWidth>
+        <DirectoryFileEditExample />
+    </DocsPageSectionContent>
+    <DocsPageSectionSource Code="DirectoryFileEditExample" />
+</DocsPageSection>
+
+<DocsPageSection>
+    <DocsPageSectionHeader Title="Multiple Directories">
+        Multiple Directory uploading is supported by enabling <Code>Directory</Code> and <Code>Multiple</Code> attribute to component. In this case <Code>Files</Code> property
+        of <Code>FileChangedEventArgs</Code> can contain multiple files within a directory.
+    </DocsPageSectionHeader>
+    <DocsPageSectionContent Outlined FullWidth>
+        <MultipleDirectoryFileEditExample />
+    </DocsPageSectionContent>
+    <DocsPageSectionSource Code="MultipleDirectoryFileEditExample" />
+</DocsPageSection>
+
 
 <DocsPageSection>
     <DocsPageSectionHeader Title="Limiting to certain file types">
@@ -76,6 +103,12 @@
 <DocsPageParagraph Title="Progressed">
     Similar to the <Code>Written</Code>, this event will also be called while file is writing to the destination stream but it will
     contain only the progress and percentage on how much the file is being uploaded.
+
+    <Alert Color="Color.Info" Visible>
+        <AlertDescription>
+            <Strong>Note:</Strong> If <Code>Progressed</Code>  and <Code>Written</Code> events aren't important to you, we highly advise you the usage of the <Code>DisableProgressReport</Code> Parameter, as it will improve file transfer significantly.
+        </AlertDescription>
+    </Alert>
 </DocsPageParagraph>
 
 <DocsPageParagraph Title="Started">
@@ -105,6 +138,13 @@
     <DocsPageSectionHeader Title="OpenReadStream">
         Using <Code>OpenReadStream</Code> on the file you can process the file as it is streamed from the browser to your code,
         this is mirrors the API found in <Blazorise.Link To="https://docs.microsoft.com/en-us/aspnet/core/blazor/file-uploads" Target="Target.Blank">ASP.NET Core Input File component</Blazorise.Link>, for example
+
+        <Alert Color="Color.Info" Visible>
+            <AlertDescription>
+                <Strong>Note:</Strong> We highly advise the usage of this api on Blazor WebAssembly as it is very performant.
+            </AlertDescription>
+        </Alert>
+
     </DocsPageSectionHeader>
     <DocsPageSectionContent Outlined FullWidth>
         <WriteToStreamFileEditExample />
@@ -124,11 +164,55 @@
     <DocsPageSectionSource Code="ResetFileEditExample" />
 </DocsPageSection>
 
+<DocsPageSection>
+    <DocsPageSectionHeader Title="Show Picker">
+        <Paragraph>
+            If you want to show the <Anchor To="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/showPicker">default picker</Anchor> that comes with the file input element you can make it by using the <Code>ShowPicker()</Code> function.
+        </Paragraph>
+        <Paragraph>
+            <Strong TextColor="TextColor.Info">Note:</Strong> Keep in mind that not all browser will support the <Code>ShowPicker()</Code> function.
+        </Paragraph>
+    </DocsPageSectionHeader>
+    <DocsPageSectionContent Outlined FullWidth>
+        <FileEditShowPickerExample />
+    </DocsPageSectionContent>
+    <DocsPageSectionSource Code="FileEditShowPickerExample" />
+</DocsPageSection>
+
 <DocsPageSubtitle>
-    Attributes
+    Functions
 </DocsPageSubtitle>
 
+<Table>
+    <TableHeader ThemeContrast="ThemeContrast.Light">
+        <TableRow>
+            <TableHeaderCell>Name</TableHeaderCell>
+            <TableHeaderCell>Description</TableHeaderCell>
+        </TableRow>
+    </TableHeader>
+    <TableBody>
+        <TableRow>
+            <TableRowCell><Code>ShowPicker()</Code></TableRowCell>
+            <TableRowCell>Show a browser picker for the file input.</TableRowCell>
+        </TableRow>
+    </TableBody>
+</Table>
+
+<DocsPageSubtitle>
+    API
+</DocsPageSubtitle>
+
+<Heading Size="HeadingSize.Is3">
+    Attributes
+</Heading>
+
 <DocsAttributes>
+    <DocsAttributesItem Name="ChildContent" Type="RenderFragment">
+        Input content.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="Feedback" Type="RenderFragment">
+        Placeholder for validation messages.
+    </DocsAttributesItem>
     <DocsAttributesItem Name="AutoReset" Type="bool" Default="true">
         If true file input will be automatically reset after it has being uploaded.
     </DocsAttributesItem>
@@ -147,8 +231,14 @@
     <DocsAttributesItem Name="MaxChunkSize" Type="int" Default="20480">
         Max chunk size (in bytes) when uploading the file.
     </DocsAttributesItem>
+    <DocsAttributesItem Name="SegmentFetchTimeout" Type="TimeSpan" Default="TimeSpan.FromMinutes(1)">
+        Gets or sets the Segment Fetch Timeout when uploading the file.
+    </DocsAttributesItem>
     <DocsAttributesItem Name="Multiple" Type="bool" Default="false">
         Specifies that multiple files can be selected.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="Directory" Type="bool" Default="false">
+        Specifies that directories can be selected.
     </DocsAttributesItem>
     <DocsAttributesItem Name="Placeholder" Type="string" Default="null">
         Sets the placeholder for the empty file input.
@@ -164,5 +254,15 @@
     </DocsAttributesItem>
     <DocsAttributesItem Name="MaxFileSize" Type="long" Default="long.MaxValue">
         Maximum file size in bytes, checked before starting upload (note: never trust client, always check file size at server-side). Defaults to long.MaxValue.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="DisableProgressReport" Type="bool" Default="false">
+        Gets or sets whether report progress should be disabled. By enabling this setting, Progressed and Written callbacks won't be called. Internal file progress won't be tracked.
+        This setting can speed up file transfer considerably.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="ReadOnly" Type="bool" Default="false">
+        Add the readonly boolean attribute on an input to prevent modification of the input’s value.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="Disabled" Type="bool" Default="false">
+        Add the disabled boolean attribute on an input to prevent user interactions and make it appear lighter.
     </DocsAttributesItem>
 </DocsAttributes>

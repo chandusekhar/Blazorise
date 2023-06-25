@@ -1,15 +1,21 @@
 ﻿@page "/docs/components/numeric-picker"
 
-<Seo Canonical="/docs/components/numeric-picker" Title="Blazorise NumericPicker system" Description="Use NumericPicker to have a field for any kind if numeric values." />
+<Seo Canonical="/docs/components/numeric-picker" Title="Blazorise NumericPicker component" Description="Learn to use and work with the Blazorise NumericPicker component, which is a fully featured numeric input that lets users input numbers." />
 
-<DocsPageTitle>
-    NumericPicker component
+<DocsPageTitle Path="Components/Numeric Picker">
+    Blazorise NumericPicker component
 </DocsPageTitle>
+
+<DocsPageLead>
+    A customizable <Code>NumericPicker</Code> component allows you to enter numeric values and contains controls for increasing and reducing the value.
+</DocsPageLead>
 
 <DocsPageParagraph>
     Use <Code Tag>NumericPicker</Code> to have a field for any kind of numeric values.
-    All basic types are supported, including nullable types
-    (<Code>int</Code>, <Code>long</Code>, <Code>float</Code>, <Code>double</Code>, <Code>decimal</Code>, etc.).
+</DocsPageParagraph>
+
+<DocsPageParagraph>
+    All basic types are supported, including nullable types: (<Code>int</Code>, <Code>long</Code>, <Code>float</Code>, <Code>double</Code>, <Code>decimal</Code>, etc.).
 </DocsPageParagraph>
 
 <DocsPageSubtitle>
@@ -75,7 +81,7 @@
 
 <DocsPageSection>
     <DocsPageSectionHeader Title="Integer values">
-        To only allow the integer values without the decimals, you can set the <Code>Decimals="0"</Code>
+        If you define a <Code>TValue</Code> as an integer type, <Code>NumericPicker</Code> will automatically ignore <Code>Decimals</Code> parameter and you will only be able to enter number without decimals.
     </DocsPageSectionHeader>
     <DocsPageSectionContent Outlined FullWidth>
         <NumericPickerIntegerExample />
@@ -83,14 +89,23 @@
     <DocsPageSectionSource Code="NumericPickerIntegerExample" />
 </DocsPageSection>
 
+<DocsPageSection>
+    <DocsPageSectionHeader Title="Modify Value With Mouse Wheel">
+        Sometime you want to be able to change the value by scrolling with the mouse wheel when it is focused over the input. To enable it just use the <Code>ModifyValueOnWheel</Code> parameter.
+    </DocsPageSectionHeader>
+    <DocsPageSectionContent Outlined FullWidth>
+        <NumericPickerMouseWheelExample />
+    </DocsPageSectionContent>
+    <DocsPageSectionSource Code="NumericPickerMouseWheelExample" />
+</DocsPageSection>
+
 <DocsPageSubtitle>
-    Attributes
+    API
 </DocsPageSubtitle>
 
-<DocsPageParagraph>
-    NumericPicker is just a specialized version of <Code>TextEdit</Code> component so all of the rules and styles are still working
-    all the same. See <Link To="docs/components/text">TextEdit</Link> to find the list of supported attributes.
-</DocsPageParagraph>
+<Heading Size="HeadingSize.Is3">
+    Attributes
+</Heading>
 
 <DocsAttributes>
     <DocsAttributesItem Name="TValue" Type="generic">
@@ -158,5 +173,11 @@
     </DocsAttributesItem>
     <DocsAttributesItem Name="AlwaysAllowDecimalSeparator" Type="bool" Default="false">
         Defines if the decimal character or decimal character alternative should be accepted when there is already a decimal character shown in the element.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="ModifyValueOnWheel" Type="bool" Default="false">
+        Determine if the element value can be incremented / decremented with the mouse wheel.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="WheelOn" Type="NumericWheelOn" Default="Focus">
+        Used in conjonction with the <Code>ModifyValueOnWheel</Code> option, defines when the wheel event will increment or decrement the element value, either when the element is focused, or hovered.
     </DocsAttributesItem>
 </DocsAttributes>

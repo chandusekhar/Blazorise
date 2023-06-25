@@ -1,10 +1,14 @@
 ﻿@page "/docs/components/time-picker"
 
-<Seo Canonical="/docs/components/time-picker" Title="Blazorise TimePicker Component" Description="The TimePicker is stand-alone component that can be utilized in many existing Blazorise components. It offers the user a visual representation for selecting the time." />
+<Seo Canonical="/docs/components/time-picker" Title="Blazorise TimePicker Component" Description="Learn to use and work with the Blazorise TimePicker component, which is a fully featured time selection component that lets users select a time." />
 
-<DocsPageTitle>
-    TimePicker component
+<DocsPageTitle Path="Components/Time Picker">
+    Blazorise TimePicker component
 </DocsPageTitle>
+
+<DocsPageLead>
+    A customizable time input component with an option to manually write time or choose from a menu.
+</DocsPageLead>
 
 <DocsPageParagraph>
     The <Code Tag>TimePicker</Code> is stand-alone component that can be utilized in many existing Blazorise components. It offers the user a visual representation for selecting the time.
@@ -39,7 +43,36 @@
     <DocsPageSectionSource Code="TimePickerWithIconExample" />
 </DocsPageSection>
 
-<Heading Size="HeadingSize.Is2">
+<DocsPageSection>
+    <DocsPageSectionHeader Title="Inline Time">
+        To always show the time menu you just need to set <Code>Inline</Code> parameter.
+    </DocsPageSectionHeader>
+    <DocsPageSectionContent Outlined FullWidth>
+        <InlineTimePickerExample />
+    </DocsPageSectionContent>
+    <DocsPageSectionSource Code="InlineTimePickerExample" />
+</DocsPageSection>
+
+<DocsPageSection>
+    <DocsPageSectionHeader Title="Non Static example">
+        <Paragraph>
+            By default, the time menu will position statically. This means that it will also keep its position relative to the page when you scroll.
+        </Paragraph>
+        <Paragraph>
+            If you want to disable this behavior, you should assign the value false to the <Code>StaticPicker</Code> parameter.
+        </Paragraph>
+    </DocsPageSectionHeader>
+    <DocsPageSectionContent Outlined FullWidth>
+        <TimePickerNonStaticExample />
+    </DocsPageSectionContent>
+    <DocsPageSectionSource Code="TimePickerNonStaticExample" />
+</DocsPageSection>
+
+<DocsPageSubtitle>
+    API
+</DocsPageSubtitle>
+
+<Heading Size="HeadingSize.Is3">
     Attributes
 </Heading>
 
@@ -65,7 +98,13 @@
     <DocsAttributesItem Name="DisplayFormat" Type="string" Default="null">
         Defines the display format of the time.
     </DocsAttributesItem>
-    <DocsAttributesItem Name="TimeAs24hr" Type="bool " Default="false">
+    <DocsAttributesItem Name="TimeAs24hr" Type="bool" Default="false">
         Displays time picker in 24 hour mode without AM/PM selection when enabled.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="Inline" Type="bool" Default="false">
+        Display the time menu in an always-open state with the inline option.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="StaticPicker" Type="bool" Default="true">
+        If enabled, the time menu will be positioned as static.
     </DocsAttributesItem>
 </DocsAttributes>

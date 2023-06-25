@@ -1,4 +1,4 @@
-import { parseFunction, deepClone } from "./utilities.js";
+import { parseFunction, deepClone } from "./utilities.js?v=1.2.4.0";
 
 // workaround for: https://github.com/Megabit/Blazorise/issues/2287
 const _ChartTitleCallbacks = function (item) {
@@ -33,7 +33,7 @@ if (!Chart.overrides.doughnut.plugins.tooltip.callbacks.label) {
 
 const _instances = [];
 
-export function initialize(dotnetAdapter, eventOptions, canvas, canvasId, type, data, options, dataJsonString, optionsJsonString, optionsObject) {
+export function initialize(dotnetAdapter, eventOptions, canvas, canvasId, type, data, options, dataJsonString, optionsJsonString, optionsObject, pluginNames) {
     if (dataJsonString) {
         data = JSON.parse(dataJsonString);
     }
@@ -69,11 +69,11 @@ export function initialize(dotnetAdapter, eventOptions, canvas, canvasId, type, 
     canvas = canvas || document.getElementById(canvasId);
 
     if (canvas) {
-        const chart = createChart(dotnetAdapter, eventOptions, canvas, canvasId, type, data, options);
+        const chart = createChart(dotnetAdapter, eventOptions, canvas, canvasId, type, data, options, pluginNames);
 
         // save references to all elements
         _instances[canvasId] = {
-            dotNetRef: dotnetAdapter,
+            dotnetAdapter: dotnetAdapter,
             eventOptions: eventOptions,
             canvas: canvas,
             chart: chart
@@ -87,6 +87,7 @@ export function changeChartType(canvas, canvasId, type) {
     if (chart) {
         const data = chart.data;
         const options = deepClone(chart.options);
+        const instance = _instances[canvasId];
 
         if (data && data.datasets) {
             data.datasets.forEach((ds) => {
@@ -96,22 +97,37 @@ export function changeChartType(canvas, canvasId, type) {
 
         chart.destroy();
 
-        chart = createChart(_instances[canvasId].dotnetAdapter, _instances[canvasId].eventOptions, canvas, canvas, type, data, options);
+        chart = createChart(instance.dotnetAdapter, instance.eventOptions, canvas, canvas, type, data, options, instance.pluginNames);
 
         _instances[canvasId].chart = chart;
     }
 }
 
-function createChart(dotnetAdapter, eventOptions, canvas, canvasId, type, data, options) {
+function createChart(dotnetAdapter, eventOptions, canvas, canvasId, type, data, options, pluginNames) {
     // save the copy of the received options
     const originalOptions = deepClone(options);
 
     options = compileOptionCallbacks(options);
 
+    const plugins = [];
+
+    if (pluginNames) {
+        if (pluginNames.includes("DataLabels") && ChartDataLabels) {
+            plugins.push(ChartDataLabels);
+        }
+
+        if (pluginNames.includes("Streaming")) {
+            plugins.push({
+                duration: 20000
+            });
+        }
+    }
+
     const chart = new Chart(canvas, {
         type: type,
         data: data,
-        options: options
+        options: options,
+        plugins: plugins
     });
 
     chart.originalOptions = originalOptions;
@@ -138,13 +154,17 @@ export function compileOptionCallbacks(options) {
 export function destroy(canvas, canvasId) {
     var instances = _instances || {};
 
-    const chart = instances[canvasId].chart;
+    const instance = instances[canvasId];
 
-    if (chart) {
-        chart.destroy();
+    if (instance) {
+        const chart = instance.chart;
+
+        if (chart) {
+            chart.destroy();
+        }
+
+        delete instances[canvasId];
     }
-
-    delete instances[canvasId];
 }
 
 export function setOptions(canvasId, options, optionsJsonString, optionsObject) {
@@ -169,7 +189,9 @@ export function setOptions(canvasId, options, optionsJsonString, optionsObject) 
         // Due to a bug in chartjs we need to set aspectRatio directly on chart instance
         // instead of through the options.
         if (options.aspectRatio) {
-            chart.aspectRatio = options.aspectRatio;
+            chart._aspectRatio = options.aspectRatio;
+
+            chart.resize();
         }
     }
 }

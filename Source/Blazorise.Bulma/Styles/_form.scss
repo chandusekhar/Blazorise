@@ -121,3 +121,12 @@ select[readonly] {
         display: none;
     }
 }
+
+.focus-trap {
+    display: contents;
+}
+
+.field-label-required:after {
+    content: " *";
+    color: var(--b-theme-danger, $danger);
+}

@@ -1,10 +1,14 @@
 ﻿@page "/docs/components/alert"
 
-<Seo Canonical="/docs/components/alert" Title="Blazorise Alert component" Description="The Alert component is used to convey important information to the user through the use of contextual types, icons, and colors." />
+<Seo Canonical="/docs/components/alert" Title="Blazorise Alert component" Description="Learn to work with the Blazorise Alert component, which is used to convey important information to the user through the use of contextual types, icons, and colors." />
 
-<DocsPageTitle>
-    Alert component
+<DocsPageTitle Path="Components/Alert">
+    Blazorise Alert component
 </DocsPageTitle>
+
+<DocsPageLead>
+    Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.
+</DocsPageLead>
 
 <DocsPageParagraph>
     The <Code Tag>Alert</Code> component is used to convey important information to the user through the use of contextual types, icons, and colors.
@@ -16,16 +20,16 @@
 
 <UnorderedList>
     <UnorderedListItem>
-        <Code>Alert</Code> main container.
+        <Code Tag>Alert</Code> main container.
         <UnorderedList>
             <UnorderedListItem>
-                <Code>AlertMessage</Code> content of the Alert.
+                <Code Tag>AlertMessage</Code> content of the Alert.
             </UnorderedListItem>
             <UnorderedListItem>
-                <Code>AlertDescription</Code>additional content of the Alert.
+                <Code Tag>AlertDescription</Code>additional content of the Alert.
             </UnorderedListItem>
             <UnorderedListItem>
-                <Code>CloseButton</Code> an optional button to close the Alert.
+                <Code Tag>CloseButton</Code> an optional button to close the Alert.
             </UnorderedListItem>
         </UnorderedList>
     </UnorderedListItem>
@@ -58,7 +62,7 @@
 </DocsPageSection>
 
 <DocsPageSection>
-    <DocsPageSectionHeader Title="Basic">
+    <DocsPageSectionHeader Title="Close button">
         You can also add a <Code>CloseButton</Code>.
     </DocsPageSectionHeader>
     <DocsPageSectionContent Outlined FullWidth>
@@ -68,7 +72,7 @@
 </DocsPageSection>
 
 <DocsPageSection>
-    <DocsPageSectionHeader Title="With content">
+    <DocsPageSectionHeader Title="Extra content">
         <Code Tag>Alert</Code> can also contain additional HTML elements like headings and paragraphs, which will be styled with the appropriate color matching the variant.
     </DocsPageSectionHeader>
     <DocsPageSectionContent Outlined FullWidth>
@@ -101,35 +105,28 @@
 </DocsPageSection>
 
 <DocsPageSubtitle>
-    Functions
+    API
 </DocsPageSubtitle>
 
-<Table>
-    <TableHeader ThemeContrast="ThemeContrast.Light">
-        <TableRow>
-            <TableHeaderCell>Name</TableHeaderCell>
-            <TableHeaderCell>Description</TableHeaderCell>
-        </TableRow>
-    </TableHeader>
-    <TableBody>
-        <TableRow>
-            <TableRowCell><Code>Show()</Code></TableRowCell>
-            <TableRowCell>Makes the alert visible.</TableRowCell>
-        </TableRow>
-        <TableRow>
-            <TableRowCell><Code>Hide()</Code></TableRowCell>
-            <TableRowCell>Hides the alert.</TableRowCell>
-        </TableRow>
-        <TableRow>
-            <TableRowCell><Code>Toggle()</Code></TableRowCell>
-            <TableRowCell>Switches the alert visibility.</TableRowCell>
-        </TableRow>
-    </TableBody>
-</Table>
+<Heading Size="HeadingSize.Is3">
+    Methods
+</Heading>
 
-<DocsPageSubtitle>
+<DocsMethods>
+    <DocsMethodsItem Name="Show()" ReturnType="Task">
+        Makes the alert visible.
+    </DocsMethodsItem>
+    <DocsMethodsItem Name="Hide()" ReturnType="Task">
+        Hides the alert.
+    </DocsMethodsItem>
+    <DocsMethodsItem Name="Toggle()" ReturnType="Task">
+        Switches the alert visibility.
+    </DocsMethodsItem>
+</DocsMethods>
+
+<Heading Size="HeadingSize.Is3">
     Attributes
-</DocsPageSubtitle>
+</Heading>
 
 <DocsAttributes>
     <DocsAttributesItem Name="Dismisable" Type="bool" Default="false">

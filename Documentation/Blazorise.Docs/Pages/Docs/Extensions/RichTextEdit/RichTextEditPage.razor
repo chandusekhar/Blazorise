@@ -1,13 +1,17 @@
 ﻿@page "/docs/extensions/richtextedit"
 
-<Seo Canonical="/docs/extensions/richtextedit" Title="Blazorise RichTextEdit" Description="Learn how to use Blazorise RichTextEdit extension components." />
+<Seo Canonical="/docs/extensions/richtextedit" Title="Blazorise RichTextEdit component" Description="Learn to use and work with the Blazorise RichTextEdit component, which allows you to add and use a ‘WYSIWYG’ rich text editor." />
 
-<DocsPageTitle>
-    RichTextEdit
+<DocsPageTitle Path="Extensions/RichTextEdit">
+    Blazorise RichTextEdit component
 </DocsPageTitle>
 
+<DocsPageLead>
+    The <Code>RichTextEdit</Code> component allows you to add and use a ‘WYSIWYG’ rich text editor.
+</DocsPageLead>
+
 <DocsPageParagraph>
-    The <Code>RichTextEdit</Code> component allows you to add and use a ‘WYSIWYG’ rich text editor. The Blazorise RichTextEdit is based on the <Blazorise.Link To="https://quilljs.com/" Target="Target.Blank">QuillJS</Blazorise.Link> JavaScript library.
+    The Blazorise RichTextEdit is based on the <Blazorise.Link To="https://quilljs.com/" Target="Target.Blank">QuillJS</Blazorise.Link> JavaScript library.
 </DocsPageParagraph>
 
 <UnorderedList>
@@ -50,7 +54,7 @@
 
 <DocsPageSection>
     <DocsPageSectionHeader Title="Imports">
-        In your main Imports.razor add:
+        In your main <Badge Color="Color.Light">_Imports.razor</Badge> add:
     </DocsPageSectionHeader>
     <DocsPageSectionSource Code="RichTextEditImportsExample"></DocsPageSectionSource>
 </DocsPageSection>
@@ -125,8 +129,12 @@
 </DocsPageSection>
 
 <DocsPageSubtitle>
-    Attributes
+    API
 </DocsPageSubtitle>
+
+<Heading Size="HeadingSize.Is3">
+    Attributes
+</Heading>
 
 <DocsAttributes Title="RichTextEdit">
     <DocsAttributesItem Name="Toolbar" Type="markup">

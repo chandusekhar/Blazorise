@@ -1,16 +1,18 @@
 ﻿@page "/docs/extensions/chart-live"
 
-<Seo Canonical="/docs/extensions/chart-live" Title="Blazorise Chart Streaming" Description="Learn how to use Blazorise chart streaming extension components." />
+<Seo Canonical="/docs/extensions/chart-live" Title="Blazorise Chart Streaming component" Description="Learn to use and work with the Blazorise Chart streaming extension, Chart.js plugin for live streaming data." />
 
-<DocsPageTitle>
-    Chart Streaming
+<DocsPageTitle Path="Extensions/Chart Streaming">
+    Blazorise Chart Streaming
 </DocsPageTitle>
 
-<DocsPageSection>
-    <DocsPageSectionHeader Title="Streaming">
-        Live streaming is made possible with the help of <Blazorise.Link To="https://nagix.github.io/chartjs-plugin-streaming/latest/" Target="Target.Blank">chartjs-plugin-streaming</Blazorise.Link>.
-    </DocsPageSectionHeader>
-</DocsPageSection>
+<DocsPageLead>
+    Chart plugin for live streaming data.
+</DocsPageLead>
+
+<DocsPageParagraph>
+    Live streaming is made possible with the help of <Anchor To="https://nagix.github.io/chartjs-plugin-streaming/latest/" Title="Link to chart streaming plugin" Target="Target.Blank">chartjs-plugin-streaming</Anchor>.
+</DocsPageParagraph>
 
 <DocsPageSubtitle>
     Installation
@@ -25,15 +27,56 @@
 
 <DocsPageSection>
     <DocsPageSectionHeader Title="Static Files">
-        Include the necessary files into your <Code>index.html</Code> or <Code>_Host.cshtml</Code> file, depending if you’re using a Blazor WebAssembly or Blazor Server side project.
+        Include the necessary files into your <Code>index.html</Code> or <Code>_Layout.cshtml</Code> / <Code>_Host.cshtml</Code> file, depending if you’re using a Blazor WebAssembly or Blazor Server side project.
     </DocsPageSectionHeader>
     <DocsPageSectionSource Code="ChartStreamingResourcesExample" />
 </DocsPageSection>
 
+<DocsPageSubtitle>
+    Examples
+</DocsPageSubtitle>
+
 <DocsPageSection>
-    <DocsPageSectionHeader Title="Example" />
+    <DocsPageSectionHeader Title="Basic Example" />
     <DocsPageSectionContent Outlined FullWidth>
         <ChartStreamingExample />
     </DocsPageSectionContent>
     <DocsPageSectionSource Code="ChartStreamingExample" />
 </DocsPageSection>
+
+<DocsPageSection>
+    <DocsPageSectionHeader Title="Pause/Play">
+        Making the stream pause and play is very simple. You only need to add a <Code>@@ref</Code> to the <Code>ChartStreaming</Code> and the call <Code>.Pause()</Code> or <Code>.Play()</Code> methods.
+    </DocsPageSectionHeader>
+    <DocsPageSectionContent Outlined FullWidth>
+        <ChartStreamingPauseExample />
+    </DocsPageSectionContent>
+    <DocsPageSectionSource Code="ChartStreamingPauseExample" />
+</DocsPageSection>
+
+<DocsPageSubtitle>
+    API
+</DocsPageSubtitle>
+
+<Heading Size="HeadingSize.Is3">
+    Methods
+</Heading>
+
+<Table>
+    <TableHeader ThemeContrast="ThemeContrast.Light">
+        <TableRow>
+            <TableHeaderCell>Name</TableHeaderCell>
+            <TableHeaderCell>Description</TableHeaderCell>
+        </TableRow>
+    </TableHeader>
+    <TableBody>
+        <TableRow>
+            <TableRowCell><Code>Pause()</Code></TableRowCell>
+            <TableRowCell>Pauses the current chart streaming.</TableRowCell>
+        </TableRow>
+        <TableRow>
+            <TableRowCell><Code>Play()</Code></TableRowCell>
+            <TableRowCell>Plays the current chart streaming.</TableRowCell>
+        </TableRow>
+    </TableBody>
+</Table>

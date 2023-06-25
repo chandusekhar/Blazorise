@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Blazorise.Docs.Compiler
+namespace Blazorise.Docs.Compiler;
+
+class Program
 {
-    class Program
+    static int Main()
     {
-        static int Main()
-        {
-            var stopWatch = Stopwatch.StartNew();
-            var success =
-                new CodeSnippets().Execute()
-                && new ExamplesMarkup().Execute();
+        var stopWatch = Stopwatch.StartNew();
 
-            Console.WriteLine( $"Blazorise.Docs.Compiler completed in {stopWatch.ElapsedMilliseconds} milliseconds." );
+        var blogMarkdownResult = new BlogMarkdown().Execute();
+        var codeSnippetResult = new CodeSnippets().Execute();
+        var codeExamplesResult = new CodeExamplesMarkup().Execute();
 
-            return success ? 0 : 1;
-        }
+        Console.WriteLine( $"Blazorise.Docs.Compiler completed in {stopWatch.ElapsedMilliseconds} milliseconds." );
+
+        return blogMarkdownResult && codeSnippetResult && codeExamplesResult ? 0 : 1;
     }
 }

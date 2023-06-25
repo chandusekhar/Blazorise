@@ -3,322 +3,342 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 #endregion
 
-namespace Blazorise.Charts
+namespace Blazorise.Charts;
+
+public class ChartModel
 {
-    public class ChartModel
-    {
-        [JsonPropertyName( "x" )]
-        public double X { get; set; }
+    [JsonPropertyName( "x" )]
+    public double X { get; set; }
 
-        [JsonPropertyName( "y" )]
-        public double Y { get; set; }
-    }
+    [JsonPropertyName( "y" )]
+    public double Y { get; set; }
+}
 
-    /* ======== IMPORTANT ========
-    * The reason why base ChartModel class is not used is because the Blazor serializer does not support inheritance.
-    * Until that is fixed we must write every model without inherit fields.
-    * =========================== */
+/* ======== IMPORTANT ========
+* The reason why base ChartModel class is not used is because the Blazor serializer does not support inheritance.
+* Until that is fixed we must write every model without inherit fields.
+* =========================== */
 
-    public class LineChartModel : ChartModel
-    {
-        [JsonPropertyName( "label" )]
-        public string Label { get; set; }
+public class LineChartModel : ChartModel
+{
+    [JsonPropertyName( "label" )]
+    public string Label { get; set; }
 
-        [JsonPropertyName( "backgroundColor" )]
-        public string BackgroundColor { get; set; }
+    [JsonPropertyName( "datasetLabel" )]
+    public string DatasetLabel { get; set; }
 
-        [JsonPropertyName( "borderColor" )]
-        public string BorderColor { get; set; }
+    [JsonPropertyName( "backgroundColor" )]
+    public string BackgroundColor { get; set; }
 
-        [JsonPropertyName( "borderWidth" )]
-        public double BorderWidth { get; set; }
+    [JsonPropertyName( "borderColor" )]
+    public string BorderColor { get; set; }
 
-        [JsonPropertyName( "controlPointNextX" )]
-        public double ControlPointNextX { get; set; }
+    [JsonPropertyName( "borderWidth" )]
+    public double BorderWidth { get; set; }
 
-        [JsonPropertyName( "controlPointNextY" )]
-        public double ControlPointNextY { get; set; }
+    [JsonPropertyName( "controlPointNextX" )]
+    public double ControlPointNextX { get; set; }
 
-        [JsonPropertyName( "controlPointPreviousX" )]
-        public double ControlPointPreviousX { get; set; }
+    [JsonPropertyName( "controlPointNextY" )]
+    public double ControlPointNextY { get; set; }
 
-        [JsonPropertyName( "controlPointPreviousY" )]
-        public double ControlPointPreviousY { get; set; }
+    [JsonPropertyName( "controlPointPreviousX" )]
+    public double ControlPointPreviousX { get; set; }
 
-        [JsonPropertyName( "hitRadius" )]
-        public double HitRadius { get; set; }
+    [JsonPropertyName( "controlPointPreviousY" )]
+    public double ControlPointPreviousY { get; set; }
 
-        [JsonPropertyName( "pointStyle" )]
-        public string PointStyle { get; set; }
+    [JsonPropertyName( "hitRadius" )]
+    public double HitRadius { get; set; }
 
-        [JsonPropertyName( "radius" )]
-        public double Radius { get; set; }
+    [JsonPropertyName( "pointStyle" )]
+    public string PointStyle { get; set; }
 
-        [JsonPropertyName( "skip" )]
-        public bool Skip { get; set; }
+    [JsonPropertyName( "radius" )]
+    public double Radius { get; set; }
 
-        [JsonPropertyName( "steppedLine" )]
-        public bool SteppedLine { get; set; }
+    [JsonPropertyName( "skip" )]
+    public bool Skip { get; set; }
 
-        [JsonPropertyName( "tension" )]
-        public double Tension { get; set; }
+    [JsonPropertyName( "steppedLine" )]
+    public bool SteppedLine { get; set; }
 
-        //[JsonPropertyName( "x" )]
-        //public double X { get; set; }
+    [JsonPropertyName( "tension" )]
+    public double Tension { get; set; }
 
-        //[JsonPropertyName( "y" )]
-        //public double Y { get; set; }
-    }
+    //[JsonPropertyName( "x" )]
+    //public double X { get; set; }
 
-    public class BarChartModel : ChartModel
-    {
-        [JsonPropertyName( "label" )]
-        public string Label { get; set; }
+    //[JsonPropertyName( "y" )]
+    //public double Y { get; set; }
+}
 
-        [JsonPropertyName( "datasetLabel" )]
-        public string DatasetLabel { get; set; }
+public class BarChartModel : ChartModel
+{
+    [JsonPropertyName( "label" )]
+    public string Label { get; set; }
 
-        [JsonPropertyName( "backgroundColor" )]
-        public string BackgroundColor { get; set; }
+    [JsonPropertyName( "datasetLabel" )]
+    public string DatasetLabel { get; set; }
 
-        [JsonPropertyName( "borderColor" )]
-        public string BorderColor { get; set; }
+    [JsonPropertyName( "backgroundColor" )]
+    public string BackgroundColor { get; set; }
 
-        [JsonPropertyName( "borderWidth" )]
-        public double BorderWidth { get; set; }
+    [JsonPropertyName( "borderColor" )]
+    public string BorderColor { get; set; }
 
-        [JsonPropertyName( "borderSkipped" )]
-        public string BorderSkipped { get; set; }
+    [JsonPropertyName( "borderWidth" )]
+    public double BorderWidth { get; set; }
 
-        [JsonPropertyName( "base" )]
-        public double Base { get; set; }
+    [JsonPropertyName( "borderSkipped" )]
+    public string BorderSkipped { get; set; }
 
-        [JsonPropertyName( "horizontal" )]
-        public bool Horizontal { get; set; }
+    [JsonPropertyName( "base" )]
+    public double Base { get; set; }
 
-        //[JsonPropertyName( "x" )]
-        //public double X { get; set; }
+    [JsonPropertyName( "horizontal" )]
+    public bool Horizontal { get; set; }
 
-        //[JsonPropertyName( "y" )]
-        //public double Y { get; set; }
+    //[JsonPropertyName( "x" )]
+    //public double X { get; set; }
 
-        [JsonPropertyName( "width" )]
-        public double Width { get; set; }
-    }
+    //[JsonPropertyName( "y" )]
+    //public double Y { get; set; }
 
-    public class DoughnutChartModel : ChartModel
-    {
-        [JsonPropertyName( "label" )]
-        public string Label { get; set; }
+    [JsonPropertyName( "width" )]
+    public double Width { get; set; }
+}
 
-        [JsonPropertyName( "backgroundColor" )]
-        public string BackgroundColor { get; set; }
+public class DoughnutChartModel : ChartModel
+{
+    [JsonPropertyName( "label" )]
+    public string Label { get; set; }
 
-        [JsonPropertyName( "borderColor" )]
-        public string BorderColor { get; set; }
+    [JsonPropertyName( "datasetLabel" )]
+    public string DatasetLabel { get; set; }
 
-        [JsonPropertyName( "borderWidth" )]
-        public double BorderWidth { get; set; }
+    [JsonPropertyName( "backgroundColor" )]
+    public string BackgroundColor { get; set; }
 
-        [JsonPropertyName( "circumference" )]
-        public double Circumference { get; set; }
+    [JsonPropertyName( "borderColor" )]
+    public string BorderColor { get; set; }
 
-        [JsonPropertyName( "startAngle" )]
-        public double StartAngle { get; set; }
+    [JsonPropertyName( "borderWidth" )]
+    public double BorderWidth { get; set; }
 
-        [JsonPropertyName( "endAngle" )]
-        public double EndAngle { get; set; }
+    [JsonPropertyName( "circumference" )]
+    public double Circumference { get; set; }
 
-        [JsonPropertyName( "outerRadius" )]
-        public double OuterRadius { get; set; }
+    [JsonPropertyName( "startAngle" )]
+    public double StartAngle { get; set; }
 
-        [JsonPropertyName( "innerRadius" )]
-        public double InnerRadius { get; set; }
+    [JsonPropertyName( "endAngle" )]
+    public double EndAngle { get; set; }
 
-        //[JsonPropertyName( "x" )]
-        //public double X { get; set; }
+    [JsonPropertyName( "outerRadius" )]
+    public double OuterRadius { get; set; }
 
-        //[JsonPropertyName( "y" )]
-        //public double Y { get; set; }
-    }
+    [JsonPropertyName( "innerRadius" )]
+    public double InnerRadius { get; set; }
 
-    public class PieChartModel : ChartModel
-    {
-        [JsonPropertyName( "label" )]
-        public string Label { get; set; }
+    //[JsonPropertyName( "x" )]
+    //public double X { get; set; }
 
-        [JsonPropertyName( "backgroundColor" )]
-        public string BackgroundColor { get; set; }
+    //[JsonPropertyName( "y" )]
+    //public double Y { get; set; }
+}
 
-        [JsonPropertyName( "borderColor" )]
-        public string BorderColor { get; set; }
+public class PieChartModel : ChartModel
+{
+    [JsonPropertyName( "label" )]
+    public string Label { get; set; }
 
-        [JsonPropertyName( "borderWidth" )]
-        public double BorderWidth { get; set; }
+    [JsonPropertyName( "datasetLabel" )]
+    public string DatasetLabel { get; set; }
 
-        [JsonPropertyName( "circumference" )]
-        public double Circumference { get; set; }
+    [JsonPropertyName( "backgroundColor" )]
+    public string BackgroundColor { get; set; }
 
-        [JsonPropertyName( "startAngle" )]
-        public double StartAngle { get; set; }
+    [JsonPropertyName( "borderColor" )]
+    public string BorderColor { get; set; }
 
-        [JsonPropertyName( "endAngle" )]
-        public double EndAngle { get; set; }
+    [JsonPropertyName( "borderWidth" )]
+    public double BorderWidth { get; set; }
 
-        [JsonPropertyName( "outerRadius" )]
-        public double OuterRadius { get; set; }
+    [JsonPropertyName( "circumference" )]
+    public double Circumference { get; set; }
 
-        [JsonPropertyName( "innerRadius" )]
-        public double InnerRadius { get; set; }
+    [JsonPropertyName( "startAngle" )]
+    public double StartAngle { get; set; }
 
-        //[JsonPropertyName( "x" )]
-        //public double X { get; set; }
+    [JsonPropertyName( "endAngle" )]
+    public double EndAngle { get; set; }
 
-        //[JsonPropertyName( "y" )]
-        //public double Y { get; set; }
-    }
+    [JsonPropertyName( "outerRadius" )]
+    public double OuterRadius { get; set; }
 
-    public class PolarChartModel : ChartModel
-    {
-        [JsonPropertyName( "label" )]
-        public string Label { get; set; }
+    [JsonPropertyName( "innerRadius" )]
+    public double InnerRadius { get; set; }
 
-        [JsonPropertyName( "backgroundColor" )]
-        public string BackgroundColor { get; set; }
+    //[JsonPropertyName( "x" )]
+    //public double X { get; set; }
 
-        [JsonPropertyName( "borderColor" )]
-        public string BorderColor { get; set; }
+    //[JsonPropertyName( "y" )]
+    //public double Y { get; set; }
+}
 
-        [JsonPropertyName( "startAngle" )]
-        public double StartAngle { get; set; }
+public class PolarChartModel : ChartModel
+{
+    [JsonPropertyName( "label" )]
+    public string Label { get; set; }
 
-        [JsonPropertyName( "endAngle" )]
-        public double EndAngle { get; set; }
+    [JsonPropertyName( "datasetLabel" )]
+    public string DatasetLabel { get; set; }
 
-        [JsonPropertyName( "outerRadius" )]
-        public double OuterRadius { get; set; }
+    [JsonPropertyName( "backgroundColor" )]
+    public string BackgroundColor { get; set; }
 
-        [JsonPropertyName( "innerRadius" )]
-        public double InnerRadius { get; set; }
+    [JsonPropertyName( "borderColor" )]
+    public string BorderColor { get; set; }
 
-        //[JsonPropertyName( "x" )]
-        //public double X { get; set; }
+    [JsonPropertyName( "startAngle" )]
+    public double StartAngle { get; set; }
 
-        //[JsonPropertyName( "y" )]
-        //public double Y { get; set; }
-    }
+    [JsonPropertyName( "endAngle" )]
+    public double EndAngle { get; set; }
 
-    public class RadarChartModel : ChartModel
-    {
-        [JsonPropertyName( "label" )]
-        public string Label { get; set; }
+    [JsonPropertyName( "outerRadius" )]
+    public double OuterRadius { get; set; }
 
-        [JsonPropertyName( "backgroundColor" )]
-        public string BackgroundColor { get; set; }
+    [JsonPropertyName( "innerRadius" )]
+    public double InnerRadius { get; set; }
 
-        [JsonPropertyName( "borderColor" )]
-        public string BorderColor { get; set; }
+    //[JsonPropertyName( "x" )]
+    //public double X { get; set; }
 
-        [JsonPropertyName( "borderWidth" )]
-        public double BorderWidth { get; set; }
+    //[JsonPropertyName( "y" )]
+    //public double Y { get; set; }
+}
 
-        [JsonPropertyName( "controlPointNextX" )]
-        public double ControlPointNextX { get; set; }
+public class RadarChartModel : ChartModel
+{
+    [JsonPropertyName( "label" )]
+    public string Label { get; set; }
 
-        [JsonPropertyName( "controlPointNextY" )]
-        public double ControlPointNextY { get; set; }
+    [JsonPropertyName( "datasetLabel" )]
+    public string DatasetLabel { get; set; }
 
-        [JsonPropertyName( "controlPointPreviousX" )]
-        public double ControlPointPreviousX { get; set; }
+    [JsonPropertyName( "backgroundColor" )]
+    public string BackgroundColor { get; set; }
 
-        [JsonPropertyName( "controlPointPreviousY" )]
-        public double ControlPointPreviousY { get; set; }
+    [JsonPropertyName( "borderColor" )]
+    public string BorderColor { get; set; }
 
-        [JsonPropertyName( "hitRadius" )]
-        public double HitRadius { get; set; }
+    [JsonPropertyName( "borderWidth" )]
+    public double BorderWidth { get; set; }
 
-        [JsonPropertyName( "pointStyle" )]
-        public string PointStyle { get; set; }
+    [JsonPropertyName( "controlPointNextX" )]
+    public double ControlPointNextX { get; set; }
 
-        [JsonPropertyName( "radius" )]
-        public double Radius { get; set; }
+    [JsonPropertyName( "controlPointNextY" )]
+    public double ControlPointNextY { get; set; }
 
-        [JsonPropertyName( "skip" )]
-        public bool Skip { get; set; }
+    [JsonPropertyName( "controlPointPreviousX" )]
+    public double ControlPointPreviousX { get; set; }
 
-        [JsonPropertyName( "tension" )]
-        public double Tension { get; set; }
+    [JsonPropertyName( "controlPointPreviousY" )]
+    public double ControlPointPreviousY { get; set; }
 
-        //[JsonPropertyName( "x" )]
-        //public double X { get; set; }
+    [JsonPropertyName( "hitRadius" )]
+    public double HitRadius { get; set; }
 
-        //[JsonPropertyName( "y" )]
-        //public double Y { get; set; }
-    }
+    [JsonPropertyName( "pointStyle" )]
+    public string PointStyle { get; set; }
 
-    public class ScatterChartModel : ChartModel
-    {
-        [JsonPropertyName( "backgroundColor" )]
-        public string BackgroundColor { get; set; }
+    [JsonPropertyName( "radius" )]
+    public double Radius { get; set; }
 
-        [JsonPropertyName( "borderColor" )]
-        public string BorderColor { get; set; }
+    [JsonPropertyName( "skip" )]
+    public bool Skip { get; set; }
 
-        [JsonPropertyName( "borderWidth" )]
-        public double BorderWidth { get; set; }
+    [JsonPropertyName( "tension" )]
+    public double Tension { get; set; }
 
-        [JsonPropertyName( "hitRadius" )]
-        public double HitRadius { get; set; }
+    //[JsonPropertyName( "x" )]
+    //public double X { get; set; }
 
-        [JsonPropertyName( "hoverBorderWidth" )]
-        public double HoverBorderWidth { get; set; }
+    //[JsonPropertyName( "y" )]
+    //public double Y { get; set; }
+}
 
-        [JsonPropertyName( "hoverRadius" )]
-        public double HoverRadius { get; set; }
+public class ScatterChartModel : ChartModel
+{
+    [JsonPropertyName( "datasetLabel" )]
+    public string DatasetLabel { get; set; }
 
-        [JsonPropertyName( "pointStyle" )]
-        public string PointStyle { get; set; }
+    [JsonPropertyName( "backgroundColor" )]
+    public string BackgroundColor { get; set; }
 
-        [JsonPropertyName( "radius" )]
-        public double Radius { get; set; }
+    [JsonPropertyName( "borderColor" )]
+    public string BorderColor { get; set; }
 
-        [JsonPropertyName( "skip" )]
-        public bool Skip { get; set; }
+    [JsonPropertyName( "borderWidth" )]
+    public double BorderWidth { get; set; }
 
-        [JsonPropertyName( "stop" )]
-        public bool Stop { get; set; }
-    }
+    [JsonPropertyName( "hitRadius" )]
+    public double HitRadius { get; set; }
 
-    public class BubbleChartModel : ChartModel
-    {
-        [JsonPropertyName( "backgroundColor" )]
-        public string BackgroundColor { get; set; }
+    [JsonPropertyName( "hoverBorderWidth" )]
+    public double HoverBorderWidth { get; set; }
 
-        [JsonPropertyName( "borderColor" )]
-        public string BorderColor { get; set; }
+    [JsonPropertyName( "hoverRadius" )]
+    public double HoverRadius { get; set; }
 
-        [JsonPropertyName( "borderWidth" )]
-        public double BorderWidth { get; set; }
+    [JsonPropertyName( "pointStyle" )]
+    public string PointStyle { get; set; }
 
-        [JsonPropertyName( "hitRadius" )]
-        public double HitRadius { get; set; }
+    [JsonPropertyName( "radius" )]
+    public double Radius { get; set; }
 
-        [JsonPropertyName( "hoverBorderWidth" )]
-        public double HoverBorderWidth { get; set; }
+    [JsonPropertyName( "skip" )]
+    public bool Skip { get; set; }
 
-        [JsonPropertyName( "hoverRadius" )]
-        public double HoverRadius { get; set; }
+    [JsonPropertyName( "stop" )]
+    public bool Stop { get; set; }
+}
 
-        [JsonPropertyName( "pointStyle" )]
-        public string PointStyle { get; set; }
+public class BubbleChartModel : ChartModel
+{
+    [JsonPropertyName( "datasetLabel" )]
+    public string DatasetLabel { get; set; }
 
-        [JsonPropertyName( "radius" )]
-        public double Radius { get; set; }
+    [JsonPropertyName( "backgroundColor" )]
+    public string BackgroundColor { get; set; }
 
-        [JsonPropertyName( "skip" )]
-        public bool Skip { get; set; }
+    [JsonPropertyName( "borderColor" )]
+    public string BorderColor { get; set; }
 
-        [JsonPropertyName( "stop" )]
-        public bool Stop { get; set; }
-    }
+    [JsonPropertyName( "borderWidth" )]
+    public double BorderWidth { get; set; }
+
+    [JsonPropertyName( "hitRadius" )]
+    public double HitRadius { get; set; }
+
+    [JsonPropertyName( "hoverBorderWidth" )]
+    public double HoverBorderWidth { get; set; }
+
+    [JsonPropertyName( "hoverRadius" )]
+    public double HoverRadius { get; set; }
+
+    [JsonPropertyName( "pointStyle" )]
+    public string PointStyle { get; set; }
+
+    [JsonPropertyName( "radius" )]
+    public double Radius { get; set; }
+
+    [JsonPropertyName( "skip" )]
+    public bool Skip { get; set; }
+
+    [JsonPropertyName( "stop" )]
+    public bool Stop { get; set; }
 }

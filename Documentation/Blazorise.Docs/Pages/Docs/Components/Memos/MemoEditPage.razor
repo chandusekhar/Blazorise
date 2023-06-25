@@ -1,18 +1,18 @@
 ﻿@page "/docs/components/memo"
 
-<Seo Canonical="/docs/components/memo" Title="Blazorise MemoEdit system" Description="MemoEdit is used to create multiline text input (textarea)." />
+<Seo Canonical="/docs/components/memo" Title="Blazorise MemoEdit system" Description="Learn to use and work with the Blazorise MemoEdit component, which is used to create multiline text input (textarea)." />
 
-<DocsPageTitle>
-    MemoEdit component
+<DocsPageTitle Path="Components/Memo Edit">
+    Blazorise MemoEdit component
 </DocsPageTitle>
 
-<DocsPageParagraph>
-    MemoEdit is used to create multiline text input (<Code Tag>textarea</Code>).
-</DocsPageParagraph>
+<DocsPageLead>
+    MemoEdit collect data from the user and allow multiple lines of text.
+</DocsPageLead>
 
-<DocsPageSubtitle>
-    Examples
-</DocsPageSubtitle>
+<DocsPageParagraph>
+    MemoEdit is an input field component for multi-line text input based on a <Code Tag>textarea</Code> element.
+</DocsPageParagraph>
 
 <DocsPageSection>
     <DocsPageSectionHeader Title="Basic">
@@ -36,7 +36,7 @@
 
 <DocsPageSection>
     <DocsPageSectionHeader Title="Auto size">
-        If you want to grow the <Code>MemoEdit</Code> along with its content they you just need to define an <Code>AutoSize</Code> parameter.
+        Unless set to a fixed height, MemoEdit adjusts its height automatically based on its content. The default and minimum height is two rows of text.
     </DocsPageSectionHeader>
     <DocsPageSectionContent Outlined FullWidth>
         <MemoEditAutoSizeExample />
@@ -101,8 +101,12 @@
 </Alert>
 
 <DocsPageSubtitle>
-    Attributes
+    API
 </DocsPageSubtitle>
+
+<Heading Size="HeadingSize.Is3">
+    Attributes
+</Heading>
 
 <DocsAttributes>
     <DocsAttributesItem Name="Text" Type="string" Default="null">

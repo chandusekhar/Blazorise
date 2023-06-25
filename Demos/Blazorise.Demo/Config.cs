@@ -1,32 +1,39 @@
 ﻿#region Using directives
+using Blazorise.FluentValidation;
+using Blazorise.LoadingIndicator;
 using Blazorise.RichTextEdit;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 #endregion
 
-namespace Blazorise.Demo
+namespace Blazorise.Demo;
+
+public static class Config
 {
-    public static class Config
+    public static IServiceCollection SetupDemoServices( this IServiceCollection services, string licenseKey )
     {
-        public static IServiceCollection SetupDemoServices( this IServiceCollection services )
-        {
-            services
-                .AddBlazorise( options =>
-                {
-                    options.Immediate = true;
-                } )
-                .AddBlazoriseRichTextEdit( options =>
-                {
-                    options.UseBubbleTheme = true;
-                    options.UseShowTheme = true;
-                } );
+        services
+            .AddBlazorise( options =>
+            {
+                options.ProductToken = licenseKey;
+                options.Immediate = true;
+            } )
+            .AddBlazoriseRichTextEdit( options =>
+            {
+                options.UseBubbleTheme = true;
+                options.UseShowTheme = true;
+            } )
+            .AddLoadingIndicator()
+            .AddBlazoriseFluentValidation();
 
-            services.AddMemoryCache();
+        services.AddValidatorsFromAssembly( typeof( App ).Assembly );
 
-            // register demo services to fetch test data
-            services.AddScoped<Shared.Data.EmployeeData>();
-            services.AddScoped<Shared.Data.CountryData>();
+        services.AddMemoryCache();
 
-            return services;
-        }
+        // register demo services to fetch test data
+        services.AddScoped<Shared.Data.EmployeeData>();
+        services.AddScoped<Shared.Data.CountryData>();
+
+        return services;
     }
 }

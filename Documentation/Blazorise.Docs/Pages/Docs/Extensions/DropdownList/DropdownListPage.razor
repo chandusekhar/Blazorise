@@ -1,13 +1,17 @@
 ﻿@page "/docs/extensions/dropdownlist"
 
-<Seo Canonical="/docs/extensions/dropdownlist" Title="Blazorise DropdownList" Description="Learn how to use Blazorise DropdownList extension components." />
+<Seo Canonical="/docs/extensions/dropdownlist" Title="Blazorise DropdownList component" Description="Learn to use and work with the Blazorise DropdownList component, which allows you to select a value from a list of predefined items." />
 
-<DocsPageTitle>
-    DropdownList
+<DocsPageTitle Path="Extensions/DropdownList">
+    Blazorise DropdownList component
 </DocsPageTitle>
 
-<DocsPageParagraph>
+<DocsPageLead>
     The <Code>DropdownList</Code> component allows you to select a value from a list of predefined items.
+</DocsPageLead>
+
+<DocsPageParagraph>
+    To be able to use <Code>DropdownList</Code> component you first need to install it.
 </DocsPageParagraph>
 
 <DocsPageSubtitle>
@@ -36,9 +40,23 @@
     <DocsPageSectionSource Code="DropdownListExample" />
 </DocsPageSection>
 
+<DocsPageSection>
+    <DocsPageSectionHeader Title="Checkbox Selection">
+        The multiple selection feature in Blazorise's DropdownList component enables users to select multiple options from a dropdown menu via checkboxes. Each option in the menu comes with a checkbox for selection. Upon clicking the DropdownList, users can tick multiple checkboxes to select various options. This feature provides an efficient way of making multiple selections, enhancing user flexibility and interaction.
+    </DocsPageSectionHeader>
+    <DocsPageSectionContent Outlined FullWidth>
+        <DropdownListCheckboxExample />
+    </DocsPageSectionContent>
+    <DocsPageSectionSource Code="DropdownListCheckboxExample" />
+</DocsPageSection>
+
 <DocsPageSubtitle>
-    Attributes
+    API
 </DocsPageSubtitle>
+
+<Heading Size="HeadingSize.Is3">
+    Attributes
+</Heading>
 
 <DocsAttributes>
     <DocsAttributesItem Name="TItem" Type="generic">
@@ -61,5 +79,17 @@
     </DocsAttributesItem>
     <DocsAttributesItem Name="MaxMenuHeight" Type="string">
         Sets the maximum height of the dropdown menu.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="Virtualize" Type="bool" Default="false">
+        Gets or sets whether the dropdown will use the <Code>Virtualize</Code> functionality.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="SelectionMode" Type="DropdownListSelectionMode" Default="DropdownListSelectionMode.Default">
+        Gets or sets the <Code>DropdownList</Code> Selection Mode.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="SelectedValues" Type="IReadOnlyList<TValue>">
+        Currently selected item values.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="SelectedValuesChanged" Type="EventCallback<IReadOnlyList<TValue>>">
+        Occurs after the selected item values have changed.
     </DocsAttributesItem>
 </DocsAttributes>

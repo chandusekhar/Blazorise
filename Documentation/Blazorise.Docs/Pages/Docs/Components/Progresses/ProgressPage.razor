@@ -1,10 +1,14 @@
 ﻿@page "/docs/components/progress"
 
-<Seo Canonical="/docs/components/progress" Title="Blazorise Progress system" Description="Progress indicators inform users about the status of ongoing processes, such as loading an app, submitting a form, or saving updates." />
+<Seo Canonical="/docs/components/progress" Title="Blazorise Progress system" Description="Learn to use and work with the Blazorise Progress component, an indicators that inform users about the status of ongoing processes, such as loading an app, submitting a form, or saving updates." />
 
-<DocsPageTitle>
-    Progress component
+<DocsPageTitle Path="Components/Progress">
+    Blazorise Progress component
 </DocsPageTitle>
+
+<DocsPageLead>
+    Progress bars are used to show the status of an ongoing operation.
+</DocsPageLead>
 
 <DocsPageParagraph>
     Use our progress component for displaying simple or complex progress bars, featuring support for horizontally stacked bars, animated backgrounds, and text labels.
@@ -62,6 +66,16 @@
     <DocsPageSectionSource Code="MultipleProgressExample" />
 </DocsPageSection>
 
+<DocsPageSection>
+    <DocsPageSectionHeader Title="Animated">
+        Use an animated effect Progress Bar to show that progress is still ongoing.
+    </DocsPageSectionHeader>
+    <DocsPageSectionContent Outlined FullWidth>
+        <AnimatedProgressExample />
+    </DocsPageSectionContent>
+    <DocsPageSectionSource Code="AnimatedProgressExample" />
+</DocsPageSection>
+
 <DocsPageSubtitle>
     Page progress
 </DocsPageSubtitle>
@@ -86,8 +100,12 @@
 </DocsPageSection>
 
 <DocsPageSubtitle>
-    Attributes
+    API
 </DocsPageSubtitle>
+
+<Heading Size="HeadingSize.Is3">
+    Attributes
+</Heading>
 
 <DocsAttributes Title="Progress">
     <DocsAttributesItem Name="Value" Type="int?" Default="null">
@@ -110,6 +128,9 @@
     </DocsAttributesItem>
     <DocsAttributesItem Name="Animated" Type="bool" Default="false">
         Set to true to make the progress bar animated.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="ShowValue" Type="bool" Default="true">
+        If true, the value will be showed within the progress bar.
     </DocsAttributesItem>
 </DocsAttributes>
 

@@ -65,12 +65,14 @@
 }
 
 .input-group {
-    > .b-numeric:not(:last-child) > input {
+    > .b-numeric:not(:last-child) > input,
+    > .flatpickr-wrapper:not(:last-child) > input {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
     }
 
-    > .b-numeric:not(:first-child) > input {
+    > .b-numeric:not(:first-child) > input,
+    > .flatpickr-wrapper:not(:first-child) > input {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
     }
@@ -192,6 +194,19 @@
     border-bottom-left-radius: 0;
 }
 
+.input-group {
+    > div.flatpickr-wrapper {
+        > .form-control,
+        > .form-control-plaintext {
+            position: relative;
+            flex: 1 1 auto;
+            width: 1%;
+            min-width: 0;
+            margin-bottom: 0;
+        }
+    }
+}
+
 @mixin checkbox($size, $width, $height, $line-height, $padding-left) {
     .custom-control.custom-checkbox {
         > .custom-control-input.custom-control-input-#{$size} {
@@ -256,6 +271,12 @@ select[readonly] {
 
     &:hover > .b-numeric-handler-wrap {
         opacity: 1;
+    }
+
+    input:disabled, input:read-only {
+        + .b-numeric-handler-wrap {
+            display: none;
+        }
     }
 }
 
@@ -374,4 +395,13 @@ input[readonly="readonly"][type=range] {
     &::-ms-thumb {
         pointer-events: none;
     }
+}
+
+.focus-trap {
+    display: contents;
+}
+
+.form-label-required:after {
+    content: " *";
+    color: var(--b-theme-danger, $danger);
 }

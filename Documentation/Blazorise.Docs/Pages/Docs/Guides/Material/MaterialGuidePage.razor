@@ -1,10 +1,14 @@
 ﻿@page "/docs/usage/material"
 
-<Seo Canonical="/docs/usage/material" Title="Material Usage" Description="Learn all the steps on how to quickly install and setup Blazorise for Material CSS framework and Material icons." />
+<Seo Canonical="/docs/usage/material" Title="Blazorise Material Usage" Description="Learn all the steps on how to quickly install and setup Blazorise for Material CSS framework and Material icons." />
 
-<DocsPageTitle>
-    Material Usage
+<DocsPageTitle Path="Usage/Material">
+    Blazorise Material Usage
 </DocsPageTitle>
+
+<DocsPageLead>
+    Quickly install Blazorise with Material, one of the world's most popular Blazor UI framework.
+</DocsPageLead>
 
 <DocsPageParagraph>
     <Alert Color="Color.Info" Visible>
@@ -17,11 +21,11 @@
 
 <DocsPageParagraph>
     Since Material CSS is based on a Bootstrap you only need to change the CSS and JS sources. The code in
-    <Strong>Imports.razor</Strong> will stay the same as for the <Blazorise.Link To="docs/usage/bootstrap">Bootstrap provider</Blazorise.Link>.
+    <Strong><Badge Color="Color.Light">_Imports.razor</Badge></Strong> will stay the same as for the <Blazorise.Link To="docs/usage/bootstrap4">Bootstrap provider</Blazorise.Link>.
 </DocsPageParagraph>
 
 <DocsPageSubtitle>
-    1. NuGet packages
+    Install Packages
 </DocsPageSubtitle>
 
 <DocsPageSection>
@@ -39,7 +43,7 @@
 </DocsPageSection>
 
 <DocsPageSubtitle>
-    2. Download CSS
+    Add Material CSS
 </DocsPageSubtitle>
 
 <DocsPageSection>
@@ -51,12 +55,12 @@
 </DocsPageSection>
 
 <DocsPageSubtitle>
-    3. Source files
+    Add Static Files
 </DocsPageSubtitle>
 
 <DocsPageSection>
     <DocsPageSectionHeader>
-        The next step is to change your <Code>index.html</Code> or <Code>_Host.cshtml</Code> file and include the CSS and JS source files:
+        The next step is to change your <Code>index.html</Code> or <Code>_Layout.cshtml</Code> / <Code>_Host.cshtml</Code> file and include the CSS and JS source files:
     </DocsPageSectionHeader>
     <DocsPageSectionSource Code="MaterialGuideSourceFilesExample" />
 </DocsPageSection>
@@ -68,18 +72,18 @@
 </Alert>
 
 <DocsPageSubtitle>
-    4. Usings
+    Add Imports
 </DocsPageSubtitle>
 
 <DocsPageSection>
     <DocsPageSectionHeader>
-        In your main <Code>_Imports.razor</Code> add:
+        In your main <Badge Color="Color.Light">_Imports.razor</Badge> add:
     </DocsPageSectionHeader>
     <DocsPageSectionSource Code="MaterialGuideUsingExample" />
 </DocsPageSection>
 
 <DocsPageSubtitle>
-    5. Register Services
+    Register Services
 </DocsPageSubtitle>
 
 <DocsPageSection>
@@ -90,12 +94,9 @@
 </DocsPageSection>
 
 <DocsPageSubtitle>
-    6. PWA & Offline Support
+    PWA & Offline Support (optional)
 </DocsPageSubtitle>
 
 <DocsPageParagraph>
     For information about PWAs & offline support, please take a look at our <Blazorise.Link To="docs/pwa">PWA docs.</Blazorise.Link>
 </DocsPageParagraph>
-@code {
-    string selectedSection5 = "5a";
-}

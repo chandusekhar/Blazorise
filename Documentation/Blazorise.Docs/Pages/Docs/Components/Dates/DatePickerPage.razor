@@ -1,10 +1,14 @@
 ﻿@page "/docs/components/date-picker"
 
-<Seo Canonical="/docs/components/date-picker" Title="Blazorise DatePicker component" Description="DatePicker is a fully featured date selection component that lets users select a date." />
+<Seo Canonical="/docs/components/date-picker" Title="Blazorise DatePicker component" Description="Learn to use and work with the Blazorise DatePicker component, which is a fully featured date selection component that lets users select a date." />
 
-<DocsPageTitle>
-    DatePicker component
+<DocsPageTitle Path="Components/Date Picker">
+    Blazorise DatePicker component
 </DocsPageTitle>
+
+<DocsPageLead>
+    DatePicker is an input field that allows the user to enter a date by typing or by selecting from a calendar overlay.
+</DocsPageLead>
 
 <DocsPageParagraph>
     <Code Tag>DatePicker</Code> is a fully featured date selection component that lets users select a date.
@@ -12,6 +16,10 @@
     and as such is not a native date input element. That means that unlike <code>DateEdit</code> which will render <Code>type="date"</Code>,
     <Code>DatePicker</Code> will render <Code>type="text"</Code> in the DOM.
 </DocsPageParagraph>
+
+<DocsPageSubtitle>
+    Examples
+</DocsPageSubtitle>
 
 <DocsPageSection>
     <DocsPageSectionHeader Title="Basic example">
@@ -60,6 +68,31 @@
         <MultipleDatePickerExample />
     </DocsPageSectionContent>
     <DocsPageSectionSource Code="MultipleDatePickerExample" />
+</DocsPageSection>
+
+<DocsPageSection>
+    <DocsPageSectionHeader Title="Inline Calendar">
+        To always show the calendar you just need to set <Code>Inline</Code> parameter.
+    </DocsPageSectionHeader>
+    <DocsPageSectionContent Outlined FullWidth>
+        <InlineDatePickerExample />
+    </DocsPageSectionContent>
+    <DocsPageSectionSource Code="InlineDatePickerExample" />
+</DocsPageSection>
+
+<DocsPageSection>
+    <DocsPageSectionHeader Title="Non Static example">
+        <Paragraph>
+            By default, the calendar menu will position statically. This means that it will also keep its position relative to the page when you scroll.
+        </Paragraph>
+        <Paragraph>
+            If you want to disable this behavior, you should assign the value false to the <Code>StaticPicker</Code> parameter.
+        </Paragraph>
+    </DocsPageSectionHeader>
+    <DocsPageSectionContent Outlined FullWidth>
+        <DatePickerNonStaticExample />
+    </DocsPageSectionContent>
+    <DocsPageSectionSource Code="DatePickerNonStaticExample" />
 </DocsPageSection>
 
 <DocsPageSubtitle>
@@ -200,8 +233,35 @@
 </Table>
 
 <DocsPageSubtitle>
-    Attributes
+    Best Practices
 </DocsPageSubtitle>
+
+<Heading Size="HeadingSize.Is3">
+    Show the Date Format
+</Heading>
+
+<DocsPageSection>
+    <DocsPageSectionHeader>
+        <Paragraph>
+            Use a placeholder or helper to show how the input should be formatted. For example, "12/6/2020" represents different dates for Americans and Europeans.
+        </Paragraph>
+        <Paragraph>
+            Helpers are preferable to placeholders, as they are always visible. Fields with placeholders are also less noticeable than empty fields, so they are susceptible to being skipped. Use placeholders when space is limited, for example when Date Picker is used as a filter in a data grid header.
+        </Paragraph>
+    </DocsPageSectionHeader>
+    <DocsPageSectionContent Outlined FullWidth>
+        <DatePickerFormatBestPracticeExample />
+    </DocsPageSectionContent>
+    <DocsPageSectionSource Code="DatePickerFormatBestPracticeExample" />
+</DocsPageSection>
+
+<DocsPageSubtitle>
+    API
+</DocsPageSubtitle>
+
+<Heading Size="HeadingSize.Is3">
+    Attributes
+</Heading>
 
 <DocsAttributes>
     <DocsAttributesItem Name="Date" Type="TValue" Default="default">
@@ -209,6 +269,9 @@
     </DocsAttributesItem>
     <DocsAttributesItem Name="DateChanged" Type="@("EventCallback<TValue>")">
         Occurs when the date has changed.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="DateExpression" Type="@("Expression<Func<TValue>>")">
+        Gets or sets an expression that identifies the date value.
     </DocsAttributesItem>
     <DocsAttributesItem Name="InputMode" Type="DateInputMode" Default="Date">
         Hints at the type of data that might be entered by the user while editing the element or its contents.
@@ -242,5 +305,26 @@
     </DocsAttributesItem>
     <DocsAttributesItem Name="DisabledDates" Type="IEnumerable<TValue>" Default="null">
         List of disabled dates that the user should not be able to pick.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="Inline" Type="bool" Default="false">
+        Display the calendar in an always-open state with the inline option.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="DisableMobile" Type="bool" Default="true">
+        If enabled, it disables the native input on mobile devices.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="Dates" Type="IReadOnlyList<TValue>">
+        Gets or sets the input date value.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="DatesChanged" Type="EventCallback<IReadOnlyList<TValue>>">
+        Occurs when the date has changed.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="DatesExpression" Type="Expression<Func<IReadOnlyList<TValue>>>">
+        Gets or sets an expression that identifies the date value.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="RangeSeparator" Type="string">
+        Overrides the range separator that is used to separate date values when <Code>SelectionMode</Code> is set to <Code>DateInputSelectionMode.Range</Code>.
+    </DocsAttributesItem>
+    <DocsAttributesItem Name="StaticPicker" Type="bool" Default="true">
+        If enabled, the calendar menu will be positioned as static.
     </DocsAttributesItem>
 </DocsAttributes>

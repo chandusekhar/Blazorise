@@ -11,8 +11,7 @@
                           ShowPager
                           ShowPageSizes
                           PagerPosition="DataGridPagerPosition.TopAndBottom"
-                          CurrentPage="2"
-                          PageSize="10">
+                          PagerOptions="new(){ ButtonSize=Size.Small }">
                     <DataGridColumns>
                         <DataGridColumn TextAlignment="TextAlignment.Center" TItem="Employee" Field="@nameof( Employee.Id )" Caption="#" Width="60px" SortDirection="SortDirection.Descending" />
                         <DataGridColumn TItem="Employee" Field="@nameof( Employee.FirstName )" Caption="First Name">
@@ -58,7 +57,7 @@
                     </DataGridColumns>
                     <PageButtonTemplate>
                         <Span TextColor="TextColor.Success">
-                            @context.PageNumer
+                            @context.PageNumber
                         </Span>
                     </PageButtonTemplate>
                     <NextPageButtonTemplate><Icon Name="IconName.StepForward" TextColor="TextColor.Success" /></NextPageButtonTemplate>
@@ -66,7 +65,25 @@
                     <LastPageButtonTemplate><Icon Name="IconName.Forward" TextColor="TextColor.Success" /></LastPageButtonTemplate>
                     <FirstPageButtonTemplate><Icon Name="IconName.Backward" TextColor="TextColor.Success" /></FirstPageButtonTemplate>
                     <TotalItemsTemplate><Badge Color="Color.Success">@context.TotalItems total items</Badge></TotalItemsTemplate>
+                    <TotalItemsShortTemplate><Badge Color="Color.Success">@context.TotalItems</Badge></TotalItemsShortTemplate>
                     <ItemsPerPageTemplate></ItemsPerPageTemplate>
+                    <PageSelectorTemplate>
+                        <Select TextColor="TextColor.Success" @bind-SelectedValue="@context.CurrentPage" Size="Size.Small">
+                            @for ( int i = context.FirstVisiblePage; i <= context.LastVisiblePage; ++i )
+                            {
+                                var pageNumber = i;
+                                <SelectItem Value="@pageNumber">@pageNumber</SelectItem>
+                            }
+                        </Select>
+                    </PageSelectorTemplate>
+                    <PageSizesTemplate>
+                        <Select TextColor="TextColor.Success" @bind-SelectedValue="@context.CurrentPageSize" Size="Size.Small">
+                            @foreach ( var curPageSize in context.PageSizes )
+                            {
+                                <SelectItem Value="@curPageSize">@curPageSize</SelectItem>
+                            }
+                        </Select>
+                    </PageSizesTemplate>
                 </DataGrid>
             </CardBody>
         </Card>

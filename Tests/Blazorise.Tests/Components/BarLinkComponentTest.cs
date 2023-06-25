@@ -3,58 +3,56 @@ using Blazorise.Tests.Helpers;
 using Blazorise.Tests.TestServices;
 using Bunit;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace Blazorise.Tests.Components
+namespace Blazorise.Tests.Components;
+
+public class BarLinkComponentTest : TestContext
 {
-    public class BarLinkComponentTest : TestContext
+    public BarLinkComponentTest()
     {
-        public BarLinkComponentTest()
-        {
-            var testServices = new TestServiceProvider( Services.AddSingleton<NavigationManager, TestNavigationManager>() );
-            BlazoriseConfig.AddBootstrapProviders( testServices );
-            BlazoriseConfig.JSInterop.AddButton( JSInterop );
-        }
+        var testServices = new TestServiceProvider( Services.AddSingleton<NavigationManager, TestNavigationManager>() );
+        BlazoriseConfig.AddBootstrapProviders( testServices );
+        BlazoriseConfig.JSInterop.AddButton( JSInterop );
+    }
 
-        [Fact]
-        public void CanRaiseClicked_WithoutToParameterSet()
-        {
-            // setup
-            bool wasClicked = false;
-            var testCallback = new EventCallback( null, (Action)( () =>
-                wasClicked = true ) );
+    [Fact]
+    public void CanRaiseClicked_WithoutToParameterSet()
+    {
+        // setup
+        bool wasClicked = false;
+        var testCallback = new EventCallback<MouseEventArgs>( null, ( MouseEventArgs e ) => wasClicked = true );
 
-            // test
-            var comp = RenderComponent<BarLink>( builder =>
-                builder
-                    .Add( p => p.Clicked, testCallback ) );
+        // test
+        var comp = RenderComponent<BarLink>( builder =>
+            builder
+                .Add( p => p.Clicked, testCallback ) );
 
-            comp.Find( "a" ).Click();
+        comp.Find( "a" ).Click();
 
-            // validate
-            Assert.True( wasClicked );
-        }
+        // validate
+        Assert.True( wasClicked );
+    }
 
-        [Fact]
-        public void CanRaiseClicked_WithToParameterSet()
-        {
-            // setup
-            bool wasClicked = false;
-            var testCallback = new EventCallback( null, (Action)( () =>
-                wasClicked = true ) );
+    [Fact]
+    public void CanRaiseClicked_WithToParameterSet()
+    {
+        // setup
+        bool wasClicked = false;
+        var testCallback = new EventCallback<MouseEventArgs>( null, ( MouseEventArgs e ) => wasClicked = true );
 
-            // test
-            var comp = RenderComponent<BarLink>( builder =>
-                builder
-                    .Add( p => p.To, "test" )
-                    .Add( p => p.Clicked, testCallback ) );
+        // test
+        var comp = RenderComponent<BarLink>( builder =>
+            builder
+                .Add( p => p.To, "test" )
+                .Add( p => p.Clicked, testCallback ) );
 
-            var link = comp.FindComponent<Link>();
-            link.Find( "a" ).Click();
+        var link = comp.FindComponent<Link>();
+        link.Find( "a" ).Click();
 
-            // validate
-            Assert.True( wasClicked );
-        }
+        // validate
+        Assert.True( wasClicked );
     }
 }

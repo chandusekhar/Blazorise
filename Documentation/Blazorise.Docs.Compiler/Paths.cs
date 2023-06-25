@@ -1,41 +1,37 @@
 ﻿using System.IO;
 using System.Linq;
 
-namespace Blazorise.Docs.Compiler
+namespace Blazorise.Docs.Compiler;
+
+public static class Paths
 {
-    public class Paths
+    private const string NewFilesToBuild = "NewFilesToBuild.txt";
+
+    public const string ExampleDiscriminator = "Example"; // example components must contain this string
+
+    public static string RootDirPath
     {
-        private const string DocsDirectory = "Blazorise.Docs";
-        private const string SnippetsFile = "Snippets.generated.cs";
-        private const string DocStringsFile = "DocStrings.generated.cs";
-        private const string NewFilesToBuild = "NewFilesToBuild.txt";
-
-        public const string ExampleDiscriminator = "Example"; // example components must contain this string
-
-        public static string RootDirPath
+        get
         {
-            get
+            var workingPath = Path.GetFullPath( "." );
+
+            do
             {
-                var workingPath = Path.GetFullPath( "." );
-
-                do
-                {
-                    workingPath = Path.GetDirectoryName( workingPath );
-                }
-                while ( Path.GetFileName( workingPath ) != "Documentation" && !string.IsNullOrWhiteSpace( workingPath ) );
-
-                return workingPath;
+                workingPath = Path.GetDirectoryName( workingPath );
             }
+            while ( Path.GetFileName( workingPath ) != "Documentation" && !string.IsNullOrWhiteSpace( workingPath ) );
+
+            return workingPath;
         }
-
-        public string DocsDirPath => Directory.EnumerateDirectories( RootDirPath, DocsDirectory ).FirstOrDefault();
-
-        public string DocsStringSnippetsDirPath => Path.Join( DocsDirPath, "Models" );
-
-        public string DocStringsFilePath => Path.Join( DocsStringSnippetsDirPath, DocStringsFile );
-
-        public string SnippetsFilePath => Path.Join( DocsStringSnippetsDirPath, SnippetsFile );
-
-        public string NewFilesToBuildPath => Path.Join( DocsDirPath, NewFilesToBuild );
     }
+
+    public static string DirPath() => Directory.EnumerateDirectories( RootDirPath, $"Blazorise.Docs" ).FirstOrDefault();
+
+    public static string DocsStringSnippetsDirPath() => Path.Join( DirPath(), "Models" );
+
+    public static string DocStringsFilePath() => Path.Join( DocsStringSnippetsDirPath(), "Strings.generated.cs" );
+
+    public static string SnippetsFilePath() => Path.Join( DocsStringSnippetsDirPath(), "Snippets.generated.cs" );
+
+    public static string NewFilesToBuildPath() => Path.Join( DirPath(), NewFilesToBuild );
 }

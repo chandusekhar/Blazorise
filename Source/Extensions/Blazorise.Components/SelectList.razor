@@ -1,6 +1,6 @@
 ﻿@typeparam TItem
 @typeparam TValue
-<Select @ref="@selectRef" ElementId="@ElementId" TValue="TValue" Multiple="@Multiple" SelectedValue="@SelectedValue" SelectedValueChanged="@HandleSelectedValueChanged" Class="@Class" Style="@Style" Size="@Size" MaxVisibleItems="@MaxVisibleItems" TabIndex="@TabIndex" Disabled="@Disabled" Attributes="@Attributes" SelectedValueExpression="@SelectedValueExpression">
+<Select @ref="@selectRef" ElementId="@ElementId" TValue="TValue" Multiple="@Multiple" SelectedValue="@SelectedValue" SelectedValueChanged="@HandleSelectedValueChanged" SelectedValues="@SelectedValues" SelectedValuesChanged="@HandleSelectedValuesChanged" Class="@Class" Style="@Style" Size="@Size" MaxVisibleItems="@MaxVisibleItems" TabIndex="@TabIndex" Disabled="@Disabled" Attributes="@Attributes" SelectedValueExpression="@SelectedValueExpression" SelectedValuesExpression="@SelectedValuesExpression">
     <ChildContent>
         @if ( DefaultItemText != null )
         {
@@ -8,12 +8,9 @@
         }
         @if ( Data != null )
         {
-            @foreach ( var item in Data )
+            @foreach ( var item in Data ?? Enumerable.Empty<TItem>() )
             {
-                var text = TextField?.Invoke( item );
-                var value = ValueField != null ? ValueField.Invoke( item ) : default;
-
-                <SelectItem @key="@value" Value="@value">@text</SelectItem>
+                @itemFragment(item)
             }
         }
         @ChildContent
@@ -22,3 +19,13 @@
         @Feedback
     </Feedback>
 </Select>
+@code {
+    protected RenderFragment<TItem> itemFragment => item => __builder =>
+    {
+        var text = TextField?.Invoke( item );
+        var value = ValueField != null ? ValueField.Invoke( item ) : default;
+        var disabled = ItemDisabled != null ? ItemDisabled.Invoke( item ) : false;
+
+        <SelectItem @key="@value" Value="@value" Disabled="@disabled">@text</SelectItem>
+    };
+}
