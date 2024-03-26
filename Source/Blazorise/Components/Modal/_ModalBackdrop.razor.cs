@@ -24,7 +24,10 @@ public partial class _ModalBackdrop : BaseComponent
     {
         base.OnInitialized();
 
-        ParentModal.NotifyCloseActivatorIdInitialized( ElementId );
+        if ( ParentModal is not null )
+        {
+            ParentModal.NotifyCloseActivatorIdInitialized( ElementId );
+        }
     }
 
     /// <inheritdoc/>
@@ -41,6 +44,7 @@ public partial class _ModalBackdrop : BaseComponent
     protected override void BuildStyles( StyleBuilder builder )
     {
         builder.Append( StyleProvider.ModalBackdropZIndex( parentModalState.OpenIndex ) );
+        builder.Append( $"--modal-animation-duration: {( Animated ? AnimationDuration : 0 )}ms" );
 
         base.BuildStyles( builder );
     }
@@ -51,6 +55,16 @@ public partial class _ModalBackdrop : BaseComponent
 
     /// <inheritdoc/>
     protected override bool ShouldAutoGenerateId => true;
+
+    /// <summary>
+    /// Gets or sets whether the component has any animations.
+    /// </summary>
+    [Parameter] public bool Animated { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets the animation duration.
+    /// </summary>
+    [Parameter] public int AnimationDuration { get; set; } = 150;
 
     /// <summary>
     /// Gets or sets the cascaded parent modal component.

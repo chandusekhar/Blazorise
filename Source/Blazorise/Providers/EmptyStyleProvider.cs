@@ -11,7 +11,11 @@ class EmptyStyleProvider : IStyleProvider
 
     public int DefaultModalBackdropZIndex => 0;
 
-    public string ModalShow() => null;
+    public string ModalShow( bool visible ) => null;
+
+    public string ModalFade( bool showing, bool hiding ) => null;
+
+    public string ModalAnimationDuration( bool animated, int animationDuration ) => null;
 
     public string ModalZIndex( int modalOpenIndex ) => null;
 
@@ -46,6 +50,20 @@ class EmptyStyleProvider : IStyleProvider
     #region Column
 
     public string ColumnGutter( (int Horizontal, int Vertical) gutter ) => null;
+
+    #endregion
+
+    #region Offcanvas
+
+    public string OffcanvasAnimationDuration( bool animated, int AnimationDuration ) => null;
+
+    public string OffcanvasBackdropAnimationDuration( bool animated, int animationDuration ) => null;
+
+    #endregion
+
+    #region Toast
+
+    public string ToastAnimationDuration( bool animated, int animationDuration ) => null;
 
     #endregion
 }

@@ -1,13 +1,13 @@
 ﻿#region Using directives
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Blazorise.DataGrid.Utils;
-using Blazorise.Extensions;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.JSInterop;
 #endregion
 
 namespace Blazorise.DataGrid;
@@ -16,13 +16,18 @@ public partial class DataGridColumn<TItem> : BaseDataGridColumn<TItem>
 {
     #region Members
 
-    private readonly Lazy<Func<Type>> valueTypeGetter;
-    private readonly Lazy<Func<object>> defaultValueByType;
-    private readonly Lazy<Func<TItem, object>> valueGetter;
-    private readonly Lazy<Action<TItem, object>> valueSetter;
-    private readonly Lazy<Func<TItem, object>> sortFieldGetter;
+    protected readonly Lazy<Func<Type>> valueTypeGetter;
+    protected readonly Lazy<Func<object>> defaultValueByType;
+    protected readonly Lazy<Func<TItem, object>> valueGetter;
+    protected readonly Lazy<Action<TItem, object>> valueSetter;
+    protected readonly Lazy<Func<TItem, object>> sortFieldGetter;
 
     private Dictionary<DataGridSortMode, SortDirection> currentSortDirection { get; set; } = new();
+
+    /// <summary>
+    /// FilterMethod can come from programatically defined Parameter or explicitly by the user through the interface.
+    /// </summary>
+    private DataGridColumnFilterMethod? currentFilterMethod;
 
     #endregion
 
@@ -38,23 +43,50 @@ public partial class DataGridColumn<TItem> : BaseDataGridColumn<TItem>
         sortFieldGetter = new( () => FunctionCompiler.CreateValueGetter<TItem>( SortField ) );
     }
 
+
     #endregion
 
     #region Methods
+
+    /// <summary>
+    /// Initializes the default values for this column.
+    /// </summary>
+    private void InitializeDefaults()
+    {
+        Displaying = Displayable;
+        currentSortDirection[DataGridSortMode.Single] = SortDirection;
+        currentSortDirection[DataGridSortMode.Multiple] = SortDirection;
+        currentFilterMethod = FilterMethod;
+
+        Filter?.Subscribe( OnSearchValueChanged );
+    }
+
+
+    /// <summary>
+    /// Provides a way to generate column specific dependencies outside the Blazor engine.
+    /// </summary>
+    /// <param name="parentDataGrid"></param>
+    /// <param name="serviceProvider"></param>
+    internal void InitializeGeneratedColumn( DataGrid<TItem> parentDataGrid, IServiceProvider serviceProvider )
+    {
+        this.ParentDataGrid = parentDataGrid;
+        this.JSRuntime = serviceProvider.GetRequiredService<IJSRuntime>();
+        this.VersionProvider = serviceProvider.GetRequiredService<IVersionProvider>();
+        this.ClassProvider = serviceProvider.GetRequiredService<IClassProvider>();
+        this.IdGenerator = serviceProvider.GetRequiredService<IIdGenerator>();
+
+        base.OnInitialized();
+
+        InitializeDefaults();
+    }
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
 
-        currentSortDirection[DataGridSortMode.Single] = SortDirection;
-        currentSortDirection[DataGridSortMode.Multiple] = SortDirection;
+        InitializeDefaults();
 
-        if ( ParentDataGrid is not null )
-        {
-            ParentDataGrid.AddColumn( this, true );
-
-            Filter?.Subscribe( OnSearchValueChanged );
-        }
+        ParentDataGrid?.AddColumn( this, true );
     }
 
     /// <inheritdoc/>
@@ -70,7 +102,7 @@ public partial class DataGridColumn<TItem> : BaseDataGridColumn<TItem>
 
     private void DisposeSubscriptions()
     {
-        ParentDataGrid.RemoveColumn( this );
+        ParentDataGrid?.RemoveColumn( this );
 
         if ( Filter is not null )
         {
@@ -106,7 +138,7 @@ public partial class DataGridColumn<TItem> : BaseDataGridColumn<TItem>
     /// </summary>
     /// <param name="item">Item for which to get the value.</param>
     /// <returns></returns>
-    internal object GetValue( TItem item )
+    protected internal object GetValue( TItem item )
         => !string.IsNullOrEmpty( Field )
             ? valueGetter.Value( item )
             : default;
@@ -116,7 +148,7 @@ public partial class DataGridColumn<TItem> : BaseDataGridColumn<TItem>
     /// </summary>
     /// <param name="item">Item for which to set the value.</param>
     /// <param name="value">Value to set.</param>
-    internal void SetValue( TItem item, object value )
+    protected internal virtual void SetValue( TItem item, object value )
     {
         if ( !string.IsNullOrEmpty( Field ) )
             valueSetter.Value( item, value );
@@ -127,7 +159,7 @@ public partial class DataGridColumn<TItem> : BaseDataGridColumn<TItem>
     /// </summary>
     /// <param name="item">Item for which to get the value.</param>
     /// <returns></returns>
-    internal object GetSortValue( TItem item )
+    protected internal object GetSortValue( TItem item )
         => sortFieldGetter.Value( item );
 
     /// <summary>
@@ -173,6 +205,30 @@ public partial class DataGridColumn<TItem> : BaseDataGridColumn<TItem>
                  || ( CellsEditableOnEditCommand && ParentDataGrid.EditState == DataGridEditState.Edit ) );
     }
 
+    /// <summary>
+    /// Sets whether the column is displaying.
+    /// </summary>
+    /// <param name="displaying">The displaying value</param>
+    /// <returns></returns>
+    public async Task SetDisplaying( bool displaying )
+    {
+        Displaying = displaying;
+        await ParentDataGrid.ColumnDisplayingChanged.InvokeAsync( new ColumnDisplayChangedEventArgs<TItem>( this, displaying ) );
+        await ParentDataGrid.Refresh();
+    }
+
+    internal string BuildHeaderCellClass()
+    {
+        var sb = new StringBuilder();
+
+        if ( !string.IsNullOrEmpty( HeaderCellClass ) )
+            sb.Append( HeaderCellClass );
+
+        sb.Append( $" {ClassProvider.DropdownFixedHeaderVisible( DropdownFilterVisible && ParentDataGrid.IsFixedHeader )}" );
+
+        return sb.ToString().TrimStart( ' ' );
+    }
+
     internal string BuildHeaderCellStyle()
     {
         var sb = new StringBuilder();
@@ -180,7 +236,7 @@ public partial class DataGridColumn<TItem> : BaseDataGridColumn<TItem>
         if ( !string.IsNullOrEmpty( HeaderCellStyle ) )
             sb.Append( HeaderCellStyle );
 
-        if ( Width != null )
+        if ( Width != null && FixedPosition == TableColumnFixedPosition.None )
             sb.Append( $"; width: {Width};" );
 
         return sb.ToString().TrimStart( ' ', ';' );
@@ -193,7 +249,7 @@ public partial class DataGridColumn<TItem> : BaseDataGridColumn<TItem>
         if ( !string.IsNullOrEmpty( FilterCellStyle ) )
             sb.Append( FilterCellStyle );
 
-        if ( Width != null )
+        if ( Width != null && FixedPosition == TableColumnFixedPosition.None )
             sb.Append( $"; width: {Width};" );
 
         return sb.ToString().TrimStart( ' ', ';' );
@@ -206,22 +262,34 @@ public partial class DataGridColumn<TItem> : BaseDataGridColumn<TItem>
         if ( !string.IsNullOrEmpty( AggregateCellStyle ) )
             sb.Append( AggregateCellStyle );
 
-        if ( Width != null )
+        if ( Width != null && FixedPosition == TableColumnFixedPosition.None )
             sb.Append( $"; width: {Width};" );
 
         return sb.ToString().TrimStart( ' ', ';' );
+    }
+
+    internal IFluentSizing BuildCellFluentSizing()
+    {
+        if ( Width is not null && FixedPosition != TableColumnFixedPosition.None )
+        {
+            return Blazorise.Width.Px( int.Parse( Width.Replace( "px", string.Empty ) ) );
+        }
+
+        return null;
     }
 
     internal string BuildCellStyle( TItem item )
     {
         var sb = new StringBuilder();
 
+#pragma warning disable CS0618 // Type or member is obsolete : Temporary retro compatibility usage
         var result = CellStyle?.Invoke( item );
+#pragma warning restore CS0618 // Type or member is obsolete
 
         if ( !string.IsNullOrEmpty( result ) )
             sb.Append( result );
 
-        if ( Width != null )
+        if ( Width != null && FixedPosition == TableColumnFixedPosition.None )
             sb.Append( $"; width: {Width}" );
 
         return sb.ToString().TrimStart( ' ', ';' );
@@ -236,9 +304,39 @@ public partial class DataGridColumn<TItem> : BaseDataGridColumn<TItem>
         return SortOrderChanged.InvokeAsync( sortOrder );
     }
 
+    internal void SetFilterMethod( DataGridColumnFilterMethod? filterMethod )
+    {
+        currentFilterMethod = filterMethod;
+    }
+
+    internal DataGridColumnFilterMethod? GetFilterMethod()
+    {
+        return currentFilterMethod;
+    }
+
+    internal DataGridColumnFilterMethod GetDataGridFilterMethodAsColumn()
+    {
+        return ParentDataGrid.FilterMethod == DataGridFilterMethod.Contains ? DataGridColumnFilterMethod.Contains
+            : ParentDataGrid.FilterMethod == DataGridFilterMethod.StartsWith ? DataGridColumnFilterMethod.StartsWith
+            : ParentDataGrid.FilterMethod == DataGridFilterMethod.EndsWith ? DataGridColumnFilterMethod.EndsWith
+            : ParentDataGrid.FilterMethod == DataGridFilterMethod.Equals ? DataGridColumnFilterMethod.Equals
+            : ParentDataGrid.FilterMethod == DataGridFilterMethod.NotEquals ? DataGridColumnFilterMethod.NotEquals
+            : DataGridColumnFilterMethod.Contains;
+    }
+
     #endregion
 
     #region Properties
+
+    /// <summary>
+    /// Gets or sets whether column is displaying.
+    /// </summary>
+    public bool Displaying { get; private set; }
+
+    /// <summary>
+    /// Whether the cell is currently being edited.
+    /// </summary>
+    public bool CellEditing { get; internal set; }
 
     /// <summary>
     /// Determines the text alignment for the filter cell.
@@ -365,19 +463,40 @@ public partial class DataGridColumn<TItem> : BaseDataGridColumn<TItem>
 
     internal bool IsDisplayable => ( ColumnType == DataGridColumnType.Command && ParentDataGrid.EditMode == DataGridEditMode.Inline );
 
-    internal bool ExcludeFromFilter => ColumnType == DataGridColumnType.Command || ColumnType == DataGridColumnType.MultiSelect;
+    internal bool IsRegularColumn => !( ColumnType == DataGridColumnType.Command || ColumnType == DataGridColumnType.MultiSelect );
 
-    internal bool ExcludeFromEdit => ColumnType == DataGridColumnType.Command || ColumnType == DataGridColumnType.MultiSelect;
+    internal bool ExcludeFromFilter => !IsRegularColumn;
 
-    internal bool ExcludeFromInit => ColumnType == DataGridColumnType.Command || ColumnType == DataGridColumnType.MultiSelect;
+    internal bool ExcludeFromEdit => !IsRegularColumn;
+
+    internal bool ExcludeFromInit => !IsRegularColumn;
+
+    /// <summary>
+    /// Tracks whether the dropdown filter is visible for this column.
+    /// </summary>
+    internal bool DropdownFilterVisible;
 
     /// <summary>
     /// Returns true if the cell value is editable.
     /// </summary>
     public bool CellValueIsEditable
         => Editable &&
-           ( ( CellsEditableOnNewCommand && ParentDataGrid.EditState == DataGridEditState.New )
-             || ( CellsEditableOnEditCommand && ParentDataGrid.EditState == DataGridEditState.Edit ) );
+           (
+                ( ParentDataGrid.EditState == DataGridEditState.Edit && ParentDataGrid.EditMode == DataGridEditMode.Cell && CellEditing
+                    && IsCellEditablePerCommand )
+                ||
+                ( ParentDataGrid.EditMode != DataGridEditMode.Cell
+                    || ( ParentDataGrid.EditState == DataGridEditState.New && ParentDataGrid.EditMode == DataGridEditMode.Cell ) //We don't have data, let's keep a regular editable row for New.
+                    && IsCellEditablePerCommand
+                )
+            );
+
+    protected bool IsCellEditablePerCommand
+        => (
+                        ( CellsEditableOnNewCommand && ParentDataGrid.EditState == DataGridEditState.New )
+                        ||
+                        ( CellsEditableOnEditCommand && ParentDataGrid.EditState == DataGridEditState.Edit )
+                        );
 
     /// <summary>
     /// Gets or sets the current sort direction.
@@ -584,12 +703,12 @@ public partial class DataGridColumn<TItem> : BaseDataGridColumn<TItem>
     /// <summary>
     /// Custom classname handler for cell based on the current row item.
     /// </summary>
-    [Parameter] public Func<TItem, string> CellClass { get; set; }
+    [Obsolete( "DataGridColumn: The CellClass parameter is deprecated, please use the DataGrid.CellStyling parameter." )][Parameter] public Func<TItem, string> CellClass { get; set; }
 
     /// <summary>
     /// Custom style handler for cell based on the current row item.
     /// </summary>
-    [Parameter] public Func<TItem, string> CellStyle { get; set; }
+    [Obsolete( "DataGridColumn: The CellStyle parameter is deprecated, please use the DataGrid.CellStyling parameter." )][Parameter] public Func<TItem, string> CellStyle { get; set; }
 
     /// <summary>
     /// Custom classname for header cell.
@@ -659,6 +778,11 @@ public partial class DataGridColumn<TItem> : BaseDataGridColumn<TItem>
     [Parameter] public IFluentGap AggregateGap { get; set; }
 
     /// <summary>
+    /// Template for aggregate values.
+    /// </summary>
+    [Parameter] public RenderFragment<AggregateContext<TItem>> AggregateTemplate { get; set; }
+
+    /// <summary>
     /// Template for custom cell display formatting.
     /// </summary>
     [Parameter] public RenderFragment<TItem> DisplayTemplate { get; set; }
@@ -723,6 +847,34 @@ public partial class DataGridColumn<TItem> : BaseDataGridColumn<TItem>
     /// Template for custom group.
     /// </summary>
     [Parameter] public RenderFragment<GroupContext<TItem>> GroupTemplate { get; set; }
+
+    /// <summary>
+    /// <para>Sets the filter method to be used for filtering the column.</para>
+    /// <para>If null, uses the <see cref="DataGrid{TItem}.FilterMethod" /> </para>
+    /// </summary>
+    [Parameter] public DataGridColumnFilterMethod? FilterMethod { get; set; }
+
+    /// <summary>
+    /// <para>Defines the caption to be displayed for a group header.</para>
+    /// <para>If set, all the column headers that are part of the group will be grouped under this caption.</para>
+    /// </summary>
+    [Parameter] public string HeaderGroupCaption { get; set; }
+
+    /// <summary>
+    /// Sets the help-text positioned below the field input when editing.
+    /// </summary>
+    [Parameter] public string HelpText { get; set; }
+
+    /// <summary>
+    /// <para>Gets or sets the filter mode for the column.</para>
+    /// <para>If set, this overrides the <see cref="DataGrid{TItem}.FilterMethod" />.</para>
+    /// </summary>
+    [Parameter] public DataGridFilterMode? FilterMode { get; set; }
+
+    /// <summary>
+    /// Defines the fixed position of the row cell within the table.
+    /// </summary>
+    [Parameter] public TableColumnFixedPosition FixedPosition { get; set; }
 
     #endregion
 }

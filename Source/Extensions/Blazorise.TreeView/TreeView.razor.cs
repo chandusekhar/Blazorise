@@ -2,12 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Threading.Tasks;
 using Blazorise.Extensions;
+using Blazorise.Licensing;
 using Blazorise.TreeView.Extensions;
 using Blazorise.TreeView.Internal;
 using Blazorise.Utilities;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 #endregion
 
 namespace Blazorise.TreeView;
@@ -48,9 +51,9 @@ public partial class TreeView<TNode> : BaseComponent, IDisposable
 
         // We don't want to have memory leak so we need to unsubscribe any previous event if it exist.
         // The unsubscribe must happen before SetParametersAsync.
-        if ( Nodes is INotifyCollectionChanged obseravableCollectionBeforeChange )
+        if ( Nodes is INotifyCollectionChanged observableCollectionBeforeChange )
         {
-            obseravableCollectionBeforeChange.CollectionChanged -= OnCollectionChanged;
+            observableCollectionBeforeChange.CollectionChanged -= OnCollectionChanged;
         }
 
         await base.SetParametersAsync( parameters );
@@ -61,9 +64,9 @@ public partial class TreeView<TNode> : BaseComponent, IDisposable
         }
 
         // Now we can safely subscribe to the changes.
-        if ( Nodes is INotifyCollectionChanged observableColleftionAfterChange )
+        if ( Nodes is INotifyCollectionChanged observableCollectionAfterChange )
         {
-            observableColleftionAfterChange.CollectionChanged += OnCollectionChanged;
+            observableCollectionAfterChange.CollectionChanged += OnCollectionChanged;
         }
     }
 
@@ -73,9 +76,9 @@ public partial class TreeView<TNode> : BaseComponent, IDisposable
         {
             InvokeAsync( async () =>
             {
-                await foreach ( var nodeState in e.NewItems.ToNodeStates( HasChildNodesAsync, HasChildNodes, ( node ) => ExpandedNodes?.Contains( node ) == true ) )
+                await foreach ( var nodeState in e.NewItems.ToNodeStates( HasChildNodesAsync, DetermineHasChildNodes, ( node ) => ExpandedNodes?.Contains( node ) == true, DetermineIsDisabled ) )
                 {
-                    treeViewNodeStates.Add( nodeState );
+                    AddTreeViewNodeState( nodeState );
                 }
             } );
         }
@@ -87,18 +90,72 @@ public partial class TreeView<TNode> : BaseComponent, IDisposable
     }
 
     /// <summary>
+    /// Attempts to find and remove an existing node from the Treeview.
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public Task RemoveNode( TNode node )
+    {
+        SearchTryRemoveNode( treeViewNodeStates, node );
+        return Task.CompletedTask;
+    }
+
+    /// <summary>
+    /// Recursively searches for a given node to remove it from the Treeview.
+    /// </summary>
+    /// <param name="nodeStates"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    private void SearchTryRemoveNode( List<TreeViewNodeState<TNode>> nodeStates, TNode node )
+    {
+        if ( nodeStates.IsNullOrEmpty() )
+            return;
+
+        var nodeToRemove = nodeStates.FirstOrDefault( x => x.Node.Equals( node ) );
+        if ( nodeToRemove is not null )
+        {
+            nodeStates.Remove( nodeToRemove );
+        }
+        else
+        {
+            foreach ( var nodeState in nodeStates )
+            {
+                SearchTryRemoveNode( nodeState.Children, node );
+            }
+        }
+    }
+
+    /// <summary>
     /// Triggers the reload of the <see cref="TreeView{TNode}.Nodes"/>.
     /// </summary>
     /// <returns>Returns the awaitable task.</returns>
     public async Task Reload()
     {
+        var maxRowsLimit = LicenseChecker.GetTreeViewRowsLimit();
+
         treeViewNodeStates = new();
 
-        await foreach ( var nodeState in Nodes.ToNodeStates( HasChildNodesAsync, HasChildNodes, ( node ) => ExpandedNodes?.Contains( node ) == true ) )
+        await foreach ( var nodeState in Nodes.ToNodeStates( HasChildNodesAsync, DetermineHasChildNodes, ( node ) => ExpandedNodes?.Contains( node ) == true, DetermineIsDisabled ) )
         {
-            treeViewNodeStates.Add( nodeState );
+            AddTreeViewNodeState( nodeState );
         }
+
         await InvokeAsync( StateHasChanged );
+    }
+
+    private void AddTreeViewNodeState( TreeViewNodeState<TNode> treeViewNodeState )
+    {
+        var maxRowsLimit = LicenseChecker.GetTreeViewRowsLimit();
+
+        if ( maxRowsLimit.HasValue )
+        {
+            if ( treeViewNodeStates?.Count >= maxRowsLimit.Value )
+            {
+                return;
+            }
+        }
+
+        treeViewNodeStates.Add( treeViewNodeState );
     }
 
     protected override void Dispose( bool disposing )
@@ -188,6 +245,21 @@ public partial class TreeView<TNode> : BaseComponent, IDisposable
     #endregion
 
     #region Properties
+
+    /// <summary>
+    /// Indicates if the node has child elements.
+    /// </summary>
+    protected Func<TNode, bool> DetermineHasChildNodes => HasChildNodes ?? ( node => false );
+
+    /// <summary>
+    /// Indicates the node's disabled state. Used for preventing selection.
+    /// </summary>
+    protected Func<TNode, bool> DetermineIsDisabled => IsDisabled ?? ( node => false );
+
+    /// <summary>
+    /// Gets or sets the license checker for the user session.
+    /// </summary>
+    [Inject] internal BlazoriseLicenseChecker LicenseChecker { get; set; }
 
     /// <summary>
     /// Defines the name of the treenode expand icon.
@@ -290,12 +362,17 @@ public partial class TreeView<TNode> : BaseComponent, IDisposable
     /// <summary>
     /// Indicates if the node has child elements.
     /// </summary>
-    [Parameter] public Func<TNode, bool> HasChildNodes { get; set; } = node => false;
+    [Parameter] public Func<TNode, bool> HasChildNodes { get; set; }
 
     /// <summary>
     /// Gets the list of child nodes for each node.
     /// </summary>
     [Parameter] public Func<TNode, Task<IEnumerable<TNode>>> GetChildNodesAsync { get; set; }
+
+    /// <summary>
+    /// Indicates the node's disabled state. Used for preventing selection.
+    /// </summary>
+    [Parameter] public Func<TNode, bool> IsDisabled { get; set; }
 
     /// <summary>
     /// Indicates if the node has child elements.
@@ -308,9 +385,24 @@ public partial class TreeView<TNode> : BaseComponent, IDisposable
     [Parameter] public Action<TNode, NodeStyling> SelectedNodeStyling { get; set; }
 
     /// <summary>
+    /// Gets or sets disabled node styling.
+    /// </summary>
+    [Parameter] public Action<TNode, NodeStyling> DisabledNodeStyling { get; set; }
+
+    /// <summary>
     /// Gets or sets node styling.
     /// </summary>
     [Parameter] public Action<TNode, NodeStyling> NodeStyling { get; set; }
+
+    /// <summary>
+    /// The event is fired when the node is right clicked to show the context menu.
+    /// </summary>
+    [Parameter] public EventCallback<TreeViewNodeMouseEventArgs<TNode>> NodeContextMenu { get; set; }
+
+    /// <summary>
+    /// Used to prevent the default action for a <see cref="NodeContextMenu"/> event.
+    /// </summary>
+    [Parameter] public bool NodeContextMenuPreventDefault { get; set; }
 
     /// <summary>
     /// Specifies the content to be rendered inside this <see cref="TreeView{TNode}"/>.

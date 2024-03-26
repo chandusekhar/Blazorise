@@ -3,31 +3,33 @@
 # Components for Blazor
 
 [![NuGet](https://img.shields.io/nuget/vpre/Blazorise.svg)](https://www.nuget.org/profiles/Megabit)
-[![MyGet](https://img.shields.io/myget/blazorise/vpre/blazorise.svg?label=myget)](https://www.myget.org/gallery/blazorise)
 ![Nuget](https://img.shields.io/nuget/dt/Blazorise.svg)
-[![Discord](https://img.shields.io/discord/761589226965696552?color=%237289da&label=Discord&logo=discord&logoColor=%237289da&style=flat-square)](https://discord.io/blazorise)
+[![Discord](https://img.shields.io/discord/761589226965696552?color=%237289da&label=Discord&logo=discord&logoColor=%237289da&style=flat-square)](https://discord.gg/cVmq8xBSnG)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE.md)
 [![Tip Me via PayPal](https://img.shields.io/badge/PayPal-tip%20me-green.svg?logo=paypal)](https://www.paypal.me/mladenmacanovic)
 [![Patreon](https://img.shields.io/badge/Patreon-donate-yellow.svg)](https://www.patreon.com/mladenmacanovic)
 
-Blazorise is a component library built on top of [Blazor](https://blazor.net/) and CSS frameworks like Bootstrap, Bulma and Material.
+Blazorise is the only [Blazor](https://blazor.net/) component library offering development independent of CSS frameworks, exclusively using C#. It provides support for various frameworks including Bootstrap, Tailwind and Material.
 
-## Commercial support
+## Commercial usage
 
-[Support](https://blazorise.com/support) for the Blazorise Components is available as part of the [Blazorise Commercial](https://blazorise.com/commercial) subscription.
+Blazorise, as a commercial product, offers a range of subscription plans that include premium support. When you choose a commercial license, you gain several advantages:
 
-With the commercial license you get:
+The benefits of the commercial licenses are:
 
-- Access to premium themes and templates
-- Premium forum support
-- Dedicated customer support with 24 or 16 hour response time
-- Priority fixes and feature requests
+- Access to [Blazorise Themes](https://blazorise.com/themes).
+- Access to [Blazorise Blocks](https://blazorise.com/blocks).
+- Premium support via [Blazorise Support](https://blazorise.com/support) forum.
+- Dedicated customer support with swift response times of either 24 or 16 hours.
+- Priority fixes and feature requests.
+
+> \* Some features may be exclusive to specific subscription tiers.
 
 ## Supporting Blazorise
 
-Blazorise is an Apache 2.0-licensed open source project with its ongoing development made possible entirely by the support of these awesome backers.
+Blazorise is an open source project with its ongoing development made possible entirely by the support of these awesome backers.
 
-### Special Sponsors
+### Special Partners
 
 <!--platinum start-->
 <table>
@@ -36,6 +38,11 @@ Blazorise is an Apache 2.0-licensed open source project with its ongoing develop
       <td align="center" valign="middle">
         <a href="https://volosoft.com/" target="_blank">
           <img width="222px" src="https://volosoft.com/assets/logos/volosoft-logo-dark.svg">
+        </a>
+      </td>
+      <td align="center" valign="middle">
+        <a href="https://www.pebble.tv/" target="_blank">
+          <img width="222px" src="https://www.pebble.tv/wp-content/uploads/2020/10/logo.svg">
         </a>
       </td>
     </tr>
@@ -54,6 +61,7 @@ Blazorise is an Apache 2.0-licensed open source project with its ongoing develop
 - [Material Demo](https://materialdemo.blazorise.com/)
 - [Bulma Demo](https://bulmademo.blazorise.com/)
 - [AntDesign Demo](https://antdesigndemo.blazorise.com/)
+- [Fluent 2 Demo](https://fluentui2demo.blazorise.com/)
 
 ### Blazor Server
 
@@ -61,61 +69,58 @@ Blazorise is an Apache 2.0-licensed open source project with its ongoing develop
 
 ## Documentation
 
-For full documentation, please visit the [Blazorise official documentation page](https://blazorise.com/docs/).
+For full documentation, with code samples and a detailed explanation of each component please visit the Blazorise [official documentation pages](https://blazorise.com/docs/).
 
 Continuing reading below for a quick start guide.
 
-## Prerequisites
-
-Before you continue, please make sure you have the latest version of Visual Studio and .Net Core installed. Visit an official [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/client) site to learn more.
-
 ## Installations
 
-There are currently 5 different NuGet packages for each of the supported CSS frameworks. Available packages are:
+### Prerequisites
+
+Before you continue, please make sure you have the latest version of Visual Studio and .NET installed. Visit an official [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/client) site to learn more.
+
+### Available packages
+
+There are currently 6 different NuGet packages for each of the supported CSS frameworks.
+
+Available Blazorise packages are:
 
 ```
-- Blazorise.Tailwind
-- Blazorise.Bootstrap
-- Blazorise.Bootstrap5
-- Blazorise.Bulma
-- Blazorise.Material
-- Blazorise.AntDesign
+1. Blazorise.Tailwind
+2. Blazorise.Bootstrap
+3. Blazorise.Bootstrap5
+4. Blazorise.Bulma
+5. Blazorise.Material
+6. Blazorise.AntDesign
+7. Blazorise.FluentUI2
 ```
 
-This guide will show you how to setup Blazorise with **Bootstrap** and **FontAwesome** icons. To setup Blazorise for other CSS frameworks, please refer the [Usage](https://blazorise.com/docs/usage/) page in the documentation.
+This guide will show you how to setup Blazorise with **Bootstrap 5** and **FontAwesome 6** icons. To setup Blazorise for other CSS frameworks, please refer the [Usage](https://blazorise.com/docs/usage/) page in the documentation.
 
 ### 1. NuGet packages
 
-First step is to install a Bootstrap provider for Blazorise:
+First step is to install a Bootstrap 5 provider for Blazorise:
 
-```
-Install-Package Blazorise.Bootstrap
+```bash
+dotnet add package Blazorise.Bootstrap5
 ```
 
 And FontAwesome icon package:
 
-```
-Install-Package Blazorise.Icons.FontAwesome
+```bash
+dotnet add package Blazorise.Icons.FontAwesome
 ```
 
 ### 2. Source files
 
-Add the following to `index.html` (Blazor WebAssembly) or `_Host.cshtml` (Blazor Server) in the `head` section.
+Add the following to `index.html` (Blazor WebAssembly), or `_Host.cshtml` (Blazor Server), or `App.razor` (.NET 8) in the `head` section.
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<link href="_content/Blazorise.Icons.FontAwesome/v6/css/all.min.css" rel="stylesheet">
 
-<link href="_content/Blazorise/blazorise.css?v=1.1.4.0" rel="stylesheet" />
-<link href="_content/Blazorise.Bootstrap/blazorise.bootstrap.css?v=1.1.4.0" rel="stylesheet" />
-```
-
-Add the following to `index.html` or `_Host.cshtml` in the `body` section.
-
-```html
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+<link href="_content/Blazorise/blazorise.css?v=1.5.0.0" rel="stylesheet" />
+<link href="_content/Blazorise.Bootstrap5/blazorise.bootstrap5.css?v=1.5.0.0" rel="stylesheet" />
 ```
 
 Please note, that these are the Blazorise explicit dependencies, you still need to add framework specific dependencies.
@@ -145,23 +150,20 @@ Add the following lines to the relevant sections of `Program.cs`.
 
 ```cs
 using Blazorise;
-using Blazorise.Bootstrap;
+using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
 ```
 
 ```cs
 builder.Services
-  .AddBlazorise( options =>
-  {
-      options.Immediate = true;
-  } )
-  .AddBootstrapProviders()
+  .AddBlazorise()
+  .AddBootstrap5Providers()
   .AddFontAwesomeIcons();
 ```
 
 ## Usage
 
-```html
+```razor
 @page "/counter"
 
 <Heading Size="HeadingSize.Is1">Counter</Heading>
@@ -180,22 +182,14 @@ builder.Services
 }
 ```
 
-## Try Preview
+## Development version
 
-If you're willing to try preview versions of Blazorise, all you need to do is set up Visual Studio to know how to use Blazorise [MyGet feed](https://www.myget.org/feed/Details/blazorise) feed. The easiest way to do this is to create `NuGet.config` file and place it into your solution root folder. Then you copy the following content and paste it to the `NuGet.config`.
+We release a development version of Blazorise on a regular basis. This version is available on the [MyGet](https://www.myget.org/gallery/blazorise) feed. 
+This release is not recommended for production use, but it's a great way to test the latest features, bug fixes and gives us some feedback ahead of the upcoming release.
 
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<configuration>
-  <packageSources>
-    <add key="BlazoriseMyGet" value="https://www.myget.org/F/blazorise/api/v3/index.json" />
-  </packageSources>
-</configuration>
-```
-
-Now you will be able to get preview versions of Blazorise with the latest changes and bug fixes.
 
 ## Contributing
+
 We welcome contributions and any suggestions or feature requests you might have. Contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. This will be signed once you submit a PullRequest on our repository. For details about our CLA, please visit: [Contributor License Agreement](https://gist.github.com/stsrki/abfa5ce0f4a5cf1e6ac67b92f8eb5d63).
 
 For our code conventions and guidelines please visit: [Contributing Guide](https://github.com/Megabit/Blazorise/wiki/Contributing)

@@ -4,7 +4,7 @@
     <div class="@ClassNames" style="@StyleNames" @attributes="@Attributes">
         @foreach ( var nodeState in NodeStates ?? Enumerable.Empty<TreeViewNodeState<TNode>>() )
         {
-            <div @key="@nodeState.Key">
+            <div @key="@nodeState.Key" @oncontextmenu="@((eventArgs)=>OnContextMenuHandler(nodeState, eventArgs))" @oncontextmenu:stopPropagation @oncontextmenu:preventDefault="@ContextMenuPreventDefault">
                 @if ( nodeState.HasChildren )
                 {
                     <span class="b-tree-view-node-icon" @onclick="@(() => ToggleNode(nodeState))">
@@ -22,7 +22,8 @@
                 <_TreeViewNodeContent TNode="TNode" NodeState="@nodeState"
                                       NodeStyling="@NodeStyling"
                                       SelectionMode="@SelectionMode"
-                                      SelectedNodeStyling="@SelectedNodeStyling">
+                                      SelectedNodeStyling="@SelectedNodeStyling"
+                                      DisabledNodeStyling="@DisabledNodeStyling">
                     @NodeContent( nodeState.Node )
                 </_TreeViewNodeContent>
 
@@ -38,14 +39,18 @@
                                    Expanded="@nodeState.Expanded"
                                    AutoExpandAll="@AutoExpandAll"
                                    HasChildNodes="@HasChildNodes"
+                                   IsDisabled="@IsDisabled"
                                    HasChildNodesAsync="@HasChildNodesAsync"
                                    NodeStyling="@NodeStyling"
                                    SelectedNodeStyling="@SelectedNodeStyling"
+                                   DisabledNodeStyling="@DisabledNodeStyling"
                                    ExpandIconName="@ExpandIconName"
                                    ExpandIconStyle="@ExpandIconStyle"
                                    CollapseIconName="@CollapseIconName"
                                    CollapseIconStyle="@CollapseIconStyle"
-                                   SelectionMode="@SelectionMode" />
+                                   SelectionMode="@SelectionMode"
+                                   ContextMenu="@ContextMenu"
+                                   ContextMenuPreventDefault="@ContextMenuPreventDefault" />
                 }
             </div>
         }

@@ -1,8 +1,8 @@
-import Cropper, { CropperViewer } from "./vendors/cropper.js?v=1.2.4.0";
+import Cropper, { CropperViewer } from "./vendors/cropper.js?v=1.5.0.0";
 
-import { getRequiredElement } from "../Blazorise/utilities.js?v=1.2.4.0";
+import { getRequiredElement } from "../Blazorise/utilities.js?v=1.5.0.0";
 
-document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend", "<link rel=\"stylesheet\" href=\"_content/Blazorise.Cropper/blazorise.cropper.css?v=1.2.4.0\" />");
+document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend", "<link rel=\"stylesheet\" href=\"_content/Blazorise.Cropper/blazorise.cropper.css?v=1.5.0.0\" />");
 
 const _instances = [];
 
@@ -163,7 +163,7 @@ export async function cropBase64(element, elementId, options) {
             const croppedCanvas = cropperSelection.$toCanvas(options);
 
             return await croppedCanvas.then((canvas) => {
-                return canvas.toDataURL();
+                return canvas.toDataURL(options.imageType, options.imageQuality);
             });
         }
     }

@@ -10,10 +10,14 @@
             'lg': '1024px',
             'xl': '1280px',
             '2xl': '1536px',
+            '3xl': '1792px',
         },
         fontFamily: {
             sans: ['Graphik', 'sans-serif'],
             serif: ['Merriweather', 'serif'],
+        },
+        fontSize: {
+            md: ['1.0625rem', '1.25rem']
         },
         variants: {
             backgroundColor: ['even', 'odd', 'hover']

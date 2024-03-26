@@ -14,9 +14,10 @@ public interface IFluentColumn
     /// <summary>
     /// Builds and returns the classnames for column sizes.
     /// </summary>
+    /// <param name="grid">If true, column is the child of the <see cref="Grid"/> component.</param>
     /// <param name="classProvider">Class provider used by the current framework provider.</param>
     /// <returns>Return list of css classnames.</returns>
-    string Class( IClassProvider classProvider );
+    string Class( bool grid, IClassProvider classProvider );
 
     /// <summary>
     /// True if there are column sizes defined.
@@ -65,6 +66,11 @@ public interface IFluentColumnOnBreakpoint :
     /// Breakpoint on large desktops (extra large).
     /// </summary>
     IFluentColumnWithSize OnFullHD { get; }
+
+    /// <summary>
+    /// Breakpoint on large desktops (extra extra large).
+    /// </summary>
+    IFluentColumnWithSize OnQuadHD { get; }
 }
 
 /// <summary>
@@ -225,7 +231,7 @@ public class FluentColumn :
     #region Methods
 
     /// <inheritdoc/>
-    public string Class( IClassProvider classProvider )
+    public string Class( bool grid, IClassProvider classProvider )
     {
         if ( dirty )
         {
@@ -233,7 +239,7 @@ public class FluentColumn :
             {
                 if ( HasSizes && columnDefinitions?.Count > 0 )
                 {
-                    builder.Append( classProvider.Column( columnDefinitions.Where( x => x.ColumnWidth != ColumnWidth.Default ) ) );
+                    builder.Append( classProvider.Column( grid, columnDefinitions.Where( x => x.ColumnWidth != ColumnWidth.Default ) ) );
                 }
 
                 if ( customRules?.Count > 0 )
@@ -302,7 +308,7 @@ public class FluentColumn :
     /// <returns>Next rule reference.</returns>
     public IFluentColumnWithSize WithColumnSize( string value )
     {
-        if ( customRules == null )
+        if ( customRules is null )
             customRules = new() { value };
         else
             customRules.Add( value );
@@ -364,6 +370,11 @@ public class FluentColumn :
     /// Breakpoint on large desktops (extra large).
     /// </summary>
     public IFluentColumnWithSize OnFullHD => WithBreakpoint( Breakpoint.FullHD );
+
+    /// <summary>
+    /// Breakpoint on large desktops (extra extra large).
+    /// </summary>
+    public IFluentColumnWithSize OnQuadHD => WithBreakpoint( Breakpoint.QuadHD );
 
     /// <summary>
     /// Move columns to the right.

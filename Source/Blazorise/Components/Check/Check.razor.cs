@@ -36,7 +36,7 @@ public partial class Check<TValue> : BaseCheckComponent<TValue>
 
         await base.SetParametersAsync( parameters );
 
-        if ( ParentValidation != null )
+        if ( ParentValidation is not null )
         {
             if ( parameters.TryGetValue<Expression<Func<TValue>>>( nameof( CheckedExpression ), out var expression ) )
                 await ParentValidation.InitializeInputExpression( expression );
@@ -78,8 +78,15 @@ public partial class Check<TValue> : BaseCheckComponent<TValue>
     /// <summary>
     /// The indeterminate property can help you to achieve a 'check all' effect.
     /// </summary>
-    [Parameter]
-    public bool? Indeterminate { get; set; }
+    [Parameter] public bool? Indeterminate { get; set; }
+
+    /// <summary>
+    /// Defines the name attribute of a checkbox.
+    /// </summary>
+    /// <remarks>
+    /// The name attribute is used to identify form data after it has been submitted to the server, or to reference form data using JavaScript on the client side.
+    /// </remarks>
+    [Parameter] public string Name { get; set; }
 
     #endregion
 }
